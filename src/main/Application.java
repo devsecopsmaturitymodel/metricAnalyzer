@@ -21,12 +21,6 @@ public class Application {
         }
     }
 
-    /**
-     * some java doc.
-     *
-     * @param ctx application contexxt
-     * @return some return
-     */
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
