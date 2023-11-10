@@ -1,0 +1,24 @@
+data privacy requirements:
+  components:
+    - array: date # TODO 
+  mapping: Logging: PII logging concept
+  level: Level 1
+  # TODO Threshold
+
+conduction of simple threat modeling on a technical level:
+  components:
+    array:
+      - title: string
+        date: date
+        array:
+          - title: string
+          - url: url
+  level: Level 2
+  threshold:
+    attribute: date,
+    value: 10
+    timespan: 365
+  grafana: |
+        {
+          "metric": "chart"
+        }

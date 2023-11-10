@@ -3,15 +3,32 @@ package com.analyzer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+public class App {
+    public static void main(String[] args) {
+        String yamlFilePath = "./activity_definitions/configuration.yaml";
 
-public class App 
-{
-    public static void main( String[] args )
-    {
-        // TODO: In separate class
+        // TODO: make own classes!
+
+        // Check if the YAML file exists
+        if (fileExists(yamlFilePath)) {
+            executeCommand("cat", yamlFilePath);
+        } else {
+            System.out.println("The YAML file does not exist.");
+        }
+    }
+
+    private static boolean fileExists(String filePath) {
+        Path path = Paths.get(filePath);
+        return Files.exists(path) && Files.isRegularFile(path);
+    }
+
+    private static void executeCommand(String... command) {
         ProcessBuilder builder = new ProcessBuilder();
-        builder.command("cat", "/local_repository/configuration.yaml");
+        builder.command(command);
 
         try {
             Process process = builder.start();
@@ -20,12 +37,11 @@ public class App
 
             String line;
 
-            while((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
 
-
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
