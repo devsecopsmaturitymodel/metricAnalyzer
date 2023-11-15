@@ -11,13 +11,19 @@ import org.yaml.snakeyaml.Yaml;
 
 public class YamlReader {
 
-    public static void convertYamlToJavaObject(String path) {
+    // Input: Yaml file path (String)
+    // Output: Map or null
+    public static Map<?, ?> convertYamlToJavaYaml(String path) {
         if (fileExists(path)) {
-            convert(path);
+            try {
+                return convert(path);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("The YAML file does not exist.");
         }
-
+        return null;
     }
 
     private static boolean fileExists(String filePath) {
@@ -25,32 +31,27 @@ public class YamlReader {
         return Files.exists(path) && Files.isRegularFile(path);
     }
 
-    private static void convert(String path) {
-        try {
+    private static Map<?, ?> convert(String path) throws FileNotFoundException {
+        // Create an InputStream to read the file
+        InputStream input = new FileInputStream(path);
 
-            // Create an InputStream to read the file
-            InputStream input = new FileInputStream(path);
+        // Create a YAML parser
+        Yaml yaml = new Yaml();
 
-            // Create a YAML parser
-            Yaml yaml = new Yaml();
+        // Parse the YAML file incrementally
+        Iterable<Object> yamlObjects = yaml.loadAll(input);
 
-            // Parse the YAML file incrementally
-            Iterable<Object> yamlObjects = yaml.loadAll(input);
-
-            // Iterate over the YAML objects
-            for (Object yamlObject : yamlObjects) {
-                if (yamlObject instanceof Map) {
-                    // Handle each YAML document as a Map
-                    Map<?, ?> documentMap = (Map<?, ?>) yamlObject;
-                    // Process the Map as needed
-                    System.out.println(documentMap);
-                }
+        // Iterate over the YAML objects
+        for (Object yamlObject : yamlObjects) {
+            if (yamlObject instanceof Map) {
+                // Handle each YAML document as a Map
+                Map<?, ?> documentMap = (Map<?, ?>) yamlObject;
+                // Process the Map as needed
+                return documentMap;
             }
-
-        } catch (FileNotFoundException e) { 
-            // should never be executed since it is checked before
-            e.printStackTrace();
         }
+        // If no Map is found, throw an exception
+        throw new IllegalStateException("No Map found in the YAML file.");
     }
     
 }

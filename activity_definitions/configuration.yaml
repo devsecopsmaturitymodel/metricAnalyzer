@@ -1,19 +1,12 @@
 conduction of simple threat modeling on a technical level:
   components:
-    array:
-      - title: string
-        date: date
-        array:
-          - title: string
-          - url: url
+    - title: string
+    - conduction date: date
   level: Level 2
-  threshold:
-    attribute: date,
-    value: 10
-    timespan: 365
+  # TODO: threshold
 
 data privacy requirements:
   components:
-    - array: date # TODO 
+    - date: date
   level: Level 1
-  # TODO Threshold
+  # TODO: threshold
