@@ -32,6 +32,13 @@ public class ActivityBuilder {
         return this;
     }
 
+    public ActivityBuilder addDateComponent(String componentName) {
+        DateComponent comp = new DateComponent();
+        comp.setName(componentName);
+        activity.addComponent(comp);
+        return this;
+    }
+
     public Activity build() {
         return this.activity;
     }
