@@ -4,28 +4,18 @@ import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
+        // TODO: Scanner which gets all yaml files the config.yaml file --> put it in utils
         String yamlFilePath = "./activity_definitions/configuration.yaml";
 
-        Map<?, ?> yaml = YamlReader.convertYamlToJavaYaml(yamlFilePath);
+        // TODO: utils
+        Map<?, ?> javaYaml = YamlReader.convertYamlToJavaYaml(yamlFilePath);
 
-        for (Map.Entry<?, ?> entry : yaml.entrySet()) {
-            Object key = entry.getKey();
-            Object value = entry.getValue();
+        // Create all Activities
+        ActivityDirector activityDirector = new ActivityDirector();
+        activityDirector.createActivities(javaYaml);
 
-            System.out.println(key);
-            System.out.println(value);
-            System.out.println("----------------------");
-        }
+        // Example
+        //System.out.println(activityDirector.getActivities().get("conduction of simple threat modeling on a technical level").getComponent().get(0).getName());
 
-        // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components.
-        ActivityBuilder builder = new ActivityBuilder();
-
-        Activity activity = builder
-            .setActivityName("conduction of simple threat modeling on a technical level")
-            .setLevel("Level 2")
-            .addStringComponent("title")
-            .build();
-
-        System.out.println(activity.getComponent().get(0).getValues());
     }
 }
