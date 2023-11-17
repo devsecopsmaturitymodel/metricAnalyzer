@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
-public class DateComponent implements Component {
+public class DateComponent implements Component<LocalDate> {
     
     private String name;
     private List<LocalDate> values;

@@ -3,7 +3,7 @@ package com.analyzer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringComponent implements Component{
+public class StringComponent implements Component<String>{
     private String name;
     private List<String> values;
 
@@ -27,6 +27,7 @@ public class StringComponent implements Component{
         return this.values;
     }
 
+    @Override
     public void setValue(String value) {
         this.values.add(value);
     }
