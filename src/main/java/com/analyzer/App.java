@@ -17,5 +17,15 @@ public class App {
             System.out.println("----------------------");
         }
 
+        // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components.
+        ActivityBuilder builder = new ActivityBuilder();
+
+        Activity activity = builder
+            .setActivityName("conduction of simple threat modeling on a technical level")
+            .setLevel("Level 2")
+            .addStringComponent("title")
+            .build();
+
+        System.out.println(activity.getComponent().get(0).getValues());
     }
 }
