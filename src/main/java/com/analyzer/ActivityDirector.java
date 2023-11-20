@@ -39,22 +39,21 @@ public class ActivityDirector {
         for (Object element : arr) {
             if (element instanceof LinkedHashMap) {
                 LinkedHashMap<?, ?> linkedHashMap = (LinkedHashMap<?, ?>) element;
-                if (linkedHashMap.values().toString().equals("[string]")){
-                    builder.addStringComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
-                }
-
-                else if (linkedHashMap.values().toString().equals("[date]")){
-                    builder.addDateComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
-                }
-
-                else if (linkedHashMap.values().toString().equals("[int]")){
-                    builder.addIntComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
-                }
-
-                else {
-                    // TODO: Raise Exception
-                    System.out.println("This type does not exist");
-                }                
+                switch (linkedHashMap.values().iterator().next().getClass().getSimpleName()) {
+                    case "String":
+                        builder.addStringComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
+                        break;
+                    case "Date":
+                        builder.addDateComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
+                        break;
+                    case "Integer":
+                        builder.addIntComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
+                        break;
+                    default:
+                        // TODO: Raise Exception
+                        System.out.println("This type does not exist");
+                        break;
+                }             
             }
         }
         
