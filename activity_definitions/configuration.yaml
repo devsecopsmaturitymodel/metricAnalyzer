@@ -1,10 +1,23 @@
-applicationId: X
+conduction of simple threat modeling on a technical level:
+  components:
+    - title: string
+      conduction date: date
+      link:
+        - title: string
+          url: string
+  level: Level 2
+  # treshold:
+    # target: "[].conduction date"
+    # timeframe: "year"
+    # count: 1
+  # TODO: threshold
 
-activities:
-  conduction of simple threat modeling on a technical level:
-    level: Level 2
-    # TODO: threshold
-
-  data privacy requirements:
-    level: Level 1
-    # TODO: threshold
+data privacy requirements:
+  components:
+    - date: date
+  level: Level 1
+  # treshold:
+    # target: "[].date"
+    # timeframe: "year"
+    # count: 1
+  # TODO: threshold

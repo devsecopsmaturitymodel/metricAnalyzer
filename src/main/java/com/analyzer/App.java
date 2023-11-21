@@ -9,10 +9,11 @@ public class App {
 
         // TODO: utils
         Map<?, ?> javaYaml = YamlReader.convertYamlToJavaYaml(yamlFilePath);
+        System.out.println(javaYaml);
 
         // Create all Activities
-        ActivityDirector activityDirector = new ActivityDirector();
-        activityDirector.createActivities(javaYaml);
+        //ActivityDirector activityDirector = new ActivityDirector();
+        //activityDirector.createActivities(javaYaml);
 
         // Example
         //System.out.println(activityDirector.getActivities().get("conduction of simple threat modeling on a technical level").getComponent().get(0).getName());
