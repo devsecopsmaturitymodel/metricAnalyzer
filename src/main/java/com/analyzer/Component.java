@@ -2,7 +2,10 @@ package com.analyzer;
 
 import java.util.List;
 
-public interface Component<T> {
+public interface Component<T> extends Cloneable {
+
+    Object clone() throws CloneNotSupportedException;
+
     String getName();
 
     void setName(String newName);

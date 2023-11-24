@@ -32,5 +32,10 @@ public class DateComponent implements Component<LocalDate> {
     public void setValue(LocalDate value) {
         this.values.add(value);
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();  // Performs a shallow copy
+    }
     
 }

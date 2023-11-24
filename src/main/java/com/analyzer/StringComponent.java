@@ -31,5 +31,10 @@ public class StringComponent implements Component<String>{
     public void setValue(String value) {
         this.values.add(value);
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();  // Performs a shallow copy
+    }
     
 }

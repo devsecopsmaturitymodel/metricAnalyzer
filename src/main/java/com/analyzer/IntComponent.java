@@ -31,4 +31,9 @@ public class IntComponent implements Component<Integer> {
     public void setValue(Integer value) {
         this.values.add(value);
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();  // Performs a shallow copy
+    }
 }
