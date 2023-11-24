@@ -1,5 +1,7 @@
 package com.analyzer;
 
+import java.util.ArrayList;
+
 public class ActivityBuilder {
 
     private Activity activity;
@@ -18,24 +20,25 @@ public class ActivityBuilder {
         return this;
     }
 
-    public ActivityBuilder addStringComponent(String componentName) {
+    public ActivityBuilder addStringComponent(String componentName, ArrayList<String> nester) {
+
         StringComponent comp = new StringComponent();
         comp.setName(componentName);
-        activity.addComponent(comp);
+        activity.addComponent(comp, nester);
         return this;
     }
     
-    public ActivityBuilder addIntComponent(String componentName) {
+    public ActivityBuilder addIntComponent(String componentName, ArrayList<String> nester) {
         IntComponent comp = new IntComponent();
         comp.setName(componentName);
-        activity.addComponent(comp);
+        activity.addComponent(comp, nester);
         return this;
     }
 
-    public ActivityBuilder addDateComponent(String componentName) {
+    public ActivityBuilder addDateComponent(String componentName, ArrayList<String> nester) {
         DateComponent comp = new DateComponent();
         comp.setName(componentName);
-        activity.addComponent(comp);
+        activity.addComponent(comp, nester);
         return this;
     }
 

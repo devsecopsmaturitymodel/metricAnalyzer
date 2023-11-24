@@ -15,7 +15,7 @@ public class App {
         activityDirector.createActivities(javaYaml);
 
         // Example
-        System.out.println(activityDirector.getActivities().get("conduction of simple threat modeling on a technical level").getComponent());
+        System.out.println(activityDirector.getActivities().get("conduction of simple threat modeling on a technical level").getComponents());
         //System.out.println(activityDirector.getActivities().get("conduction of simple threat modeling on a technical level").getComponent().get(0).getName());
 
     }

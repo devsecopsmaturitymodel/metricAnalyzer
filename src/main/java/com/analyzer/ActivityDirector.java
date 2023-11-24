@@ -9,9 +9,11 @@ import java.util.Map;
 public class ActivityDirector {
 
     private Map<String, Activity> activities;
+    private ArrayList<String> nester;
 
     public ActivityDirector() {
         this.activities = new HashMap<>();
+        this.nester = new ArrayList<String>();
     }
 
     public void createActivities(Map<?, ?> javaYaml) {
@@ -39,28 +41,6 @@ public class ActivityDirector {
         // Add Components in the builder
         ArrayList arr = (ArrayList) data.get("components");
         addComponents(builder, arr);
-
-
-        // for (Object element : arr) {
-        //     if (element instanceof LinkedHashMap) {
-        //         LinkedHashMap<?, ?> linkedHashMap = (LinkedHashMap<?, ?>) element;
-        //         switch (linkedHashMap.values().iterator().next().getClass().getSimpleName()) {
-        //             case "String":
-        //                 builder.addStringComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
-        //                 break;
-        //             case "Date":
-        //                 builder.addDateComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
-        //                 break;
-        //             case "Integer":
-        //                 builder.addIntComponent(linkedHashMap.keySet().toString().replace("[", "").replace("]", ""));
-        //                 break;
-        //             default:
-        //                 // TODO: Raise Exception
-        //                 System.out.println("This type does not exist");
-        //                 break;
-        //         }             
-        //     }
-        // }
         
         Activity activity = builder.build();
 
@@ -79,21 +59,29 @@ public class ActivityDirector {
             if (value instanceof String) {
                 switch (value.toString()) {
                     case "string":
-                        builder.addStringComponent(key.toString());
+                        builder.addStringComponent(key.toString(), nester);
                         break;
                     case "date":
-                        builder.addDateComponent(key.toString());
+                        builder.addDateComponent(key.toString(), nester);
                         break;
                     case "int":
-                        builder.addIntComponent(key.toString());
+                        builder.addIntComponent(key.toString(), nester);
                         break;
                     default:
                         // TODO: Raise Exception
+                        nester = new ArrayList<String>();
                         System.out.println("This type does not exist");
                         break;
                 }
             }
-            else if (value instanceof ArrayList) {
+            else if (value instanceof ArrayList && nester.isEmpty()) {
+                nester.add(key.toString());
+                ArrayList<Object> arr = (ArrayList<Object>) value;
+                addComponents(builder, arr);
+                nester = new ArrayList<String>();
+            }
+            else if (value instanceof ArrayList && !nester.isEmpty()) {
+                nester.add(key.toString());
                 ArrayList<Object> arr = (ArrayList<Object>) value;
                 addComponents(builder, arr);
             }
