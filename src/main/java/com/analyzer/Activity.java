@@ -3,14 +3,17 @@ package com.analyzer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Activity {
     private String level;
     private String activityName;
     private Map<String, Object> components;
+    private ArrayList<Map<String, Object>> content;
 
     public Activity() {
         components = new HashMap<>();
+        content = new ArrayList<>();
     }
 
     public String getLevel() {
@@ -50,5 +53,43 @@ public class Activity {
 
     public Map<String, Object> getComponents() {
         return this.components;
+    }
+
+    public void addContent() {
+        HashMap finalAcc = new HashMap<>();
+        for (String key : components.keySet()){
+            if (components.get(key) instanceof Component){
+                try {
+                    Component comp = (Component) components.get(key);
+                    finalAcc.put(key, comp.clone());
+                } catch (CloneNotSupportedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            else if (components.get(key) instanceof HashMap){
+                HashMap temp = new HashMap<>();
+                HashMap fin = (HashMap) components.get(key);
+                for (Object k : fin.keySet()){
+                    Component c = (Component) fin.get(k);
+                    try {
+                        temp.put(k, c.clone());
+                    } catch (CloneNotSupportedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                }
+                }
+                finalAcc.put(key, temp);
+            }
+            else {
+                // TODO Raise an exception
+                System.out.println("This instance should not be here!");
+            }
+        }
+        content.add(finalAcc);
+    }
+
+    public ArrayList<Map<String, Object>> getContent() {
+        return this.content;
     }
 }
