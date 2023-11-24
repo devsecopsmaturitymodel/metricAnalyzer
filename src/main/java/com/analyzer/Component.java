@@ -1,7 +1,5 @@
 package com.analyzer;
 
-import java.util.List;
-
 public interface Component<T> extends Cloneable {
 
     Object clone() throws CloneNotSupportedException;
@@ -11,7 +9,7 @@ public interface Component<T> extends Cloneable {
     void setName(String newName);
 
     // The list can hold elements of any type.
-    List<?> getValues();
+    T getValue();
 
-    void setValue(T value);
+    void setValue(Object value);
 }

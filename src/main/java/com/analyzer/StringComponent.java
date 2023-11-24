@@ -1,16 +1,8 @@
 package com.analyzer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class StringComponent implements Component<String>{
     private String name;
-    private List<String> values;
-
-    // Default constructor initializes the values list
-    public StringComponent() {
-        this.values = new ArrayList<>();
-    }
+    private String value;
 
     @Override
     public String getName() {
@@ -23,13 +15,14 @@ public class StringComponent implements Component<String>{
     }
 
     @Override
-    public List<String> getValues() {
-        return this.values;
+    public String getValue() {
+        return this.value;
     }
 
     @Override
-    public void setValue(String value) {
-        this.values.add(value);
+    public void setValue(Object value) {
+        String s = (String) value;
+        this.value = s;
     }
 
     @Override

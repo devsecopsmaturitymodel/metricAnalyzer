@@ -1,18 +1,11 @@
 package com.analyzer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.time.LocalDate;
+import java.util.Date;
 
-public class DateComponent implements Component<LocalDate> {
+public class DateComponent implements Component<Date> {
     
     private String name;
-    private List<LocalDate> values;
-
-    // Default constructor initializes the values list
-    public DateComponent() {
-        this.values = new ArrayList<>();
-    }
+    private Date value;
 
     @Override
     public String getName() {
@@ -25,12 +18,13 @@ public class DateComponent implements Component<LocalDate> {
     }
 
     @Override
-    public List<LocalDate> getValues() {
-        return this.values;
+    public Date getValue() {
+        return this.value;
     }
 
-    public void setValue(LocalDate value) {
-        this.values.add(value);
+    public void setValue(Object value) {
+        Date l = (Date) value;
+        this.value = l;
     }
 
     @Override

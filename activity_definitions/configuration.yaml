@@ -14,7 +14,7 @@ conduction of simple threat modeling on a technical level:
 
 data privacy requirements:
   components:
-    - date: date
+    - read date: date
   level: Level 1
   # treshold:
     # target: "[].date"
