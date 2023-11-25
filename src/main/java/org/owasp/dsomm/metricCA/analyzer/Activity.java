@@ -1,11 +1,14 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Activity {
+    private static final Logger LOGGER = Logger.getLogger(Activity.class.getName());
+
     private String level;
     private String activityName;
     private Map<String, Object> components;
@@ -36,7 +39,6 @@ public class Activity {
         if (nester.isEmpty()) {
             components.put(component.getName(), component);
         } else {
-            
             for (String key : nester) {
                 if (components.get(nester.get(0)) != null){ // Is key in components
                     Map<String, Object> temp = (HashMap) components.get(key);
@@ -57,29 +59,31 @@ public class Activity {
 
     public void addContent() {
         HashMap finalAcc = new HashMap<>();
-        for (String key : components.keySet()){
-            if (components.get(key) instanceof Component){
+        for (String componentKey : components.keySet()){
+            if (components.get(componentKey) instanceof Component){
                 try {
-                    Component comp = (Component) components.get(key);
-                    finalAcc.put(key, comp.clone());
+                    LOGGER.log(Level.INFO, "Key " + componentKey);
+                    Component component = (Component) components.get(componentKey);
+                    LOGGER.log(Level.INFO, "Value " + component.getValue());
+                    finalAcc.put(componentKey, component.clone());
                 } catch (CloneNotSupportedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-            else if (components.get(key) instanceof HashMap){
+            else if (components.get(componentKey) instanceof HashMap){
                 HashMap temp = new HashMap<>();
-                HashMap fin = (HashMap) components.get(key);
+                HashMap fin = (HashMap) components.get(componentKey);
                 for (Object k : fin.keySet()){
-                    Component c = (Component) fin.get(k);
+                    Component component = (Component) fin.get(k);
                     try {
-                        temp.put(k, c.clone());
+                        temp.put(k, component.clone());
                     } catch (CloneNotSupportedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                 }
                 }
-                finalAcc.put(key, temp);
+                finalAcc.put(componentKey, temp);
             }
             else {
                 // TODO Raise an exception
@@ -91,5 +95,10 @@ public class Activity {
 
     public ArrayList<Map<String, Object>> getContent() {
         return this.content;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[name=" + activityName + ", level=" + level + "]";
     }
 }

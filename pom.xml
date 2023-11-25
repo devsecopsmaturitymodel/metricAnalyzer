@@ -30,6 +30,26 @@
       <artifactId>snakeyaml</artifactId>
       <version>1.21</version>            
   </dependency>
+  <dependency>
+    <groupId>net.sourceforge.argparse4j</groupId>
+    <artifactId>argparse4j</artifactId>
+    <version>0.9.0</version>
+  </dependency>
+  <dependency>
+    <groupId>com.influxdb</groupId>
+    <artifactId>influxdb3-java</artifactId>
+    <version>0.4.0</version>
+  </dependency>
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.16.0</version>
+  </dependency>
+  <dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-xml</artifactId>
+    <version>2.15.2</version>
+  </dependency>
   </dependencies>
 
   <build>
@@ -40,7 +60,7 @@
         <configuration>
             <archive>
                 <manifest>
-                    <mainClass>com.analyzer.App</mainClass>
+                    <mainClass>org.owasp.dsomm.metricCA.analyzer.App</mainClass>
                 </manifest>
             </archive>
         </configuration>

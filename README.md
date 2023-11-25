@@ -2,12 +2,12 @@
 
 ## Local Installation and Deployment
 
-### Build and Package with Maven
+### Build and execute with Maven
 
 ```bash
 mvn clean install
 mvn compile
-mvn package
+mvn compile; mvn exec:java  -Dexec.mainClass="org.owasp.dsomm.metricCA.analyzer.App" -Dexec.args='"--configuration-yaml-path=/home/XXX/git/metricAnalyzer/definitions/configuration.yaml" "--application-yaml-path=/home/XXX/git/metricAnalyzer/definitions/App1.yaml"'
 ```
 
 ### Add to Docker 

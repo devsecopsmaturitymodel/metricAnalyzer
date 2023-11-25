@@ -1,4 +1,4 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Application {
+    private static final Logger LOGGER = Logger.getLogger( Application.class.getName() );
+
     private ActivityDirector activityDirector;
 
     public Application(Map<?, ?> configJavaYaml) {
@@ -17,12 +21,12 @@ public class Application {
 
     public void saveData(Map<?, ?> appJavaYaml){
         HashMap allActivities = (HashMap) (appJavaYaml.get("activities"));
-        for (Object actKey : allActivities.keySet()){
-            ArrayList data = (ArrayList) allActivities.get(actKey);
+        for (Object activityKey : allActivities.keySet()){
+            ArrayList data = (ArrayList) allActivities.get(activityKey);
             for (int i = 0; i<data.size(); i++){
-                activityDirector.getActivities().get(actKey).addContent();
+                activityDirector.getActivities().get(activityKey).addContent();
             }
-            fillActivityContent(data, actKey);
+            fillActivityContent(data, activityKey);
         }
     }
 

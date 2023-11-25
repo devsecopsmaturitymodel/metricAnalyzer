@@ -1,4 +1,4 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;

@@ -1,4 +1,6 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.components;
+
+import org.owasp.dsomm.metricCA.analyzer.Component;
 
 import java.util.Date;
 
@@ -31,5 +33,8 @@ public class DateComponent implements Component<Date> {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();  // Performs a shallow copy
     }
-    
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[name=" + name + ", value=" + value + "]";
+    }
 }

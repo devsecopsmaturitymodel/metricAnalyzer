@@ -1,4 +1,8 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer;
+
+import org.owasp.dsomm.metricCA.analyzer.components.DateComponent;
+import org.owasp.dsomm.metricCA.analyzer.components.IntComponent;
+import org.owasp.dsomm.metricCA.analyzer.components.StringComponent;
 
 import java.util.ArrayList;
 
@@ -21,7 +25,6 @@ public class ActivityBuilder {
     }
 
     public ActivityBuilder addStringComponent(String componentName, ArrayList<String> nester) {
-
         StringComponent comp = new StringComponent();
         comp.setName(componentName);
         activity.addComponent(comp, nester);
