@@ -1,7 +1,9 @@
 package org.owasp.dsomm.metricCA.analyzer.components;
 
+import jakarta.persistence.Entity;
 import org.owasp.dsomm.metricCA.analyzer.Component;
 
+@Entity
 public class StringComponent implements Component<String> {
     private String name;
     private String value;

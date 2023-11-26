@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- Connection settings -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/my_data_wh_db</property>
+        <property name="hibernate.connection.username">my_data_wh_user</property>
+        <property name="hibernate.connection.password">my_data_wh_pwd</property>
+
+        <!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Print executed SQL to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- Update database on startup -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <!-- Annotated entity classes -->
+        <mapping class="org.owasp.dsomm.metricCA.analyzer.Activity"/>
+    </session-factory>
+</hibernate-configuration>

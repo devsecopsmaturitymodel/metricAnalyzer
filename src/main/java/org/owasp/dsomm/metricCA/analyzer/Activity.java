@@ -1,17 +1,32 @@
 package org.owasp.dsomm.metricCA.analyzer;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Activity {
+@Entity
+public class Activity implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(Activity.class.getName());
 
+    @Id
     private String level;
+
+    @Id
     private String activityName;
+
+    @Id
+    private String team = "noteam";
+
     private Map<String, Object> components;
+
+    @OneToMany
     private ArrayList<Map<String, Object>> content;
 
     public Activity() {

@@ -1,13 +1,12 @@
 package org.owasp.dsomm.metricCA.analyzer;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 
 import java.util.Collection;
@@ -57,29 +56,63 @@ public class App {
         Application newApp = new Application(configJavaYaml);
         assert app1JavaYaml != null;
         newApp.saveData(app1JavaYaml);
+        Collection activities = newApp.getActivities();
+
+
+
+
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        for (Object activity : activities) {
+            session.save(activity);
+        }
+
+        session.close();
+        sessionFactory.close();
 
         // Example
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//
+//
+//        String activitiesAsJsonString = null;
+//        try {
+//            activitiesAsJsonString = mapper.writeValueAsString(activities);
+//
+//            Map<String, Object> flattenJson = JsonFlattener.flattenAsMap(activitiesAsJsonString);
+//            System.out.println("###############################");
+//            System.out.println(flattenJson);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        // convert user o,bject to json string and return it
+//        LOGGER.log(Level.INFO,"Full object\n" + activitiesAsJsonString);
+//
+//
+//        for (Object activity : activities) {
+//            Activity ac = (Activity) activity;
+//
+//            try {
+//
+//                String activityAsJsonString = mapper.writeValueAsString(activity);
+//                // convert user o,bject to json string and return it
+//                LOGGER.log(Level.INFO,"Full activity object\n" + activityAsJsonString);
+//
+//            }
+//            catch (JsonProcessingException e) {
+//                // catch various errors
+//                e.printStackTrace();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+// TODO https://github.com/wnameless/json-flattener
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            // convert user o,bject to json string and return it
-            LOGGER.log(Level.INFO,"Full object\n" + mapper.writeValueAsString(newApp.getActivities()));
-        }
-        catch (JsonProcessingException e) {
-            // catch various errors
-            e.printStackTrace();
-        }
-
-        Collection activities = newApp.getActivities();
-        for (Object activity : activities) {
-            Activity ac = (Activity) activity;
-            LOGGER.log(Level.INFO, "Activity: " + ((Activity) activity));
-            System.out.println(((Activity) activity).getComponents());
-            Component cmp = (Component) (ac.getContent().get(0).get("read date"));
-            System.out.println(cmp.getValue());
-        }
-
-
+//            LOGGER.log(Level.INFO, "Activity: " + ((Activity) activity));
+//            System.out.println(((Activity) activity).getComponents());
+//            Component cmp = (Component) (ac.getContent().get(0).get("read date"));
+//            System.out.println(cmp.getValue());
+//        }
     }
 }

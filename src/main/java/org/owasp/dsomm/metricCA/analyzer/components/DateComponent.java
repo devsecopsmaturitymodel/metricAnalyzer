@@ -1,11 +1,13 @@
 package org.owasp.dsomm.metricCA.analyzer.components;
 
+import jakarta.persistence.Entity;
 import org.owasp.dsomm.metricCA.analyzer.Component;
 
 import java.util.Date;
 
+@Entity
 public class DateComponent implements Component<Date> {
-    
+    private int id;
     private String name;
     private Date value;
 
