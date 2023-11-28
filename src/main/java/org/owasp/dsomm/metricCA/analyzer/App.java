@@ -71,10 +71,10 @@ public class App {
             e.printStackTrace();
         }
 
-        Collection activities = newApp.getActivities();
-        for (Object activity : activities) {
-            Activity ac = (Activity) activity;
-            LOGGER.log(Level.INFO, "Activity: " + ((Activity) activity));
+        Collection<Activity> activities = newApp.getActivities();
+        for (Activity activity : activities) {
+            Activity ac = activity;
+            LOGGER.log(Level.INFO, "Activity: " + activity);
             System.out.println(((Activity) activity).getComponents());
             Component cmp = (Component) (ac.getContent().get(0).get("read date"));
             System.out.println(cmp.getValue());
