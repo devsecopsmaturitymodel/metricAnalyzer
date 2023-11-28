@@ -5,9 +5,7 @@
 ### Build and execute with Maven
 
 ```bash
-mvn clean install
-mvn compile
-mvn compile; mvn exec:java  -Dexec.mainClass="org.owasp.dsomm.metricCA.analyzer.App" -Dexec.args='"--configuration-yaml-path=/home/XXX/git/metricAnalyzer/definitions/configuration.yaml" "--application-yaml-path=/home/XXX/git/metricAnalyzer/definitions/App1.yaml"'
+mvn spring-boot:run -Dspring-boot.run.arguments="--metricCA.configuration.yaml-path=/home/XXX/git/metricAnalyzer/definitions/configuration.yaml,metricCA.application.yaml-path=/home/XXX/git/metricAnalyzer/definitions/App1.yaml"
 ```
 
 ### Add to Docker 

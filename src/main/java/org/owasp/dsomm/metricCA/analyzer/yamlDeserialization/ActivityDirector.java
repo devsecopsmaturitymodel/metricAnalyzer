@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricCA.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 import org.owasp.dsomm.metricCA.analyzer.exception.ComponentNotFoundException;
 

@@ -1,8 +1,8 @@
-package org.owasp.dsomm.metricCA.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
-import org.owasp.dsomm.metricCA.analyzer.components.DateComponent;
-import org.owasp.dsomm.metricCA.analyzer.components.IntComponent;
-import org.owasp.dsomm.metricCA.analyzer.components.StringComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DateComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.IntComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.StringComponent;
 
 import java.util.ArrayList;
 

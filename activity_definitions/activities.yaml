@@ -1,0 +1,11 @@
+applicationId: X
+
+activities:
+  conduction of simple threat modeling on a technical level:
+    components:
+      - title: string
+      - conduction date: date
+
+  data privacy requirements:
+    components:
+      - date: date

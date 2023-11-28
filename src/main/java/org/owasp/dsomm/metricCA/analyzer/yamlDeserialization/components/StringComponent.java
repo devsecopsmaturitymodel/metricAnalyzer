@@ -1,6 +1,6 @@
-package org.owasp.dsomm.metricCA.analyzer.components;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components;
 
-import org.owasp.dsomm.metricCA.analyzer.Component;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Component;
 
 public class StringComponent implements Component<String> {
     private String name;

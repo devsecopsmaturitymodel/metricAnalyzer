@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricCA.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Application {

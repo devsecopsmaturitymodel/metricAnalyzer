@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricCA.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 import java.util.ArrayList;
 import java.util.HashMap;
