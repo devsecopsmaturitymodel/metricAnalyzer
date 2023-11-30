@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricCA.metricAnalyzer;
+package org.owasp.dsomm.metricCA.analyzer;
 
 import org.owasp.dsomm.metricCA.analyzer.controller.GrafanaController;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.YamlToObjectManager;
