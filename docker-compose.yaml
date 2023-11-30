@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    user: "0:0"
+      #    environment:
+    restart: unless-stopped
+    depends_on:
+        - pg_grafana
+    ports:
+      - 3111:3000
+    volumes:
+      - grafana:/var/lib/grafana
+volumes:
+  grafana:
+    driver: local
