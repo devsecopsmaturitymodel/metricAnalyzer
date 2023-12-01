@@ -1,4 +1,4 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 public interface Component<T> extends Cloneable {
 

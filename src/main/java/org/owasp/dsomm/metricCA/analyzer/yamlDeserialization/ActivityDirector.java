@@ -1,4 +1,6 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
+
+import org.owasp.dsomm.metricCA.analyzer.exception.ComponentNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +29,6 @@ public class ActivityDirector {
     }
 
     private void createActivity(String activityName, LinkedHashMap<?, ?> data){
-
         // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components.
         ActivityBuilder builder = new ActivityBuilder();
 
@@ -68,10 +69,7 @@ public class ActivityDirector {
                         builder.addIntComponent(key.toString(), nester);
                         break;
                     default:
-                        // TODO: Raise Exception
-                        nester = new ArrayList<String>();
-                        System.out.println("This type does not exist");
-                        break;
+                        throw new ComponentNotFoundException("Component '" + value + "' doesn't exists");
                 }
             }
             else if (value instanceof ArrayList && nester.isEmpty()) {

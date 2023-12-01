@@ -2,12 +2,10 @@
 
 ## Local Installation and Deployment
 
-### Build and Package with Maven
+### Build and execute with Maven
 
 ```bash
-mvn clean install
-mvn compile
-mvn package
+mvn spring-boot:run -Dspring-boot.run.arguments="--metricCA.configuration.yaml-path=/home/XXX/git/metricAnalyzer/definitions/configuration.yaml,metricCA.application.yaml-path=/home/XXX/git/metricAnalyzer/definitions/App1.yaml"
 ```
 
 ### Add to Docker 

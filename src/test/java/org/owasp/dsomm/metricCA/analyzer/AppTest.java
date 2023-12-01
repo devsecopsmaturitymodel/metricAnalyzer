@@ -1,4 +1,4 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer;
 
 import static org.junit.Assert.assertTrue;
 

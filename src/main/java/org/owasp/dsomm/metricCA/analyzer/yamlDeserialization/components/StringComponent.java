@@ -1,6 +1,8 @@
-package com.analyzer;
+package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components;
 
-public class StringComponent implements Component<String>{
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Component;
+
+public class StringComponent implements Component<String> {
     private String name;
     private String value;
 
@@ -29,5 +31,8 @@ public class StringComponent implements Component<String>{
     public Object clone() throws CloneNotSupportedException {
         return super.clone();  // Performs a shallow copy
     }
-    
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[name=" + name + ", value=" + value + "]";
+    }
 }
