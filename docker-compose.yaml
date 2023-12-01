@@ -6,8 +6,6 @@ services:
     user: "0:0"
       #    environment:
     restart: unless-stopped
-    depends_on:
-        - pg_grafana
     ports:
       - 3111:3000
     volumes:
