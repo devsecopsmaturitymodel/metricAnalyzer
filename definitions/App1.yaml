@@ -2,24 +2,8 @@ applicationId: 5
 team: superhero
 
 activities:
-  # Plan
-  conduction of simple threat modeling on a technical level:
-    - title: Feature Y
-      conduction date: 2023-10-01
-      link: # Maybe some teams would like the option for multiple links, e.g. to a used threat library
-        - title: Documentation of new Feature Y
-          url: https://link-for-example-in-confluencex
-    - title: Feature X
-      conduction date: 2023-11-01
-      link: # Maybe some teams would like the option for multiple links, e.g. to a used threat library
-        - title: Documentation of new Feature X
-          url: https://link-for-example-in-confluence
-  #      finding handling: do we want finding handling confirmation?
-  #        security_team_confirmation:
-  #          - confirmed by: Max Mustermann
-  #            confirmed date: 2023-10-09
-
   data privacy requirements:
-    - read date: 2023-10-01
-    - read date: 2023-11-01
     - read date: 2023-12-01
+    - read date: 2020-10-01
+    - read date: 2021-05-01
+    - read date: 2022-11-01

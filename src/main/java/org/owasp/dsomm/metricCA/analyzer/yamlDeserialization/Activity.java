@@ -1,13 +1,14 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Activity {
-    private static final Logger LOGGER = Logger.getLogger(Activity.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(Activity.class);
 
     private String level;
     private String activityName;
@@ -62,16 +63,15 @@ public class Activity {
         for (String componentKey : components.keySet()){
             if (components.get(componentKey) instanceof Component){
                 try {
-                    LOGGER.log(Level.INFO, "Key " + componentKey);
+                    logger.info("Key " + componentKey);
                     Component component = (Component) components.get(componentKey);
-                    LOGGER.log(Level.INFO, "Value " + component.getValue());
                     finalAcc.put(componentKey, component.clone());
                 } catch (CloneNotSupportedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-            else if (components.get(componentKey) instanceof HashMap){
+            else if (components.get(componentKey) instanceof HashMap) {
                 HashMap temp = new HashMap<>();
                 HashMap fin = (HashMap) components.get(componentKey);
                 for (Object k : fin.keySet()){

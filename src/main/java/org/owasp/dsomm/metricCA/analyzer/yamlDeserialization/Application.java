@@ -1,15 +1,15 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodEndComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 public class Application {
-    private static final Logger LOGGER = Logger.getLogger( Application.class.getName() );
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     private ActivityDirector activityDirector;
 
@@ -29,26 +29,40 @@ public class Application {
         }
     }
 
-    private void fillActivityContent(ArrayList data, Object activity){
+    private void fillActivityContent(ArrayList data, Object activity) {
+        logger.info("data"  + data);
         for (int i = 0; i<data.size(); i++){ // Data in each activity
             HashMap<String, Object> temp_data = (HashMap<String, Object>) data.get(i);
             Set<Entry<String, Object>> entrySet = temp_data.entrySet();
             for (Entry<String, Object> entry : entrySet) {
                 Object mayComp = entry.getValue();
                 if (mayComp.getClass() == ArrayList.class) {
+                    logger.info("test");
                     ArrayList<?> arrayList = (ArrayList<?>) mayComp;
                     HashMap f = (HashMap) arrayList.get(0);
                     Set<Entry<String, Object>> enSet2= f.entrySet();
                     for (Entry<String, Object> entry2 : enSet2) {
                         HashMap innerMap = (HashMap) activityDirector.getActivities().get(activity).getContent().get(i).get(entry.getKey());
                         Component compon = (Component) (innerMap.get(entry2.getKey()));
+                        logger.info("classname2 " + compon.getClass().getSimpleName());
                         compon.setValue(entry2.getValue());
+
+
+
                     }
                 }
                 else {
                     HashMap comp = temp_data;
                     Component editComp = (Component) activityDirector.getActivities().get(activity).getContent().get(i).get(comp.keySet().iterator().next());
-                    editComp.setValue(comp.values().iterator().next());
+                    Object value = (Object) comp.values().iterator().next();
+                    editComp.setValue(value);
+//                    if(editComp instanceof DatePeriodComponent) {
+//                        DatePeriodEndComponent editCompEnd = (DatePeriodEndComponent) activityDirector.getActivities().get(activity).getContent().get(i).get("end");
+//                        editCompEnd.setValue(value);
+//                        editCompEnd.setActive(false);
+//                        editCompEnd.setName(editComp.getName());
+//                        logger.info("value2" +  editCompEnd.getValue());
+//                    }
                 }
             }
         }

@@ -1,6 +1,8 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 import org.owasp.dsomm.metricCA.analyzer.exception.ComponentNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ActivityDirector {
+    private static final Logger logger = LoggerFactory.getLogger(ActivityDirector.class);
 
     private Map<String, Activity> activities;
     private ArrayList<String> nester;
@@ -49,7 +52,7 @@ public class ActivityDirector {
         activities.put(activityName, activity);
     }
 
-    private void addComponents(ActivityBuilder builder, ArrayList data){
+    private void addComponents(ActivityBuilder builder, ArrayList data) {
         LinkedHashMap components = (LinkedHashMap) data.get(0);
         List<Object> keyList = new ArrayList<>(components.keySet());
 
@@ -64,6 +67,10 @@ public class ActivityDirector {
                         break;
                     case "date":
                         builder.addDateComponent(key.toString(), nester);
+                        break;
+                    case "dateperiod":
+                        builder.addDatePeriodComponent(key.toString(), "365", true, nester);
+//                        builder.addDatePeriodEndComponent("end", "365", true, nester);
                         break;
                     case "int":
                         builder.addIntComponent(key.toString(), nester);
