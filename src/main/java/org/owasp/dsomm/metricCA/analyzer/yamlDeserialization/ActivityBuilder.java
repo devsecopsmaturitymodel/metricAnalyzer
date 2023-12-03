@@ -42,14 +42,14 @@ public class ActivityBuilder {
         activity.addComponent(comp, nester);
         return this;
     }
-    public ActivityBuilder addDatePeriodComponent(String componentName, String periodInDays, boolean isActive, ArrayList<String> nester) {
-        DatePeriodComponent comp = new DatePeriodComponent(Integer.parseInt(periodInDays), isActive);
+    public ActivityBuilder addDatePeriodComponent(String componentName, String periodInDays, ArrayList<String> nester) {
+        DatePeriodComponent comp = new DatePeriodComponent(Integer.parseInt(periodInDays));
         comp.setName(componentName);
         activity.addComponent(comp, nester);
         return this;
     }
-    public ActivityBuilder addDatePeriodEndComponent(String componentName, String periodInDays, boolean isActive, ArrayList<String> nester) {
-        DatePeriodEndComponent comp = new DatePeriodEndComponent(Integer.parseInt(periodInDays), isActive);
+    public ActivityBuilder addDatePeriodEndComponent(String componentName, String periodInDays, ArrayList<String> nester) {
+        DatePeriodEndComponent comp = new DatePeriodEndComponent(Integer.parseInt(periodInDays));
         comp.setName(componentName);
         activity.addComponent(comp, nester);
         return this;

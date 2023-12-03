@@ -29,6 +29,8 @@ public class YamlToObjectManager {
         }
         return activities;
     }
+
+    //TODO Cronjob
     private static void initiateActivities() {
         // TODO: Scanner which gets all yaml files the configuration.yaml file --> put it in utils
 

@@ -44,11 +44,7 @@ public class Application {
                     for (Entry<String, Object> entry2 : enSet2) {
                         HashMap innerMap = (HashMap) activityDirector.getActivities().get(activity).getContent().get(i).get(entry.getKey());
                         Component compon = (Component) (innerMap.get(entry2.getKey()));
-                        logger.info("classname2 " + compon.getClass().getSimpleName());
                         compon.setValue(entry2.getValue());
-
-
-
                     }
                 }
                 else {

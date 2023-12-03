@@ -35,36 +35,31 @@ public class GrafanaController {
             return date1.compareTo(date2);
         };
 
-        for(int j=0; j<activities.size();j++) {
+        for (int j=0; j<activities.size();j++) {
             Activity activity = activities.iterator().next();
             Collections.sort(activity.getContent(), dateComparator);
             boolean containsDate = false;
             for(int i = 0; i<activity.getContent().size(); i++) {
                 Map<String, Object> componentMap = activity.getContent().get(i);
-                logger.info("component " + componentMap);
                 for (String key : componentMap.keySet()) {
                     if(key.contains("date")) {
                         containsDate = true;
                         break;
                     }
                 }
-                if (containsDate) { // TODO
-                    for (Object value : componentMap.values()) {
-                        if (componentMap instanceof DatePeriodComponent) {
-                            logger.info("adding");
-                            DatePeriodEndComponent end = new DatePeriodEndComponent();
-                            end.setName(((DatePeriodComponent) componentMap).getName());
-                            end.setValue(((DatePeriodComponent) componentMap).getValue());
-                            end.setPeriodInDays(((DatePeriodComponent) componentMap).getPeriodInDays());
+                if (containsDate) {
+                    for (Object component : componentMap.values()) {
+                        logger.info("value" + component);
+                        if (component instanceof DatePeriodComponent && !(component instanceof DatePeriodEndComponent)) {
+                            DatePeriodEndComponent end = new DatePeriodEndComponent(((DatePeriodComponent) component).getPeriodInDays());
+                            end.setName(((DatePeriodComponent) component).getName() + "q");
+                            end.setValue(((DatePeriodComponent) component).getValue());
                             HashMap<String, Object> content = new HashMap<String, Object>();
-                            content.put(((DatePeriodComponent) componentMap).getName(), end);
+                            content.put(((DatePeriodComponent) component).getName(), end);
                             activity.getContent().add(content);
                         }
                     }
-
                 }
-
-
             }
         }
 

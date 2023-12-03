@@ -15,9 +15,8 @@ public class DatePeriodComponent implements Component<Date> {
 
     public DatePeriodComponent() {
     }
-    public DatePeriodComponent(int periodInDays, boolean isActive) {
+    public DatePeriodComponent(int periodInDays) {
         this.periodInDays = periodInDays;
-        this.isActive = isActive;
     }
 
     @Override

@@ -17,9 +17,8 @@ public class DatePeriodEndComponent extends DatePeriodComponent implements Compo
 
     public DatePeriodEndComponent() {
     }
-    public DatePeriodEndComponent(int periodInDays, boolean isActive) {
+    public DatePeriodEndComponent(int periodInDays) {
         this.periodInDays = periodInDays;
-        this.isActive = isActive;
     }
 
     @Override

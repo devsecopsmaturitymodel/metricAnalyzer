@@ -69,8 +69,8 @@ public class ActivityDirector {
                         builder.addDateComponent(key.toString(), nester);
                         break;
                     case "dateperiod":
-                        builder.addDatePeriodComponent(key.toString(), "365", true, nester);
-//                        builder.addDatePeriodEndComponent("end", "365", true, nester);
+                        builder.addDatePeriodComponent(key.toString(), "365", nester);
+//                        builder.addDatePeriodEndComponent("end", "365", nester);
                         break;
                     case "int":
                         builder.addIntComponent(key.toString(), nester);

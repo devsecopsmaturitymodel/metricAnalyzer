@@ -3,7 +3,7 @@ team: superhero
 
 activities:
   data privacy requirements:
-    - read date: 2023-12-01
     - read date: 2020-10-01
-    - read date: 2021-05-01
+    - read date: 2021-05-01 #   too early
     - read date: 2022-11-01
+    - read date: 2023-12-01
