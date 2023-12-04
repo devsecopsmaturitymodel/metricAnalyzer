@@ -42,8 +42,8 @@ public class YamlToObjectManager {
         Application newApp = new Application(configJavaYaml);
         assert app1JavaYaml != null;
         newApp.saveData(app1JavaYaml);
-        app1JavaYaml.get("applicationId");
-        app1JavaYaml.get("team");
+        newApp.setApplicationId((String) app1JavaYaml.get("applicationId"));
+        newApp.setTeam((String) app1JavaYaml.get("team"));
 
         applications.add(newApp);
     }
