@@ -1,24 +1,32 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Component;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.YamlToObjectManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
-public class DatePeriodEndComponent extends DatePeriodComponent implements Component<Date> {
+public class DatePeriodEndComponent implements Component<Date> {
+    private static final Logger logger = LoggerFactory.getLogger(DatePeriodEndComponent.class);
 
     private String name;
     private Date value;
 
-    private int periodInDays;
+    @JsonIgnore
+    private Period period;
 
     private boolean isActive = false;
 
     public DatePeriodEndComponent() {
     }
-    public DatePeriodEndComponent(int periodInDays) {
-        this.periodInDays = periodInDays;
+    public DatePeriodEndComponent(String period) {
+        this.setPeriod(period);
     }
 
     @Override
@@ -38,9 +46,13 @@ public class DatePeriodEndComponent extends DatePeriodComponent implements Compo
 
     public void setValue(Object value) {
         Date givenDate = (Date) value;
+        logger.info("givenDate " + givenDate);
         Calendar c = Calendar.getInstance();
         c.setTime(givenDate);
-        c.add(Calendar.DATE, this.periodInDays);
+        c.add(Calendar.HOUR, this.period.getHours());
+        c.add(Calendar.DATE, this.period.getDays()); // TODO Check
+        c.add(Calendar.MONTH, this.period.getMonths());
+        c.add(Calendar.YEAR, this.period.getYears());
         this.value = c.getTime();
     }
 
@@ -53,12 +65,24 @@ public class DatePeriodEndComponent extends DatePeriodComponent implements Compo
         return getClass().getSimpleName() + "[name=" + name + ", value=" + value + "]";
     }
 
-    public int getPeriodInDays() {
-        return periodInDays;
+    public Period getPeriod() {
+        return period;
     }
 
-    public void setPeriodInDays(int periodInDays) {
-        this.periodInDays = periodInDays;
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public void setPeriod(String givenPeriod) {
+        PeriodFormatter formatter = new PeriodFormatterBuilder()
+                .appendYears().appendSuffix("y")
+                .appendMonths().appendSuffix("m")
+                .appendWeeks().appendSuffix("w")
+                .appendDays().appendSuffix("d")
+                .appendHours().appendSuffix("h")
+                .toFormatter();
+
+        this.period = formatter.parsePeriod(givenPeriod);
     }
 
     public boolean isActive() {

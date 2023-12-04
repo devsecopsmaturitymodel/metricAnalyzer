@@ -61,7 +61,8 @@ public class ActivityDirector {
             Object value = components.get(key);
 
             if (value instanceof String) {
-                switch (value.toString()) {
+                String normalizedValue = value.toString().replaceAll("-.*", "");
+                switch (normalizedValue) {
                     case "string":
                         builder.addStringComponent(key.toString(), nester);
                         break;
@@ -69,8 +70,8 @@ public class ActivityDirector {
                         builder.addDateComponent(key.toString(), nester);
                         break;
                     case "dateperiod":
-                        builder.addDatePeriodComponent(key.toString(), "365", nester);
-//                        builder.addDatePeriodEndComponent("end", "365", nester);
+                        String periodLength = value.toString().replaceAll(".*-", "");
+                        builder.addDatePeriodComponent(key.toString(), periodLength, nester);
                         break;
                     case "int":
                         builder.addIntComponent(key.toString(), nester);

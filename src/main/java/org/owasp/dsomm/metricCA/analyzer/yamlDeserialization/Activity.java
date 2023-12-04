@@ -1,17 +1,19 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
-import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.logging.Level;
 
 public class Activity {
     private static final Logger logger = LoggerFactory.getLogger(Activity.class);
 
     private String level;
     private String activityName;
+
+
+    @JsonIgnore
     private Map<String, Object> components;
     private ArrayList<Map<String, Object>> content;
 
@@ -58,12 +60,11 @@ public class Activity {
         return this.components;
     }
 
-    public void addContent() {
+    public void addContentSkeleton() {
         HashMap finalAcc = new HashMap<>();
         for (String componentKey : components.keySet()){
             if (components.get(componentKey) instanceof Component){
                 try {
-                    logger.info("Key " + componentKey);
                     Component component = (Component) components.get(componentKey);
                     finalAcc.put(componentKey, component.clone());
                 } catch (CloneNotSupportedException e) {

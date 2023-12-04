@@ -1,22 +1,25 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components;
 
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Component;
 
 import java.util.Date;
 
 public class DatePeriodComponent implements Component<Date> {
-    
+
     private String name;
     private Date value;
 
-    private int periodInDays;
+    private String period;
 
     private boolean isActive = true;
 
-    public DatePeriodComponent() {
-    }
-    public DatePeriodComponent(int periodInDays) {
-        this.periodInDays = periodInDays;
+    public DatePeriodComponent() {}
+
+    public DatePeriodComponent(String period) {
+        this.setPeriod(period);
     }
 
     @Override
@@ -43,17 +46,18 @@ public class DatePeriodComponent implements Component<Date> {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();  // Performs a shallow copy
     }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "[name=" + name + ", value=" + value + "]";
     }
 
-    public int getPeriodInDays() {
-        return periodInDays;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setPeriodInDays(int periodInDays) {
-        this.periodInDays = periodInDays;
+    public void setPeriod(String givenPeriod) {
+        this.period = givenPeriod;
     }
 
     public boolean isActive() {
