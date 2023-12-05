@@ -46,7 +46,6 @@ public class DatePeriodEndComponent implements Component<Date> {
 
     public void setValue(Object value) {
         Date givenDate = (Date) value;
-        logger.info("givenDate " + givenDate);
         Calendar c = Calendar.getInstance();
         c.setTime(givenDate);
         c.add(Calendar.HOUR, this.period.getHours());

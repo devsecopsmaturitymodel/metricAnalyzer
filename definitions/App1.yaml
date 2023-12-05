@@ -1,5 +1,5 @@
 applicationId: "5"
-team: superhero
+team: "superhero"
 
 activities:
   data privacy requirements:
@@ -20,4 +20,3 @@ activities:
       link: # Maybe some teams would like the option for multiple links, e.g. to a used threat library
         - title: Documentation of new Feature X
           url: https://link-for-example-in-confluence
-

@@ -30,7 +30,7 @@ public class Activity {
         this.level = level;
     }
 
-    public String getActivityName() {
+    public String getName() {
         return this.activityName;
     }
 

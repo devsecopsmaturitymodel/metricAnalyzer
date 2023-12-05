@@ -105,14 +105,12 @@ public class Application {
                 if (containsDate) {
                     for (Object component : componentMap.values()) {
                         if (component instanceof DatePeriodComponent && !(component instanceof DatePeriodEndComponent)) {
-                            logger.info("Creating DatePeriodEndComponent" + component);
                             DatePeriodEndComponent end = new DatePeriodEndComponent(((DatePeriodComponent) component).getPeriod());
                             end.setName(((DatePeriodComponent) component).getName());
                             end.setValue(((DatePeriodComponent) component).getValue());
                             HashMap<String, Object> content = new HashMap<String, Object>();
                             content.put(((DatePeriodComponent) component).getName(), end);
                             if (isPeriodBetweenTwoDates(activity, i, end.getValue())) {
-                                logger.info("is not in perid");
                                 continue;
                             }
                             newContent.add(content);
