@@ -2,6 +2,7 @@ package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -25,12 +26,14 @@ public class YamlToObjectManager {
 //        }
         return applications;
     }
+    @Autowired
+    private YamlScanner yamlScanner;
 
-    //TODO Cronjob
+    // TODO: CronJob
     private void initiateApplications() throws FileNotFoundException {
         // TODO: Scanner which gets all yaml files the configuration.yaml file --> put it in utils
 
-        YamlScanner yamlScanner = new YamlScanner();
+//        YamlScanner yamlScanner = new YamlScanner();
         logger.info("yamlConfigurationFilePath: " + yamlScanner.getSkeletonYaml());
         Map<?, ?> configJavaYaml = YamlReader.convertYamlToJavaYaml(yamlScanner.getSkeletonYaml().getPath());
 

@@ -14,7 +14,7 @@ import java.util.Collection;
 public class YamlScanner {
     private static final Logger logger = LoggerFactory.getLogger(YamlScanner.class);
 
-    //TODO How to make this path relative?
+    // TODO How to make this path relative?
     @Value("${metricCA.skeleton.path}")
     public String yamlSkeletonFilePath;
 
