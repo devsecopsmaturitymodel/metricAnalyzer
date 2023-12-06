@@ -1,0 +1,120 @@
+apiVersion: v1
+kind: application
+settings:
+  desired level: Level 1 # one team can have multiple applications in different levels
+  application: "shire" # e.g. from deployment
+  team: "fellowship of the ring"
+
+activities:
+  # Plan
+  conduction of simple threat modeling on a technical level:
+    - title: Feature Y
+      date: 2023-10-01
+      links: # Maybe some teams would like the option for multiple links, e.g. to a used threat library
+        - title: Documentation of new Feature Y
+          url: https://link-for-example-in-confluencex
+    - title: Feature X
+      date: 2023-11-01
+      links: # Maybe some teams would like the option for multiple links, e.g. to a used threat library
+        - title: Documentation of new Feature X
+          url: https://link-for-example-in-confluence
+  #      finding handling: do we want finding handling confirmation?
+  #        security_team_confirmation:
+  #          - confirmed by: Max Mustermann
+  #            confirmed date: 2023-10-09
+
+
+
+  # Code
+  source control protection:
+    - url: example.com/repo/service-1 # Link to application repository URL
+    - url: example.com/repo/service-1 # Link to application repository URL
+    # branch protection is checked on PR; Later automatically via collector
+
+  # One application might have multiple images
+  reduction of the attack surface: # check on merge that the image is distroless or an organization specific image
+    - confirmed by: Max Mustermann # optional
+      confirmation date: 2023-09-10 # optional, might need re-assessment after two years
+
+  security code review:
+    - confirmed by: Max Mustermann # optional
+      confirmation date: 2023-09-10 # optional, might need re-assessment after two years
+
+  # Build
+  defined build process:
+    - url: https://github.com/org/repo/.github/workflows # access checked on PR
+    - url: https://github.com/org/repo/.github/workflows # access checked on PR
+
+  # Test
+  #mttr: hard to determine/continuously update manually
+  usage of a vulnerability management system:
+    - confirmed by: Max Mustermann # optional
+      confirmation date: 2023-09-10 # optional, might need re-assessment after two years
+
+  test for stored secrets:
+    - confirmed by: Max Mustermann # optional
+      confirmation date: 2023-09-10 # optional, might need re-assessment after two years
+
+  #  continuous penetration tests: # usage of collector
+
+  # wouldn't mix tests TODO remove
+  iast: # e.g. contrast security
+    security_team_confirmation:
+      - confirmed by: Max Mustermann
+        confirmed date: 2023-10-09
+
+  sast: # e.g. findsecuritybugs, checkmarx
+    security_team_confirmation:
+      - confirmed by: Max Mustermann
+        confirmed date: 2023-10-09
+
+  # release and deployment
+
+  environment depending configuration parameters (secrets):
+    secret handling url: https://github.com/org/repo/deployment/sealed-secret.yaml
+
+  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
+  same artifact for environments:
+    artifact url: https://hub.docker.com/org/image-name/
+
+  # Operate
+  # mean time to patch: Hard to identify
+  automated PRs for patches:
+    configuration url: https://github.com/org/repo/dependabot.yaml # or .github/renovate.json
+
+  # Monitor
+  logging capabilities:
+    - confirmed by security team member: Max Mustermann
+      confirmed date: 2023-10-09
+
+  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
+  centralized application logging:
+    logging_url: https://grafana.tool.internal.local/applicationId
+
+  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
+  simple application metrics:
+    - confirmed by po: Max Mustermann
+      confirmed date: 2023-10-09
+    # supported?
+    # configured?
+
+  # TODO link to a sample instead of confirmed?
+  advanced app. metrics:
+    - confirmed by po: Max Mustermann
+      confirmed date: 2023-10-09
+
+  targeted alerting:
+    - confirmed by po: Max Mustermann
+      confirmed date: 2023-10-09
+
+  definition of simple BCDR practices for critical components:
+    url: https://org.confluence.com/application/incident-response
+    confirmed by po: Max Mustermann
+    confirmed date: 2023-10-09
+
+  # TODO link to a sample instead of confirmed?
+  advanced logging:
+    security_team_confirmation:
+      - confirmed by: Max Mustermann
+        confirmed date: 2023-10-09
+

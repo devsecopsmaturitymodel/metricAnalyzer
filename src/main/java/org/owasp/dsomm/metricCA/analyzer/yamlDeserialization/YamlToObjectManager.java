@@ -43,14 +43,23 @@ public class YamlToObjectManager {
         ArrayList<Application> applications = new ArrayList<>();
         for(File yamlApplicationFilePath : yamlScanner.getApplicationYamls()) {
             logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());
-            Map<?, ?> app1JavaYaml = YamlReader.convertYamlToJavaYaml(yamlApplicationFilePath.getPath());
-            assert app1JavaYaml != null;
-
-            Application newApp = new Application(configJavaYaml);
-            newApp.saveData(app1JavaYaml);
-            newApp.setApplicationId((String) app1JavaYaml.get("applicationId"));
-            newApp.setTeam((String) app1JavaYaml.get("team"));
-            applications.add(newApp);
+            Map<?, ?> javaYaml = YamlReader.convertYamlToJavaYaml(yamlApplicationFilePath.getPath());
+            assert javaYaml != null;
+            switch((String) javaYaml.get("kind")) {
+                case "application":
+                    Application newApp = new Application(configJavaYaml);
+                    newApp.saveData(javaYaml);
+                    newApp.setApplication((String) javaYaml.get("application settings.application"));
+                    newApp.setTeam((String) javaYaml.get("application settings.team"));
+                    newApp.setDesiredLevel((String) javaYaml.get("application settings.desired level"));
+                    applications.add(newApp);
+                    break;
+                case "team":
+                    break;
+                default:
+                    logger.error("Yaml file " + yamlApplicationFilePath.getPath() + " has no kind defined.");
+                    break;
+            }
         }
         this.applications = applications;
     }

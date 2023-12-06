@@ -1,8 +1,9 @@
-applicationId: "reduced read dates app"
-team: "leeloo"
+apiVersion: v1
+kind: application
+settings:
+  desired level: Level 1 # one team can have multiple applications in different levels
+  application: "black tower" # e.g. from deployment
+  team: "orcs"
 
 activities:
-  data privacy requirements:
-    - read date: 2020-01-01
-    - read date: 2021-06-01
-    - read date: 2022-12-01
+

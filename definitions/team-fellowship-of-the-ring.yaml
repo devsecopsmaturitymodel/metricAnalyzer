@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: team
+
+settings:
+  team: "orcs"
+  # level is per app and not per team
+
+activities:
+  security requirements:
+    - read date: 2022-09-02
+    - read date: 2023-09-01
+
+  data privacy requirements:
+    - read date: 2020-05-01
+    - read date: 2021-09-01
+    - read date: 2022-02-01

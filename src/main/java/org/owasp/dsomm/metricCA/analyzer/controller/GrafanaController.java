@@ -57,7 +57,7 @@ public class GrafanaController {
         Collection<String> applicationsToReturn = new ArrayList<String>();
         for (Application application : yamlToObjectManager.getApplications()) {
             if (application.getTeam().equals(teamName)) {
-                applicationsToReturn.add(application.getApplicationId());
+                applicationsToReturn.add(application.getApplication());
             }
         }
         applicationsToReturn.add("all");
@@ -75,7 +75,7 @@ public class GrafanaController {
             for (Application application : yamlToObjectManager.getApplications()) {
                 for (Activity activity : application.getActivities(activityName)) {
                         boolean value = false;
-                        logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplicationId());
+                        logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
                         DateComponent dateComponent = getActivityMatchingDate(activity, date);
                         logger.info("dateComponent: " + dateComponent);
                         if (dateComponent != null) {
@@ -86,9 +86,8 @@ public class GrafanaController {
                                     value = true;
                                 }
                         }
-                        flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplicationId(), value);
+                        flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
                     }
-
             }
             flattendActivitiesToReturn.add(flattenDate);
         }
@@ -113,11 +112,10 @@ public class GrafanaController {
         logger.info("in teamGetActivity");
         for (Application application : yamlToObjectManager.getApplications()) {
             if (application.getTeam().equals(teamName) || teamName.equals("all")) {
-                if (application.getApplicationId().equals(applicationId) || applicationId.equals("all")) {
+                if (application.getApplication().equals(applicationId) || applicationId.equals("all")) {
                     for (Activity activity : application.getActivities()) {
                         if (activity.getName().equals(activityName)) {
-                            logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplicationId());
-
+                            logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
                             activitiesToReturn.add(activity);
                         }
                     }
@@ -133,7 +131,7 @@ public class GrafanaController {
     public Collection<String> getApplicationIds() throws IOException, GitAPIException {
         Set<String> applicationIds = new HashSet<>();
         for (Application application : yamlToObjectManager.getApplications()) {
-            applicationIds.add(application.getApplicationId());
+            applicationIds.add(application.getApplication());
         }
         return applicationIds;
     }
