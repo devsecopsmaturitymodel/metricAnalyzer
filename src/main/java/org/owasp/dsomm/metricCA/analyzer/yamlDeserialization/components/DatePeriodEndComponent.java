@@ -12,21 +12,16 @@ import org.slf4j.LoggerFactory;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DatePeriodEndComponent implements Component<Date> {
+public class DatePeriodEndComponent extends DatePeriodComponent implements Component<Date> {
     private static final Logger logger = LoggerFactory.getLogger(DatePeriodEndComponent.class);
-
-    private String name;
-    private Date value;
 
     @JsonIgnore
     private Period period;
 
     private boolean isActive = false;
 
-    public DatePeriodEndComponent() {
-    }
     public DatePeriodEndComponent(String period) {
-        this.setPeriod(period);
+        super(period);
     }
 
     @Override
@@ -64,7 +59,7 @@ public class DatePeriodEndComponent implements Component<Date> {
         return getClass().getSimpleName() + "[name=" + name + ", value=" + value + "]";
     }
 
-    public Period getPeriod() {
+    public Period getPeriodAsPeriod() {
         return period;
     }
 

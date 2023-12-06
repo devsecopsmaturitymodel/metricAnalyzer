@@ -7,39 +7,14 @@ import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Component;
 
 import java.util.Date;
 
-public class DatePeriodComponent implements Component<Date> {
-
-    private String name;
-    private Date value;
+public class DatePeriodComponent extends DateComponent implements Component<Date> {
 
     private String period;
 
     private boolean isActive = true;
 
-    public DatePeriodComponent() {}
-
     public DatePeriodComponent(String period) {
         this.setPeriod(period);
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public void setName(String newName) {
-        this.name = newName;
-    }
-
-    @Override
-    public Date getValue() {
-        return this.value;
-    }
-
-    public void setValue(Object value) {
-        Date l = (Date) value;
-        this.value = l;
     }
 
     @Override

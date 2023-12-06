@@ -5,9 +5,9 @@ import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Component;
 import java.util.Date;
 
 public class DateComponent implements Component<Date> {
-    
-    private String name;
-    private Date value;
+
+    protected String name;
+    protected Date value;
 
     @Override
     public String getName() {
