@@ -1,6 +1,8 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DateComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +32,7 @@ public class Activity {
         this.level = level;
     }
 
-    public String getActivityName() {
+    public String getName() {
         return this.activityName;
     }
 
@@ -101,5 +103,27 @@ public class Activity {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "[name=" + activityName + ", level=" + level + "]";
+    }
+
+    public DatePeriodComponent getDatePeriodOrEndComponent() {
+        for (Map<String, Object> componentMap : content) {
+            for (Object component : componentMap.values()) {
+                if (component instanceof DatePeriodComponent) {
+                    return (DatePeriodComponent) component;
+                }
+            }
+        }
+        return null;
+    }
+    public Collection<DateComponent> getDateComponents() {
+        Collection<DateComponent> dateComponents = new ArrayList<>();
+        for (Map<String, Object> componentMap : content) {
+            for (Object component : componentMap.values()) {
+                if (component instanceof DateComponent) {
+                    dateComponents.add((DateComponent) component);
+                }
+            }
+        }
+        return dateComponents;
     }
 }

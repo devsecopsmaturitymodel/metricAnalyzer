@@ -1,5 +1,6 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
+import org.owasp.dsomm.metricCA.analyzer.exception.SkeletonNotFoundException;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodEndComponent;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ public class Application {
     private String applicationId;
     private ActivityDirector activityDirector;
 
-    public Application(Map<?, ?> configJavaYaml) {
+    public Application(Map<?, ?> configJavaYaml) throws SkeletonNotFoundException {
         activityDirector = new ActivityDirector();
         activityDirector.createActivities(configJavaYaml);
     }
@@ -63,6 +64,16 @@ public class Application {
         Collection<Activity> activities = activityDirector.getActivities().values();
         return activities;
     }
+    public Collection<Activity> getActivities(String activityName) {
+        Collection<Activity> activities = getActivities();
+        Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
+        for(Activity activity : activities) {
+            if(activity.getName().equals(activityName)) {
+                activitiesToReturn.add(activity);
+            }
+        }
+        return activitiesToReturn;
+    }
 
     private String mapKeyForCompare;
 
@@ -105,14 +116,12 @@ public class Application {
                 if (containsDate) {
                     for (Object component : componentMap.values()) {
                         if (component instanceof DatePeriodComponent && !(component instanceof DatePeriodEndComponent)) {
-                            logger.info("Creating DatePeriodEndComponent" + component);
                             DatePeriodEndComponent end = new DatePeriodEndComponent(((DatePeriodComponent) component).getPeriod());
                             end.setName(((DatePeriodComponent) component).getName());
                             end.setValue(((DatePeriodComponent) component).getValue());
                             HashMap<String, Object> content = new HashMap<String, Object>();
                             content.put(((DatePeriodComponent) component).getName(), end);
                             if (isPeriodBetweenTwoDates(activity, i, end.getValue())) {
-                                logger.info("is not in perid");
                                 continue;
                             }
                             newContent.add(content);
@@ -141,7 +150,7 @@ public class Application {
                     }
                 }
 
-        logger.info(" dateAfterStart " + dateAfterStart + " endOfPeriod " + endOfPeriod);
+        logger.debug("dateAfterStart " + dateAfterStart + " endOfPeriod " + endOfPeriod);
         if (dateAfterStart == null) return false;
         if (dateAfterStart.before(endOfPeriod)) {
             return true;
