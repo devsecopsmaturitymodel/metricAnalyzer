@@ -1,0 +1,32 @@
+data privacy requirements:
+  components:
+    - read date: dateperiod-1y
+  level: Level 1
+  treshold:
+    target: "read date"
+    threshold reached: boolean # fetch last date and check !isActive
+conduction of simple threat modeling on a technical level:
+  components:
+    - title: string
+      conduction date: date
+      link:
+        - title: string
+          url: string
+  level: Level 2
+    # treshold:
+    # target: "[].conduction date"
+    # timeframe: "year"
+  # count: 1
+  # TODO: threshold
+
+#mttr:
+#  components:
+#    - title: string
+#      fetch date: date
+#      mttr: int # float
+#      threshold:
+#        target: "mttr"
+#        max value: 90 # to compare with mttr; max means the value is not allowed to be higher. If higher, threashold is reached
+#        # min value: 90
+#        threshold reached: boolean # maybe not defined here
+#  level: Level 1

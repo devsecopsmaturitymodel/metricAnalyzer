@@ -1,0 +1,8 @@
+applicationId: "reduced read dates app"
+team: "leeloo"
+
+activities:
+  data privacy requirements:
+    - read date: 2020-01-01
+    - read date: 2021-06-01
+    - read date: 2022-12-01

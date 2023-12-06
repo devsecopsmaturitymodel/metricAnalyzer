@@ -1,11 +1,11 @@
 # Metric Analyzer
 
 ## Local Installation and Deployment
-
 ### Build and execute with Maven
 
 ```bash
-mvn spring-boot:run -Dspring-boot.run.arguments="--metricCA.configuration.yaml-path=/home/XXX/git/metricAnalyzer/definitions/configuration.yaml,metricCA.application.yaml-path=/home/XXX/git/metricAnalyzer/definitions/App1.yaml"
+export spring_profiles_active=dev
+mvn spring-boot:run
 ```
 
 ### Add to Docker 

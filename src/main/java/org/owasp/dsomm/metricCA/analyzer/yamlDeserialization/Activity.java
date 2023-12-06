@@ -1,16 +1,21 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DateComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 public class Activity {
-    private static final Logger LOGGER = Logger.getLogger(Activity.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(Activity.class);
 
     private String level;
     private String activityName;
+
+
+    @JsonIgnore
     private Map<String, Object> components;
     private ArrayList<Map<String, Object>> content;
 
@@ -27,7 +32,7 @@ public class Activity {
         this.level = level;
     }
 
-    public String getActivityName() {
+    public String getName() {
         return this.activityName;
     }
 
@@ -57,21 +62,19 @@ public class Activity {
         return this.components;
     }
 
-    public void addContent() {
+    public void addContentSkeleton() {
         HashMap finalAcc = new HashMap<>();
         for (String componentKey : components.keySet()){
             if (components.get(componentKey) instanceof Component){
                 try {
-                    LOGGER.log(Level.INFO, "Key " + componentKey);
                     Component component = (Component) components.get(componentKey);
-                    LOGGER.log(Level.INFO, "Value " + component.getValue());
                     finalAcc.put(componentKey, component.clone());
                 } catch (CloneNotSupportedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-            else if (components.get(componentKey) instanceof HashMap){
+            else if (components.get(componentKey) instanceof HashMap) {
                 HashMap temp = new HashMap<>();
                 HashMap fin = (HashMap) components.get(componentKey);
                 for (Object k : fin.keySet()){
@@ -100,5 +103,27 @@ public class Activity {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "[name=" + activityName + ", level=" + level + "]";
+    }
+
+    public DatePeriodComponent getDatePeriodOrEndComponent() {
+        for (Map<String, Object> componentMap : content) {
+            for (Object component : componentMap.values()) {
+                if (component instanceof DatePeriodComponent) {
+                    return (DatePeriodComponent) component;
+                }
+            }
+        }
+        return null;
+    }
+    public Collection<DateComponent> getDateComponents() {
+        Collection<DateComponent> dateComponents = new ArrayList<>();
+        for (Map<String, Object> componentMap : content) {
+            for (Object component : componentMap.values()) {
+                if (component instanceof DateComponent) {
+                    dateComponents.add((DateComponent) component);
+                }
+            }
+        }
+        return dateComponents;
     }
 }

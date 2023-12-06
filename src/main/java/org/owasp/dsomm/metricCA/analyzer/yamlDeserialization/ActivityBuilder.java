@@ -1,8 +1,6 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
-import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DateComponent;
-import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.IntComponent;
-import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.StringComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.*;
 
 import java.util.ArrayList;
 
@@ -40,6 +38,12 @@ public class ActivityBuilder {
 
     public ActivityBuilder addDateComponent(String componentName, ArrayList<String> nester) {
         DateComponent comp = new DateComponent();
+        comp.setName(componentName);
+        activity.addComponent(comp, nester);
+        return this;
+    }
+    public ActivityBuilder addDatePeriodComponent(String componentName, String periodLength, ArrayList<String> nester) {
+        DatePeriodComponent comp = new DatePeriodComponent(periodLength);
         comp.setName(componentName);
         activity.addComponent(comp, nester);
         return this;

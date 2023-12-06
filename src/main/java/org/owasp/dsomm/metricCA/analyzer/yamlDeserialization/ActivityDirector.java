@@ -1,6 +1,9 @@
 package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 import org.owasp.dsomm.metricCA.analyzer.exception.ComponentNotFoundException;
+import org.owasp.dsomm.metricCA.analyzer.exception.SkeletonNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ActivityDirector {
+    private static final Logger logger = LoggerFactory.getLogger(ActivityDirector.class);
 
     private Map<String, Activity> activities;
     private ArrayList<String> nester;
@@ -18,7 +22,7 @@ public class ActivityDirector {
         this.nester = new ArrayList<String>();
     }
 
-    public void createActivities(Map<?, ?> javaYaml) {
+    public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException {
         for (Map.Entry<?, ?> entry : javaYaml.entrySet()) {
             String key = (String) entry.getKey();
             LinkedHashMap<?, ?> value = (LinkedHashMap<?, ?>) entry.getValue();
@@ -28,7 +32,7 @@ public class ActivityDirector {
         }
     }
 
-    private void createActivity(String activityName, LinkedHashMap<?, ?> data){
+    private void createActivity(String activityName, LinkedHashMap<?, ?> data) throws SkeletonNotFoundException, ComponentNotFoundException {
         // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components.
         ActivityBuilder builder = new ActivityBuilder();
 
@@ -49,7 +53,7 @@ public class ActivityDirector {
         activities.put(activityName, activity);
     }
 
-    private void addComponents(ActivityBuilder builder, ArrayList data){
+    private void addComponents(ActivityBuilder builder, ArrayList data) throws SkeletonNotFoundException, ComponentNotFoundException {
         LinkedHashMap components = (LinkedHashMap) data.get(0);
         List<Object> keyList = new ArrayList<>(components.keySet());
 
@@ -58,12 +62,17 @@ public class ActivityDirector {
             Object value = components.get(key);
 
             if (value instanceof String) {
-                switch (value.toString()) {
+                String normalizedValue = value.toString().replaceAll("-.*", "");
+                switch (normalizedValue) {
                     case "string":
                         builder.addStringComponent(key.toString(), nester);
                         break;
                     case "date":
                         builder.addDateComponent(key.toString(), nester);
+                        break;
+                    case "dateperiod":
+                        String periodLength = value.toString().replaceAll(".*-", "");
+                        builder.addDatePeriodComponent(key.toString(), periodLength, nester);
                         break;
                     case "int":
                         builder.addIntComponent(key.toString(), nester);
@@ -84,8 +93,7 @@ public class ActivityDirector {
                 addComponents(builder, arr);
             }
             else {
-                // TODO: Should throw an exception! 
-                System.out.println("This instance does not exist!");
+                throw new SkeletonNotFoundException("This instance does not exist! value: " + value);
             }
             //System.out.println("Key: " + key + ", Value: " + value);
         }
