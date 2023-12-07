@@ -13,8 +13,10 @@ public class Application {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     private String team;
-    private String applicationId;
+    private String application;
     private ActivityDirector activityDirector;
+
+    private String desiredLevel;
 
     public Application(Map<?, ?> configJavaYaml) throws SkeletonNotFoundException {
         activityDirector = new ActivityDirector();
@@ -101,7 +103,9 @@ public class Application {
         Iterator<Activity> iterator = getActivities().iterator();
         while (iterator.hasNext()) {
             Activity activity = iterator.next();
-            this.sortContent(activity);
+            if(hasDateComponent(activity)) {
+                this.sortContent(activity);
+            }
 
             boolean containsDate = false;
             ArrayList<Map<String, Object>> newContent = new ArrayList<Map<String, Object>>();
@@ -132,6 +136,16 @@ public class Application {
             activity.getContent().addAll(newContent);
         }
         return getActivities();
+    }
+
+    private boolean hasDateComponent(Activity activity) {
+        for (Map<String, Object> componentMap : activity.getContent()) {
+            for (String key : componentMap.keySet()) {
+                if (key.contains("date"))
+                    return true;
+            }
+        }
+        return false;
     }
 
     private boolean isPeriodBetweenTwoDates(Activity activity, int currentContentIndex, Date endOfPeriod) {
@@ -165,11 +179,19 @@ public class Application {
         this.team = team;
     }
 
-    public String getApplicationId() {
-        return applicationId;
+    public String getApplication() {
+        return application;
     }
 
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public String getDesiredLevel() {
+        return desiredLevel;
+    }
+
+    public void setDesiredLevel(String desiredLevel) {
+        this.desiredLevel = desiredLevel;
     }
 }

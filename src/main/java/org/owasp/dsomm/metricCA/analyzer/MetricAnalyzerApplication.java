@@ -1,17 +1,10 @@
 package org.owasp.dsomm.metricCA.analyzer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-import org.owasp.dsomm.metricCA.analyzer.controller.GrafanaController;
-import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.YamlToObjectManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
 
 import java.io.FileNotFoundException;
 @EnableConfigurationProperties

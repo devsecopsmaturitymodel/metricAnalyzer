@@ -1,32 +1,200 @@
-data privacy requirements:
-  components:
-    - read date: dateperiod-1y
-  level: Level 1
-  treshold:
-    target: "read date"
-    threshold reached: boolean # fetch last date and check !isActive
-conduction of simple threat modeling on a technical level:
-  components:
-    - title: string
-      conduction date: date
-      link:
-        - title: string
-          url: string
-  level: Level 2
-    # treshold:
-    # target: "[].conduction date"
-    # timeframe: "year"
-  # count: 1
-  # TODO: threshold
+apiVersion: v1
+kind: skeleton
 
-#mttr:
-#  components:
-#    - title: string
-#      fetch date: date
-#      mttr: int # float
-#      threshold:
-#        target: "mttr"
-#        max value: 90 # to compare with mttr; max means the value is not allowed to be higher. If higher, threashold is reached
-#        # min value: 90
-#        threshold reached: boolean # maybe not defined here
-#  level: Level 1
+activity definitions:
+
+  conduction of simple threat modeling on a technical level:
+    components:
+      - title: string
+        conduction date: dateperiod-5y
+        links:
+          - title: string
+            url: string
+    level: Level 1
+  regular conduction of simple threat modeling on a technical level:
+      components:
+        - title: string
+          conduction date: dateperiod-2y
+          links:
+            - title: string
+              url: string
+      level: Level 2
+  source control protection:
+    level: Level 1
+    components:
+      - url: string # TODO create type url
+
+
+  # One application might have multiple images
+  reduction of the attack surface: # check on merge that the image is distroless or an organization specific image
+    level: Level 1
+    components:
+      - confirmed by: string # optional
+        confirmation date: dateperiod-5y # optional, might need re-assessment after two years
+
+
+  security code review:
+    level: Level 1
+    components:
+      - confirmed by: string # optional
+        confirmation date: dateperiod-5y # optional, might need re-assessment after two years
+
+  # Build
+  defined build process:
+    level: Level 1
+    components:
+      - url: string # TODO URL type
+
+  test for stored secrets:
+    level: Level 1
+    components:
+      - confirmed by: string # optional
+        confirmation date: dateperiod-5y # optional, might need re-assessment
+
+  #  continuous penetration tests: # usage of collector
+
+  iast: # e.g. contrast security
+    level: Level 1
+    components:
+      - confirmed by: string # optional
+        confirmation date: dateperiod-5y # optional, might need re-assessment
+
+  sast: # e.g. findsecuritybugs, checkmarx
+    level: Level 1
+    components:
+      - confirmed by: string # optional
+        confirmation date: dateperiod-5y # optional, might need re-assessment
+
+  # release and deployment
+
+  environment depending configuration parameters (secrets):
+    level: Level 1
+    components:
+      - secret handling url: string # later url
+
+  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
+  same artifact for environments:
+    level: Level 1
+    components:
+      - artifact url: string # later url
+
+  # Operate
+  # mean time to patch: Hard to identify
+  #  automated PRs for patches:
+  #    configuration url: https://github.com/org/repo/dependabot.yaml # or .github/renovate.json
+
+  # Monitor
+  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
+  logging capabilities:
+    level: Level 1
+    components:
+      - confirmed by security team member: string
+        confirmed date: date
+        project id: string
+        logging url: string
+
+  thresholds for logging and monitoring:
+    level: Level 2
+    components:
+      - confirmed by security team member: string
+        confirmed date: date
+
+  alerting for logging and monitoring:
+    level: Level 2
+    components:
+      - confirmed by security team member: string
+        confirmed date: date
+
+  response documentation:
+    level: Level 1
+    components:
+      - url: string
+        confirmed date: dateperiod-5y
+
+  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
+  simple application metrics:
+    level: Level 1
+    components:
+      - confirmed by po: string
+        confirmed date: date
+    # supported?
+    # configured?
+
+  # TODO link to a sample instead of confirmed?
+  advanced app. metrics:
+    level: Level 2
+    components:
+      - confirmed by po: string
+        confirmed date: date
+
+  targeted alerting:
+    level: Level 1
+    components:
+      - confirmed by po: string
+        confirmed date: date
+
+  definition of simple BCDR practices for critical components:
+    level: Level 1
+    components:
+      - url: string
+        confirmed by po: string
+        confirmed date: date
+
+  # TODO link to a sample instead of confirmed?
+  advanced logging:
+    level: Level 1
+    components:
+      - confirmed by: string
+        confirmed date: date
+
+
+
+  ############### TEAM Activity definitions #####################
+  security requirements:
+    components:
+      - read date: dateperiod-1y
+    level: Level 1
+
+  data privacy requirements:
+    components:
+      - read date: dateperiod-1y
+    level: Level 1
+  #    threshold:
+  #      target: "read date"
+  #      threshold reached: boolean # fetch last date and check !isActive
+
+  # TODO: Once activity for two level
+  security training:
+    level: Level 1
+    components:
+      - date: dateperiod-1y
+        total team hours: int
+        number of people: int
+
+
+  security champion:
+    level: Level 1
+    components:
+      - nominated: string
+
+
+
+
+
+
+
+
+
+
+
+  #mttr:
+  #  components:
+  #    - title: string
+  #      fetch date: date
+  #      mttr: int # float
+  #      threshold:
+  #        target: "mttr"
+  #        max value: 90 # to compare with mttr; max means the value is not allowed to be higher. If higher, threashold is reached
+  #        # min value: 90
+  #        threshold reached: boolean # maybe not defined here
+  #  level: Level 1
