@@ -5,7 +5,6 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Component;
-import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.YamlToObjectManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +58,7 @@ public class DatePeriodEndComponent extends DatePeriodComponent implements Compo
         return getClass().getSimpleName() + "[name=" + name + ", value=" + value + "]";
     }
 
+    @JsonIgnore
     public Period getPeriodAsPeriod() {
         return period;
     }
@@ -86,4 +86,5 @@ public class DatePeriodEndComponent extends DatePeriodComponent implements Compo
     public void setActive(boolean active) {
         isActive = active;
     }
+
 }

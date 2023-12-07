@@ -16,13 +16,13 @@ import java.util.*;
 
 // Utilizes Singleton Design Pattern
 @Component
-public class YamlToObjectManager {
-    private static final Logger logger = LoggerFactory.getLogger(YamlToObjectManager.class);
+public class ApplicationDirector {
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationDirector.class);
 
     private static Collection<Application> applications = new ArrayList<>();
 
     // Direct instantiation not possible
-    private YamlToObjectManager() {    }
+    private ApplicationDirector() {    }
 
     public Collection<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException {
 //        if(activities == null || activities.isEmpty()) {
@@ -43,16 +43,18 @@ public class YamlToObjectManager {
         ArrayList<Application> applications = new ArrayList<>();
         for(File yamlApplicationFilePath : yamlScanner.getApplicationYamls()) {
             logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());
-            Map<?, ?> javaYaml = YamlReader.convertYamlToJavaYaml(yamlApplicationFilePath.getPath());
-            assert javaYaml != null;
-            switch((String) javaYaml.get("kind")) {
+            Map<?, ?> applicationYamlReader = YamlReader.convertYamlToJavaYaml(yamlApplicationFilePath.getPath());
+            assert applicationYamlReader != null;
+            switch((String) applicationYamlReader.get("kind")) {
                 case "application":
                 case "team":
+                    logger.debug("applicationYamlReader" + applicationYamlReader.toString());
+                    Map<String, String> settingsApplicationYamlMap = (Map<String, String>) applicationYamlReader.get("settings");
                     Application newApp = new Application(configJavaYaml);
-                    newApp.saveData(javaYaml);
-                    newApp.setApplication((String) javaYaml.get("application settings.application"));
-                    newApp.setTeam((String) javaYaml.get("application settings.team"));
-                    newApp.setDesiredLevel((String) javaYaml.get("application settings.desired level"));
+                    newApp.saveData(applicationYamlReader);
+                    newApp.setApplication((String) settingsApplicationYamlMap.get("application"));
+                    newApp.setTeam((String) settingsApplicationYamlMap.get("team"));
+                    newApp.setDesiredLevel((String) settingsApplicationYamlMap.get("desired level"));
                     applications.add(newApp);
                     break;
                 default:

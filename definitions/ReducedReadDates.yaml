@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: application
-settings:
-  desired level: Level 1 # one team can have multiple applications in different levels
-  application: "black tower" # e.g. from deployment
-  team: "orcs"
-
-activities:
-

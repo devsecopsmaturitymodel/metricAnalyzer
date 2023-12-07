@@ -4,7 +4,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricCA.analyzer.model.FlattenDate;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Activity;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Application;
-import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.YamlToObjectManager;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.ApplicationDirector;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DateComponent;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
 import org.slf4j.Logger;
@@ -21,13 +21,13 @@ public class GrafanaController {
     private static final Logger logger = LoggerFactory.getLogger(GrafanaController.class);
 
     @Autowired
-    private YamlToObjectManager yamlToObjectManager;
+    private ApplicationDirector applicationDirector;
 
     @RequestMapping(value = "/activities", method = RequestMethod.GET)
     @ResponseBody
     public Collection<Activity> getActivities() throws Exception {
         Collection<Activity> activities = new ArrayList<Activity>();
-        for (Application application : yamlToObjectManager.getApplications()) {
+        for (Application application : applicationDirector.getApplications()) {
             activities.addAll(application.getActivities());
         }
         return activities;
@@ -36,14 +36,14 @@ public class GrafanaController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public Collection<Application> getApplications() throws Exception {
-        return yamlToObjectManager.getApplications();
+        return applicationDirector.getApplications();
     }
 
     @RequestMapping(value = "/team/{teamName}/applications", method = RequestMethod.GET)
     @ResponseBody
     public Collection<Application> getTeamApplications(@PathVariable String teamName) throws Exception {
         Collection<Application> applicationsToReturn = new ArrayList<Application>();
-        for (Application application : yamlToObjectManager.getApplications()) {
+        for (Application application : applicationDirector.getApplications()) {
             if (application.getTeam().equals(teamName)) {
                 applicationsToReturn.add(application);
             }
@@ -55,7 +55,7 @@ public class GrafanaController {
     @ResponseBody
     public Collection<String> getTeamApplicationIds(@PathVariable String teamName) throws Exception {
         Collection<String> applicationsToReturn = new ArrayList<String>();
-        for (Application application : yamlToObjectManager.getApplications()) {
+        for (Application application : applicationDirector.getApplications()) {
             if (application.getTeam().equals(teamName)) {
                 applicationsToReturn.add(application.getApplication());
             }
@@ -68,11 +68,11 @@ public class GrafanaController {
     @ResponseBody
     public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName) throws Exception {
         Collection<FlattenDate> flattendActivitiesToReturn = new ArrayList<FlattenDate>();
-        Collection<Date> datesFromActivities = yamlToObjectManager.getDatesFromActivities(activityName);
+        Collection<Date> datesFromActivities = applicationDirector.getDatesFromActivities(activityName);
         logger.info("dates: " + datesFromActivities);
         for (Date date : datesFromActivities) {
             FlattenDate flattenDate = new FlattenDate(date);
-            for (Application application : yamlToObjectManager.getApplications()) {
+            for (Application application : applicationDirector.getApplications()) {
                 for (Activity activity : application.getActivities(activityName)) {
                         boolean value = false;
                         logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
@@ -110,7 +110,7 @@ public class GrafanaController {
             applicationId, @PathVariable String activityName) throws Exception {
         Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
         logger.info("in teamGetActivity");
-        for (Application application : yamlToObjectManager.getApplications()) {
+        for (Application application : applicationDirector.getApplications()) {
             if (application.getTeam().equals(teamName) || teamName.equals("all")) {
                 if (application.getApplication().equals(applicationId) || applicationId.equals("all")) {
                     for (Activity activity : application.getActivities()) {
@@ -130,7 +130,7 @@ public class GrafanaController {
     @ResponseBody
     public Collection<String> getApplicationIds() throws IOException, GitAPIException {
         Set<String> applicationIds = new HashSet<>();
-        for (Application application : yamlToObjectManager.getApplications()) {
+        for (Application application : applicationDirector.getApplications()) {
             applicationIds.add(application.getApplication());
         }
         return applicationIds;
@@ -140,7 +140,7 @@ public class GrafanaController {
     @ResponseBody
     public Collection<String> getTeams() throws IOException, GitAPIException {
         Set<String> teams = new HashSet<>();
-        for (Application application : yamlToObjectManager.getApplications()) {
+        for (Application application : applicationDirector.getApplications()) {
             teams.add(application.getTeam());
         }
         teams.add("all");
