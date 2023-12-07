@@ -43,6 +43,11 @@ jobs:
           #registry: registry.hub.docker.com
           username: wurstbrot
           password: ${{ secrets.HUB_TOKEN }}
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: temurin
       - name: build
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
