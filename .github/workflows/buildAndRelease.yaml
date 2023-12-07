@@ -44,9 +44,13 @@ jobs:
           username: wurstbrot
           password: ${{ secrets.HUB_TOKEN }}
       - name: build
-        run: | 
-          ./mvnw compile com.google.cloud.tools:jib-maven-plugin:2.8.0:build \
-          -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${{ steps.get-version.outputs.version }},latest
+        run: |
+          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          tag="${{ steps.get-version.outputs.version }}"
+          if [ "branch" == "main" ]; then
+            tag="${$tag},latest"
+          fi        
+          ./mvnw compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${tag}
       # Commit all changed files back to the repository
       - uses: planetscale/ghcommit-action@v0.1.6
         with:
