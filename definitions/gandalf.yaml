@@ -11,12 +11,12 @@ activities:
   # Plan
   conduction of simple threat modeling on a technical level:
     - title: Feature Y
-      date: 2023-10-01
+      conduction date: 2023-10-01
       links: # optional, Maybe some teams would like the option for multiple links, e.g. to a used threat library
         - title: Documentation of new Feature Y
           url: https://link-for-example-in-confluencex
     - title: Feature X
-      date: 2023-11-01
+      conduction date: 2023-11-01
       links: # Maybe some teams would like the option for multiple links, e.g. to a used threat library
         - title: Documentation of new Feature X
           url: https://link-for-example-in-confluence
@@ -46,11 +46,6 @@ activities:
     - url: https://github.com/org/repo/.github/workflows # access checked on PR
 
   # Test
-  #mttr: hard to determine/continuously update manually
-  usage of a vulnerability management system:
-    - confirmed by: Max Mustermann # optional
-      confirmation date: 2023-09-10 # optional, might need re-assessment after two years
-
   test for stored secrets:
     - confirmed by: Max Mustermann # optional
       confirmation date: 2023-09-10 # optional, might need re-assessment after two years
@@ -59,23 +54,21 @@ activities:
 
   # wouldn't mix tests TODO remove
   iast: # e.g. contrast security
-    security_team_confirmation:
-      - confirmed by: Max Mustermann
-        confirmed date: 2023-10-09
+    - confirmed by: Max Mustermann
+      confirmed date: 2023-10-09
 
   sast: # e.g. findsecuritybugs, checkmarx
-    security_team_confirmation:
-      - confirmed by: Max Mustermann
-        confirmed date: 2023-10-09
+    - confirmed by: Max Mustermann
+      confirmed date: 2023-10-09
 
   # release and deployment
 
   environment depending configuration parameters (secrets):
-    secret handling url: https://github.com/org/repo/deployment/sealed-secret.yaml
+    - secret handling url: https://github.com/org/repo/deployment/sealed-secret.yaml
 
   # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
   same artifact for environments:
-    artifact url: https://hub.docker.com/org/image-name/
+    - artifact url: https://hub.docker.com/org/image-name/
 
   # Operate
   # mean time to patch: Hard to identify
