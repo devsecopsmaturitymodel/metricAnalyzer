@@ -50,7 +50,7 @@ jobs:
           if [ "branch" == "main" ]; then
             tag="${$tag},latest"
           fi        
-          ./mvnw compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${tag}
+          ./mvnw compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Djib.from.image=eclipse-temurin:17-jre -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${tag}
       # Commit all changed files back to the repository
       - uses: planetscale/ghcommit-action@v0.1.6
         with:
