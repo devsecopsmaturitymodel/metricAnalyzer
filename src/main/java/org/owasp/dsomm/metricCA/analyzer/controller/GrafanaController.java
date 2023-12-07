@@ -7,6 +7,7 @@ import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.Application;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.ApplicationDirector;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DateComponent;
 import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodComponent;
+import org.owasp.dsomm.metricCA.analyzer.yamlDeserialization.components.DatePeriodEndComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class GrafanaController {
     @RequestMapping(value = "/activity/{activityName}", method = RequestMethod.GET)
     @ResponseBody
     public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName) throws Exception {
-        Collection<FlattenDate> flattendActivitiesToReturn = new ArrayList<FlattenDate>();
+        Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
         Collection<Date> datesFromActivities = applicationDirector.getDatesFromActivities(activityName);
         logger.info("dates: " + datesFromActivities);
         for (Date date : datesFromActivities) {
@@ -78,24 +79,26 @@ public class GrafanaController {
             for (Application application : applicationDirector.getApplications()) {
                 for (Activity activity : application.getActivities(activityName)) {
                     boolean value = false;
-                    logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+
                     DateComponent dateComponent = getActivityMatchingDate(activity, date);
                     logger.info("dateComponent: " + dateComponent);
                     if (dateComponent != null) {
                         logger.info("date == dateComponent.getValue()" + dateComponent.getValue());
                         if (dateComponent instanceof DatePeriodComponent) {
-                            value = activity.getDatePeriodOrEndComponent().isActive();
+                            logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
+                            value = ((DatePeriodComponent) dateComponent).isActive();
                         } else {
                             value = true;
                         }
                     }
+                    // TODO: prüfen ob das Feld gerade true/false ist basierend auf letztem Date der Aktivität
                     flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
                 }
             }
-            flattendActivitiesToReturn.add(flattenDate);
+            flattenedActivitiesToReturn.add(flattenDate);
         }
-        logger.debug("activitiesToReturn: " + flattendActivitiesToReturn);
-        return flattendActivitiesToReturn;
+        logger.debug("activitiesToReturn: " + flattenedActivitiesToReturn);
+        return flattenedActivitiesToReturn;
     }
 
     private DateComponent getActivityMatchingDate(Activity activity, Date givenDate) {
