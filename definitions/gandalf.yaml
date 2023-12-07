@@ -5,12 +5,14 @@ settings:
   application: "shire" # e.g. from deployment
   team: "fellowship of the ring"
 
+# TODO optional fields results in null values in the output is good?
+
 activities:
   # Plan
   conduction of simple threat modeling on a technical level:
     - title: Feature Y
       date: 2023-10-01
-      links: # Maybe some teams would like the option for multiple links, e.g. to a used threat library
+      links: # optional, Maybe some teams would like the option for multiple links, e.g. to a used threat library
         - title: Documentation of new Feature Y
           url: https://link-for-example-in-confluencex
     - title: Feature X
@@ -22,8 +24,6 @@ activities:
   #        security_team_confirmation:
   #          - confirmed by: Max Mustermann
   #            confirmed date: 2023-10-09
-
-
 
   # Code
   source control protection:
@@ -79,17 +79,28 @@ activities:
 
   # Operate
   # mean time to patch: Hard to identify
-  automated PRs for patches:
-    configuration url: https://github.com/org/repo/dependabot.yaml # or .github/renovate.json
+  #  automated PRs for patches:
+  #    configuration url: https://github.com/org/repo/dependabot.yaml # or .github/renovate.json
 
   # Monitor
+  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
   logging capabilities:
     - confirmed by security team member: Max Mustermann
       confirmed date: 2023-10-09
+      project id: "1234"
+      logging url: https://grafana.tool.internal.local/applicationId # TODO check if exsts
 
-  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
-  centralized application logging:
-    logging_url: https://grafana.tool.internal.local/applicationId
+  thresholds for logging and monitoring:
+    - confirmed by security team member: Max Mustermann
+      confirmed date: 2023-10-09
+
+  alerting for logging and monitoring:
+    - confirmed by security team member: Max Mustermann # do we need the conrimation person? Is stored in github and we might face data privacy issues in case we write it down here
+      confirmed date: 2023-10-09
+
+  response documentation:
+    - url: https://org.confluence.com/application/incident-response
+      confirmed date: 2023-10-09 # period of 5 years?
 
   # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
   simple application metrics:

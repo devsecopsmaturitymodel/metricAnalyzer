@@ -47,14 +47,13 @@ public class YamlToObjectManager {
             assert javaYaml != null;
             switch((String) javaYaml.get("kind")) {
                 case "application":
+                case "team":
                     Application newApp = new Application(configJavaYaml);
                     newApp.saveData(javaYaml);
                     newApp.setApplication((String) javaYaml.get("application settings.application"));
                     newApp.setTeam((String) javaYaml.get("application settings.team"));
                     newApp.setDesiredLevel((String) javaYaml.get("application settings.desired level"));
                     applications.add(newApp);
-                    break;
-                case "team":
                     break;
                 default:
                     logger.error("Yaml file " + yamlApplicationFilePath.getPath() + " has no kind defined.");

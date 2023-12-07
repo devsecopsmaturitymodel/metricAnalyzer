@@ -14,3 +14,20 @@ activities:
     - read date: 2020-05-01
     - read date: 2021-09-01
     - read date: 2022-02-01
+
+  # TODO: Once activity for two level
+  security training:
+    - date: 2020-05-01
+      total team hours: 12
+      number of people: 1
+    - date: 2021-09-01
+      number of people: 3
+      total team hours: 8
+    - date: 2022-02-01
+      number of people: 2
+      total team hours: 10
+
+
+
+  security champion:
+    - nominated: Max Mustermann

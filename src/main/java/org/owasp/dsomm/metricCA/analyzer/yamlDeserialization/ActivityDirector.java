@@ -23,10 +23,10 @@ public class ActivityDirector {
     }
 
     public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException {
-        for (Map.Entry<?, ?> entry : javaYaml.entrySet()) {
+        Map<?, ?> activityDefinition = (Map<?, ?>) javaYaml.get("activity definitions");
+        for (Map.Entry<?, ?> entry : activityDefinition.entrySet()) {
             String key = (String) entry.getKey();
             LinkedHashMap<?, ?> value = (LinkedHashMap<?, ?>) entry.getValue();
-            //System.out.println(value);
 
             createActivity(key.toString(), value);
         }
