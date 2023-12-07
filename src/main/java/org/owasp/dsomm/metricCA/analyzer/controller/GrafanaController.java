@@ -11,7 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.*;
@@ -74,20 +77,20 @@ public class GrafanaController {
             FlattenDate flattenDate = new FlattenDate(date);
             for (Application application : applicationDirector.getApplications()) {
                 for (Activity activity : application.getActivities(activityName)) {
-                        boolean value = false;
-                        logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
-                        DateComponent dateComponent = getActivityMatchingDate(activity, date);
-                        logger.info("dateComponent: " + dateComponent);
-                        if (dateComponent != null) {
-                                logger.info("date == dateComponent.getValue()" + dateComponent.getValue());
-                                if (dateComponent instanceof DatePeriodComponent) {
-                                    value = activity.getDatePeriodOrEndComponent().isActive();
-                                } else {
-                                    value = true;
-                                }
+                    boolean value = false;
+                    logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+                    DateComponent dateComponent = getActivityMatchingDate(activity, date);
+                    logger.info("dateComponent: " + dateComponent);
+                    if (dateComponent != null) {
+                        logger.info("date == dateComponent.getValue()" + dateComponent.getValue());
+                        if (dateComponent instanceof DatePeriodComponent) {
+                            value = activity.getDatePeriodOrEndComponent().isActive();
+                        } else {
+                            value = true;
                         }
-                        flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
                     }
+                    flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
+                }
             }
             flattendActivitiesToReturn.add(flattenDate);
         }
@@ -106,10 +109,8 @@ public class GrafanaController {
 
     @RequestMapping(value = "/team/{teamName}/application/{applicationId}/activity/{activityName}", method = RequestMethod.GET)
     @ResponseBody
-    public Collection<Activity> getTeamActivity(@PathVariable String teamName, @PathVariable String
-            applicationId, @PathVariable String activityName) throws Exception {
+    public Collection<Activity> getTeamActivity(@PathVariable String teamName, @PathVariable String applicationId, @PathVariable String activityName) throws Exception {
         Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
-        logger.info("in teamGetActivity");
         for (Application application : applicationDirector.getApplications()) {
             if (application.getTeam().equals(teamName) || teamName.equals("all")) {
                 if (application.getApplication().equals(applicationId) || applicationId.equals("all")) {
