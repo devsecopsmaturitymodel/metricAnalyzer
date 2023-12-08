@@ -45,13 +45,15 @@ public class ApplicationDirector {
             logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());
             Map<?, ?> applicationYamlReader = YamlReader.convertYamlToJavaYaml(yamlApplicationFilePath.getPath());
             assert applicationYamlReader != null;
-            switch((String) applicationYamlReader.get("kind")) {
+            switch((String) applicationYamlReader.get("kind")) { // TODO Something is wrong. "application" goes also into team
                 case "application":
                 case "team":
                     logger.debug("applicationYamlReader" + applicationYamlReader.toString());
                     Map<String, String> settingsApplicationYamlMap = (Map<String, String>) applicationYamlReader.get("settings");
-                    Application newApp = new Application(configJavaYaml);
-                    newApp.saveData(applicationYamlReader);
+
+                    // Create new Application
+                    Application newApp = new Application(configJavaYaml); // Creates Skeleton
+                    newApp.saveData(applicationYamlReader); // Assign the value from the application.yaml data to a component. 
                     newApp.setApplication((String) settingsApplicationYamlMap.get("application"));
                     newApp.setTeam((String) settingsApplicationYamlMap.get("team"));
                     newApp.setDesiredLevel((String) settingsApplicationYamlMap.get("desired level"));
