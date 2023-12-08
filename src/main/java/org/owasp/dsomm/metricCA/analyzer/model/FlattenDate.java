@@ -7,28 +7,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FlattenDate {
-    private Date givenDate;
-    private final Map<String, Object> dynamicFields = new HashMap<>();
+    private Date date;
+    private final Map<String, Boolean> entries = new HashMap<>();
 
     public FlattenDate(Date givenDate) {
-        this.givenDate = givenDate;
+        this.date = givenDate;
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getDynamicFields() {
-        return dynamicFields;
+    public Map<String, Boolean> getEntries() {
+        return entries;
     }
 
-    public void addDynamicField(String key, Object value) {
-        dynamicFields.put(key, value);
+    public void addDynamicField(String key, Boolean value) {
+        entries.put(key, value);
     }
 
-    public Date getGivenDate() {
-        return givenDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setGivenDate(Date givenDate) {
-        this.givenDate = givenDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
 }
