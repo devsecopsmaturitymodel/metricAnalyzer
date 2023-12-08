@@ -22,6 +22,7 @@ public class ActivityDirector {
         this.nester = new ArrayList<String>();
     }
 
+    // (1) Creates activities with its components
     public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException {
         Map<?, ?> activityDefinition = (Map<?, ?>) javaYaml.get("activity definitions");
         for (Map.Entry<?, ?> entry : activityDefinition.entrySet()) {
@@ -32,8 +33,9 @@ public class ActivityDirector {
         }
     }
 
+    // (1) Helper function uses ActivityBuilder
     private void createActivity(String activityName, LinkedHashMap<?, ?> data) throws SkeletonNotFoundException, ComponentNotFoundException {
-        // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components.
+        // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components which will be added to Activity when builder builds component.
         ActivityBuilder builder = new ActivityBuilder();
 
         // Get Level
@@ -53,6 +55,7 @@ public class ActivityDirector {
         activities.put(activityName, activity);
     }
 
+    // (1) Helper function for create Activity
     private void addComponents(ActivityBuilder builder, ArrayList data) throws SkeletonNotFoundException, ComponentNotFoundException {
         LinkedHashMap components = (LinkedHashMap) data.get(0);
         List<Object> keyList = new ArrayList<>(components.keySet());

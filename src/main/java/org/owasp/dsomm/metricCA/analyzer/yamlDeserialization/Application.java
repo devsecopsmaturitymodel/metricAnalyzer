@@ -20,9 +20,10 @@ public class Application {
 
     public Application(Map<?, ?> configJavaYaml) throws SkeletonNotFoundException {
         activityDirector = new ActivityDirector();
-        activityDirector.createActivities(configJavaYaml);
+        activityDirector.createActivities(configJavaYaml); // (1) Creates skeleton in activities. Each application has one ActivityDirector
     }
 
+    // (2) Main function of application. It clones all components and fill it with content
     public void saveData(Map<?, ?> appJavaYaml) {
         HashMap allActivities = (HashMap) (appJavaYaml.get("activities"));
         for (Object activityKey : allActivities.keySet()) {
@@ -35,6 +36,7 @@ public class Application {
         enrichComponentsOfActivities();
     }
 
+    // (2) Helper function of saveData
     private void fillActivityContent(ArrayList data, Object activity) {
         for (int i = 0; i < data.size(); i++) { // Data in each activity
             HashMap<String, Object> temp_data = (HashMap<String, Object>) data.get(i);
