@@ -16,11 +16,11 @@ public class Activity {
 
 
     @JsonIgnore
-    private Map<String, Object> components;
+    private Map<String, Object> skeleton;
     private ArrayList<Map<String, Object>> content;
 
     public Activity() {
-        components = new HashMap<>();
+        skeleton = new HashMap<>();
         content = new ArrayList<>();
     }
 
@@ -40,43 +40,45 @@ public class Activity {
         this.activityName = activityName;
     }
 
-    public void addComponent(Component component, ArrayList<String> nester) {
+    public void addComponentToSkeleton(Component component, ArrayList<String> nester) {
         if (nester.isEmpty()) {
-            components.put(component.getName(), component);
+            skeleton.put(component.getName(), component);
         } else {
             for (String key : nester) {
-                if (components.get(nester.get(0)) != null){ // Is key in components
-                    Map<String, Object> temp = (HashMap) components.get(key);
+                if (skeleton.get(nester.get(0)) != null){ // Is key in components
+                    Map<String, Object> temp = (HashMap) skeleton.get(key);
                     temp.put(component.getName(), component);
                 }
                 else {
                     Map<String, Object> temp = new HashMap<>();
                     temp.put(component.getName(), component);
-                    components.put(key, temp);
+                    skeleton.put(key, temp);
                 }
             }
         }
     }
 
-    public Map<String, Object> getComponents() {
-        return this.components;
+    public Map<String, Object> getSkeleton() {
+        return this.skeleton;
     }
 
-    public void addContentSkeleton() {
+    // Clones components from the 'skeleton' map and adds them to the 'content' ArrayList.
+    // Components are added either directly or within nested HashMaps, preserving the original structure.
+    public void cloneSkeletonAndAddToContent() {
         HashMap finalAcc = new HashMap<>();
-        for (String componentKey : components.keySet()){
-            if (components.get(componentKey) instanceof Component){
+        for (String componentKey : skeleton.keySet()){
+            if (skeleton.get(componentKey) instanceof Component){
                 try {
-                    Component component = (Component) components.get(componentKey);
+                    Component component = (Component) skeleton.get(componentKey);
                     finalAcc.put(componentKey, component.clone());
                 } catch (CloneNotSupportedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-            else if (components.get(componentKey) instanceof HashMap) {
+            else if (skeleton.get(componentKey) instanceof HashMap) {
                 HashMap temp = new HashMap<>();
-                HashMap fin = (HashMap) components.get(componentKey);
+                HashMap fin = (HashMap) skeleton.get(componentKey);
                 for (Object k : fin.keySet()){
                     Component component = (Component) fin.get(k);
                     try {

@@ -28,7 +28,7 @@ public class Application {
         for (Object activityKey : allActivities.keySet()) {
             ArrayList data = (ArrayList) allActivities.get(activityKey);
             for (int i = 0; i < data.size(); i++) {
-                activityDirector.getActivities().get(activityKey).addContentSkeleton();
+                activityDirector.getActivities().get(activityKey).cloneSkeletonAndAddToContent();
             }
             fillActivityContent(data, activityKey);
         }
