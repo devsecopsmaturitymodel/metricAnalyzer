@@ -3,7 +3,9 @@ package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
+import org.owasp.dsomm.metricca.analyzer.model.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
+import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,4 +92,37 @@ public class ApplicationDirector {
     Collections.sort((ArrayList<Date>) datesToReturn, dateComparator);
     return datesToReturn;
   }
+
+  public Collection<FlattenDate> getActivitiesPerTeamFlat(String teamName, String activityName) throws Exception {
+    return getActivitiesPerTeamAndApplicationFlat(teamName, null, activityName);
+  }
+
+  public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String teamName, String applicationName, String activityName) throws Exception {
+    Collection<FlattenDate> activitiesToReturn = new ArrayList<FlattenDate>();
+    for (Application application : this.getApplications()) {
+      if(!application.getApplication().equals(applicationName) && applicationName != null) {
+        logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName);
+        continue;
+      }
+      for (Activity activity : application.getActivities(activityName)) {
+        if (!teamName.equals(application.getTeam()) && teamName != null) {
+          logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName + " and team: " + application.getTeam() + " does not match: " + teamName);
+          continue;
+        }
+          logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+          for (DateComponent dateComponent : activity.getDateComponents()) {
+            FlattenDate flattenDate = new FlattenDate(dateComponent.getValue());
+            flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), ((DatePeriodComponent) dateComponent).isActive());
+            activitiesToReturn.add(flattenDate);
+          }
+
+      }
+    }
+    return activitiesToReturn;
+  }
+
+  public Collection<FlattenDate> getActivitiesFlat(String activityName) throws Exception {
+    return getActivitiesPerTeamFlat(null, activityName);
+  }
+
 }

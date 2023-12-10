@@ -69,19 +69,13 @@ public class GrafanaController {
   @RequestMapping(value = "/activity/{activityName}/simple", method = RequestMethod.GET)
   @ResponseBody
   public Collection<FlattenDate> getActivitiesFlatSimple(@PathVariable String activityName) throws Exception {
-    Collection<FlattenDate> activitiesToReturn = new ArrayList<FlattenDate>();
-    for (Application application : applicationDirector.getApplications()) {
-      for (Activity activity : application.getActivities(activityName)) {
-        logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
-        for (DateComponent dateComponent : activity.getDateComponents()) {
-          FlattenDate flattenDate = new FlattenDate(dateComponent.getValue());
-          flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), ((DatePeriodComponent) dateComponent).isActive());
-          activitiesToReturn.add(flattenDate);
-        }
-      }
-    }
-    logger.debug("activitiesToReturn: " + activitiesToReturn);
-    return activitiesToReturn;
+    return applicationDirector.getActivitiesFlat(activityName);
+  }
+
+  @RequestMapping(value = "/team/{teamName}/application/{application}/activity/{activityName}/simple", method = RequestMethod.GET)
+  @ResponseBody
+  public Collection<FlattenDate> getActivitiesPerTeamFlatSimple(@PathVariable String teamName, @PathVariable String application, @PathVariable String activityName) throws Exception {
+    return applicationDirector.getActivitiesPerTeamAndApplicationFlat(teamName, application, activityName);
   }
 
   @RequestMapping(value = "/activity/{activityName}", method = RequestMethod.GET)
@@ -89,7 +83,6 @@ public class GrafanaController {
   public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName) throws Exception {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
     Collection<Date> datesFromActivities = applicationDirector.getDatesFromActivities(activityName);
-    logger.info("dates: " + datesFromActivities);
     for (Date date : datesFromActivities) {
       FlattenDate flattenDate = new FlattenDate(date);
       for (Application application : applicationDirector.getApplications()) {
@@ -97,9 +90,9 @@ public class GrafanaController {
           boolean value = false;
 
           DateComponent dateComponent = activity.getMatchingDatePeriodComponent(date);
-          logger.info("dateComponent: " + dateComponent);
+          logger.debug("dateComponent: " + dateComponent);
           if (dateComponent != null) {
-            logger.info("date == dateComponent.getValue()" + dateComponent.getValue());
+            logger.debug("date == dateComponent.getValue()" + dateComponent.getValue());
             if (dateComponent instanceof DatePeriodComponent) {
               logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
               value = ((DatePeriodComponent) dateComponent).isActive();
