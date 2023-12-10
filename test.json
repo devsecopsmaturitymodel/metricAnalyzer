@@ -1,0 +1,26 @@
+[
+  {
+    "givenDate": "2020-10-01T00:00:00.000+00:00",
+    "entries": {
+      "leeloo-reduced read dates app2": false,
+      "superhero-death-star app": true,
+      "leeloo-reduced read dates app": false
+    }
+  },
+  {
+    "givenDate": "2021-10-01T00:00:00.000+00:00",
+    "entries": {
+      "leeloo-reduced read dates app2": true,
+      "superhero-death-star app": true,
+      "leeloo-reduced read dates app": true
+    }
+  },
+  {
+    "givenDate": "2022-10-01T00:00:00.000+00:00",
+    "entries": {
+      "leeloo-reduced read dates app2": true,
+      "superhero-death-star app": false,
+      "leeloo-reduced read dates app": true
+    }
+  }
+]
