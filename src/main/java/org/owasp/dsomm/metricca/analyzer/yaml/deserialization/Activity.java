@@ -12,7 +12,6 @@ public class Activity {
   @JsonIgnore
   private final Map<String, Object> components;
   private final ArrayList<Map<String, Object>> content;
-  @SuppressWarnings("checkstyle:JavadocVariable")
   private String level;
   private String activityName;
 
