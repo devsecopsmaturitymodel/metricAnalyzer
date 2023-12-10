@@ -18,12 +18,10 @@ activities:
 
   # One application might have multiple images
   reduction of the attack surface: # check on merge that the image is distroless or an organization specific image
-    - confirmed by: Max Mustermann # optional
-      confirmation date: 2023-09-10 # optional, might need re-assessment after two years
+    - confirmation date: 2023-09-10 # optional, might need re-assessment after two years
 
   security code review:
-    - confirmed by: Max Mustermann # optional
-      confirmation date: 2023-09-10 # optional, might need re-assessment after two years
+    - confirmation date: 2023-09-10 # optional, might need re-assessment after two years
 
   # Build
   defined build process:
@@ -63,18 +61,15 @@ activities:
   # Monitor
   # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
   logging capabilities:
-    - confirmed by security team member: Max Mustermann
-      confirmed date: 2023-10-09
+    - confirmed date: 2023-10-09
       project id: "1234"
       logging url: https://grafana.tool.internal.local/applicationId # TODO check if exsts
 
   thresholds for logging and monitoring:
-    - confirmed by security team member: Max Mustermann
-      confirmed date: 2023-10-09
+    - confirmed date: 2023-10-09
 
   alerting for logging and monitoring:
-    - confirmed by security team member: Max Mustermann # do we need the conrimation person? Is stored in github and we might face data privacy issues in case we write it down here
-      confirmed date: 2023-10-09
+    - confirmed date: 2023-10-09
 
   response documentation:
     - url: https://org.confluence.com/application/incident-response
@@ -89,22 +84,18 @@ activities:
 
   # TODO link to a sample instead of confirmed?
   advanced app. metrics:
-    - confirmed by po: Max Mustermann
-      confirmed date: 2023-10-09
+    - confirmed date: 2023-10-09
 
   targeted alerting:
-    - confirmed by po: Max Mustermann
-      confirmed date: 2023-10-09
+    - confirmed date: 2023-10-09
 
   definition of simple BCDR practices for critical components:
     - url: https://org.confluence.com/application/incident-response
-      confirmed by po: Max Mustermann
       confirmed date: 2023-10-09
 
   # TODO link to a sample instead of confirmed?
   advanced logging:
-    - confirmed by: Max Mustermann
-      confirmed date: 2023-10-09
+    - confirmed date: 2023-10-09
 
 
 
@@ -121,6 +112,6 @@ activities:
 
 
   data privacy requirements:
-    - read date: 2020-01-01
-    - read date: 2020-11-01
-    - read date: 2022-05-01
+    - read date: 2020-01-01 # end 2021-01-01 ; overwritten by next entry
+    - read date: 2020-11-01 # end 2021-11-01
+    - read date: 2022-05-01 # end 2023-05-01
