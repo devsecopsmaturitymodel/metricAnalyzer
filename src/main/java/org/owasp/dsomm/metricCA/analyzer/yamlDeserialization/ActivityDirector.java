@@ -25,6 +25,7 @@ public class ActivityDirector {
     // (1) Creates activities with its components
     public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException {
         Map<?, ?> activityDefinition = (Map<?, ?>) javaYaml.get("activity definitions");
+        logger.info("THis should be true!!!: "+javaYaml); // Logging Capabilities sollte 3 strings haben, jedoch wird nur eines angezeigt.
         for (Map.Entry<?, ?> entry : activityDefinition.entrySet()) {
             String key = (String) entry.getKey();
             LinkedHashMap<?, ?> value = (LinkedHashMap<?, ?>) entry.getValue();
@@ -63,25 +64,27 @@ public class ActivityDirector {
         for (int i = 0; i < keyList.size(); i++) {
             Object key = keyList.get(i);
             Object value = components.get(key);
-
+            
+            // TODO Change!!!
             if (value instanceof String) {
-                String normalizedValue = value.toString().replaceAll("-.*", "");
+                String normalizedValue = key.toString().replaceAll("-.*", "");
                 switch (normalizedValue) {
                     case "string":
-                        builder.addStringComponent(key.toString(), nester);
+                        logger.info(value.toString());
+                        builder.addStringComponent(value.toString(), nester);
                         break;
                     case "date":
-                        builder.addDateComponent(key.toString(), nester);
+                        builder.addDateComponent(value.toString(), nester);
                         break;
                     case "dateperiod":
-                        String periodLength = value.toString().replaceAll(".*-", "");
-                        builder.addDatePeriodComponent(key.toString(), periodLength, nester);
+                        String periodLength = key.toString().replaceAll(".*-", "");
+                        builder.addDatePeriodComponent(value.toString(), periodLength, nester);
                         break;
                     case "int":
-                        builder.addIntComponent(key.toString(), nester);
+                        builder.addIntComponent(value.toString(), nester);
                         break;
                     default:
-                        throw new ComponentNotFoundException("Component '" + value + "' doesn't exists");
+                        throw new ComponentNotFoundException("Component '" + key + "' doesn't exists");
                 }
             }
             else if (value instanceof ArrayList && nester.isEmpty()) {
