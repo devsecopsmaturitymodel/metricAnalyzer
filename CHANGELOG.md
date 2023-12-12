@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.5.0...v1.6.0) (2023-12-12)
+
+
+### Features
+
+* add endpoints ([a7940c8](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/a7940c8ac2493df461cb3ddf3d0d5e373494e385))
+
 # [1.5.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.4.0...v1.5.0) (2023-12-10)
 
 
