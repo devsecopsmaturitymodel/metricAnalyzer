@@ -25,7 +25,6 @@ public class ActivityDirector {
     // (1) Creates activities with its components
     public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException {
         Map<?, ?> activityDefinition = (Map<?, ?>) javaYaml.get("activity definitions");
-        logger.info("THis should be true!!!: "+javaYaml); // Logging Capabilities sollte 3 strings haben, jedoch wird nur eines angezeigt.
         for (Map.Entry<?, ?> entry : activityDefinition.entrySet()) {
             String key = (String) entry.getKey();
             LinkedHashMap<?, ?> value = (LinkedHashMap<?, ?>) entry.getValue();
@@ -58,7 +57,10 @@ public class ActivityDirector {
 
     // (1) Helper function for create Activity
     private void addComponents(ActivityBuilder builder, ArrayList data) throws SkeletonNotFoundException, ComponentNotFoundException {
-        LinkedHashMap components = (LinkedHashMap) data.get(0);
+        for(int j=0; j < data.size(); j++) {
+            logger.debug("data.get(j)" + data.get(j));
+
+        LinkedHashMap components = (LinkedHashMap) data.get(j);
         List<Object> keyList = new ArrayList<>(components.keySet());
 
         for (int i = 0; i < keyList.size(); i++) {
@@ -102,6 +104,7 @@ public class ActivityDirector {
                 throw new SkeletonNotFoundException("This instance does not exist! value: " + value);
             }
             //System.out.println("Key: " + key + ", Value: " + value);
+        }
         }
     }
 

@@ -9,7 +9,7 @@ activity definitions:
         dateperiod-5y: conduction date
         links:
           - string: title
-            string: url
+          - string: url
     level: Level 1
   regular conduction of simple threat modeling on a technical level:
       components:
@@ -17,7 +17,7 @@ activity definitions:
           dateperiod-2y: conduction date
           links:
             - string: title
-              string: url
+            - string: url
       level: Level 2
   source control protection:
     level: Level 1
@@ -89,9 +89,9 @@ activity definitions:
     level: Level 1
     components:
       - string: confirmed by security team member
-        date: confirmed date
-        string: project id
-        string: logging url
+      - date: confirmed date
+      - string: project id
+      - string: logging url
 
   thresholds for logging and monitoring:
     level: Level 2
@@ -137,7 +137,7 @@ activity definitions:
     level: Level 1
     components:
       - string: url
-        string: confirmed by po
+      - string: confirmed by po
         date: confirmed date
 
   # TODO link to a sample instead of confirmed?
@@ -168,8 +168,8 @@ activity definitions:
     level: Level 1
     components:
       - dateperiod-1y: date
-        int: total team hours
-        int: number of people
+      - int: total team hours
+      - int: number of people
 
 
   security champion:
