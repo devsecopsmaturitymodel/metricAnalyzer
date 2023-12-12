@@ -2,14 +2,14 @@ package org.owasp.dsomm.metricCA.analyzer.yamlDeserialization;
 
 public interface Component<T> extends Cloneable {
 
-    Object clone() throws CloneNotSupportedException;
+  Object clone() throws CloneNotSupportedException;
 
-    String getName();
+  String getName();
 
-    void setName(String newName);
+  void setName(String newName);
 
-    // The list can hold elements of any type.
-    T getValue();
+  // The list can hold elements of any type.
+  T getValue();
 
-    void setValue(Object value);
+  void setValue(Object value);
 }

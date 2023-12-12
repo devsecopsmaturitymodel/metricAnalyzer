@@ -8,11 +8,11 @@ import javax.annotation.PostConstruct;
 @Component
 
 public class YamlToObjectManagerInit {
-    @Autowired
-    private ApplicationDirector applicationDirector;
+  @Autowired
+  private ApplicationDirector applicationDirector;
 
-    @PostConstruct
-    private void postConstruct() throws Exception {
-        applicationDirector.getApplications();
-    }
+  @PostConstruct
+  private void postConstruct() throws Exception {
+    applicationDirector.getApplications();
+  }
 }

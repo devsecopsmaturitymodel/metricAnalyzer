@@ -14,99 +14,89 @@ import java.util.Collection;
 
 @Configuration
 public class YamlScanner {
-    private static final Logger logger = LoggerFactory.getLogger(YamlScanner.class);
+  private static final Logger logger = LoggerFactory.getLogger(YamlScanner.class);
+  public boolean enforceGitCloneIfTargetFolderExists = false;
+  @Value("${metricCA.git.url}")
+  private String yamlGitUrl;
+  @Value("${metricCA.git.branch:master}")
+  private String yamlGitBranch;
+  @Value("${metricCA.git.targetPath:/tmp/metricCA/}")
+  private String yamlGitTargetPath;
+  @Value("${metricCA.skeleton.path}")
+  private String yamlSkeletonFilePath;
+  @Value("${metricCA.application.path}")
+  private String yamlApplicationFolderPath;
 
-    @Value("${metricCA.git.url}")
-    private String yamlGitUrl;
-
-    @Value("${metricCA.git.branch:master}")
-    private String yamlGitBranch;
-
-    @Value("${metricCA.git.targetPath:/tmp/metricCA/}")
-    private String yamlGitTargetPath;
-
-
-    @Value("${metricCA.skeleton.path}")
-    private String yamlSkeletonFilePath;
-
-    @Value("${metricCA.application.path}")
-    private String yamlApplicationFolderPath;
-
-    public boolean enforceGitCloneIfTargetFolderExists = false;
-
-
-    public void initiate() throws IOException, GitAPIException {
-        if (isGit()) {
-            gitClone();
-        }
+  private static void deleteDirectoryRecursively(File dir) {
+    File[] allContents = dir.listFiles();
+    if (allContents != null) {
+      for (File file : allContents) {
+        deleteDirectoryRecursively(file);
+      }
     }
+    dir.delete();
+  }
 
-    private static void deleteDirectoryRecursively(File dir) {
-        File[] allContents = dir.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                deleteDirectoryRecursively(file);
-            }
-        }
-        dir.delete();
+  public void initiate() throws IOException, GitAPIException {
+    if (isGit()) {
+      gitClone();
     }
-    private void gitClone() throws GitAPIException {
-        File yamlGitTargetPathFile = new File(yamlGitTargetPath);
-        if (yamlGitTargetPathFile.exists()) {
-            if(enforceGitCloneIfTargetFolderExists) {
-                logger.info("yamlGitTargetPath exists, deleting it " + yamlGitTargetPath);
-                deleteDirectoryRecursively(yamlGitTargetPathFile);
-            }else {
-                logger.info("yamlGitTargetPath exists, skipping cloning " + yamlGitTargetPath);
-                return;
-            }
-        }
-        if (yamlGitTargetPathFile.exists()) {
-            logger.info("yamlGitTargetPath STILL exists");
-        }
-        logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
-        Git.cloneRepository()
-                .setURI(yamlGitUrl)
-                .setDirectory(yamlGitTargetPathFile)
-                .setBranch(yamlGitBranch)
-                .call();
+  }
+
+  private void gitClone() throws GitAPIException {
+    File yamlGitTargetPathFile = new File(yamlGitTargetPath);
+    if (yamlGitTargetPathFile.exists()) {
+      if (enforceGitCloneIfTargetFolderExists) {
+        logger.info("yamlGitTargetPath exists, deleting it " + yamlGitTargetPath);
+        deleteDirectoryRecursively(yamlGitTargetPathFile);
+      } else {
+        logger.info("yamlGitTargetPath exists, skipping cloning " + yamlGitTargetPath);
+        return;
+      }
     }
-
-    public Collection<File> getApplicationYamls() throws IOException, GitAPIException {
-        this.initiate();
-        File yamlApplicationFolder = new File(getYamlApplicationFolderPath());
-        if (!yamlApplicationFolder.exists()) throw new FileNotFoundException(getYamlApplicationFolderPath());
-
-        return java.util.Arrays.asList(yamlApplicationFolder.listFiles());
+    if (yamlGitTargetPathFile.exists()) {
+      logger.info("yamlGitTargetPath STILL exists");
     }
+    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
+    Git.cloneRepository()
+        .setURI(yamlGitUrl)
+        .setDirectory(yamlGitTargetPathFile)
+        .setBranch(yamlGitBranch)
+        .call();
+  }
 
-    public File getSkeletonYaml() throws IOException, GitAPIException {
-        this.initiate();
-        logger.info("getYamlSkeletonFilePath() " + getYamlSkeletonFilePath());
-        File skeletonConfig = new File(getYamlSkeletonFilePath());
-        if (!skeletonConfig.exists()) throw new FileNotFoundException(getYamlSkeletonFilePath());
+  public Collection<File> getApplicationYamls() throws IOException, GitAPIException {
+    this.initiate();
+    File yamlApplicationFolder = new File(getYamlApplicationFolderPath());
+    if (!yamlApplicationFolder.exists()) throw new FileNotFoundException(getYamlApplicationFolderPath());
 
-        return skeletonConfig;
+    return java.util.Arrays.asList(yamlApplicationFolder.listFiles());
+  }
+
+  public File getSkeletonYaml() throws IOException, GitAPIException {
+    this.initiate();
+    logger.info("getYamlSkeletonFilePath() " + getYamlSkeletonFilePath());
+    File skeletonConfig = new File(getYamlSkeletonFilePath());
+    if (!skeletonConfig.exists()) throw new FileNotFoundException(getYamlSkeletonFilePath());
+
+    return skeletonConfig;
+  }
+
+  private boolean isGit() {
+    return yamlGitUrl != null && !yamlGitUrl.isEmpty();
+  }
+
+  private String getYamlSkeletonFilePath() {
+    if (isGit()) {
+      return yamlGitTargetPath + "/" + yamlSkeletonFilePath;
     }
+    return yamlSkeletonFilePath;
+  }
 
-    private boolean isGit() {
-        if (yamlGitUrl != null && !yamlGitUrl.isEmpty()) {
-            return true;
-        }
-        return false;
+  private String getYamlApplicationFolderPath() {
+    if (isGit()) {
+      return yamlGitTargetPath + "/" + yamlApplicationFolderPath;
     }
-
-    private String getYamlSkeletonFilePath() {
-        if (isGit()) {
-            return yamlGitTargetPath + "/" + yamlSkeletonFilePath;
-        }
-        return yamlSkeletonFilePath;
-    }
-
-    private String getYamlApplicationFolderPath() {
-        if (isGit()) {
-            return yamlGitTargetPath + "/" + yamlApplicationFolderPath;
-        }
-        return yamlApplicationFolderPath;
-    }
+    return yamlApplicationFolderPath;
+  }
 }
