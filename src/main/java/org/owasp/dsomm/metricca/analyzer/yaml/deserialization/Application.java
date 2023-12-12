@@ -11,29 +11,33 @@ import java.util.Map.Entry;
 
 public class Application {
   private static final Logger logger = LoggerFactory.getLogger(Application.class);
-  private final ActivityDirector activityDirector;
+
   private String team;
   private String application;
+  private final ActivityDirector activityDirector;
+
   private String desiredLevel;
   private String mapKeyForCompare;
 
   public Application(Map<?, ?> configJavaYaml) throws SkeletonNotFoundException {
     activityDirector = new ActivityDirector();
-    activityDirector.createActivities(configJavaYaml);
+    activityDirector.createActivities(configJavaYaml); // (1) Creates skeleton in activities. Each application has one ActivityDirector
   }
 
+  // (2) Main function of application. It clones all components and fill it with content
   public void saveData(Map<?, ?> appJavaYaml) {
     HashMap allActivities = (HashMap) (appJavaYaml.get("activities"));
     for (Object activityKey : allActivities.keySet()) {
       ArrayList data = (ArrayList) allActivities.get(activityKey);
       for (int i = 0; i < data.size(); i++) {
-        activityDirector.getActivities().get(activityKey).addContentSkeleton();
+        activityDirector.getActivities().get(activityKey).cloneSkeletonAndAddToContent();
       }
       fillActivityContent(data, activityKey);
     }
     enrichComponentsOfActivities();
   }
 
+  // (2) Helper function of saveData
   private void fillActivityContent(ArrayList data, Object activity) {
     for (int i = 0; i < data.size(); i++) { // Data in each activity
       HashMap<String, Object> tempData = (HashMap<String, Object>) data.get(i);

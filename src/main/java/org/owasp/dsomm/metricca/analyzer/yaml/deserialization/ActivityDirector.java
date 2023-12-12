@@ -18,6 +18,7 @@ public class ActivityDirector {
     this.nester = new ArrayList<String>();
   }
 
+  // (1) Creates activities with its components
   public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException {
     Map<?, ?> activityDefinition = (Map<?, ?>) javaYaml.get("activity definitions");
     for (Map.Entry<?, ?> entry : activityDefinition.entrySet()) {
@@ -28,8 +29,9 @@ public class ActivityDirector {
     }
   }
 
+  // (1) Helper function uses ActivityBuilder
   private void createActivity(String activityName, LinkedHashMap<?, ?> data) throws SkeletonNotFoundException, ComponentNotFoundException {
-    // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components.
+    // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components which will be added to Activity when builder builds component.
     ActivityBuilder builder = new ActivityBuilder();
 
     // Get Level
@@ -49,46 +51,53 @@ public class ActivityDirector {
     activities.put(activityName, activity);
   }
 
+  // (1) Helper function for create Activity
   private void addComponents(ActivityBuilder builder, ArrayList data) throws SkeletonNotFoundException, ComponentNotFoundException {
-    LinkedHashMap components = (LinkedHashMap) data.get(0);
-    List<Object> keyList = new ArrayList<>(components.keySet());
+    for (int j = 0; j < data.size(); j++) {
+      logger.debug("data.get(j)" + data.get(j));
 
-    for (int i = 0; i < keyList.size(); i++) {
-      Object key = keyList.get(i);
-      Object value = components.get(key);
+      LinkedHashMap components = (LinkedHashMap) data.get(j);
+      List<Object> keyList = new ArrayList<>(components.keySet());
 
-      if (value instanceof String) {
-        String normalizedValue = value.toString().replaceAll("-.*", "");
-        switch (normalizedValue) {
-          case "string":
-            builder.addStringComponent(key.toString(), nester);
-            break;
-          case "date":
-            builder.addDateComponent(key.toString(), nester);
-            break;
-          case "dateperiod":
-            String periodLength = value.toString().replaceAll(".*-", "");
-            builder.addDatePeriodComponent(key.toString(), periodLength, nester);
-            break;
-          case "int":
-            builder.addIntComponent(key.toString(), nester);
-            break;
-          default:
-            throw new ComponentNotFoundException("Component '" + value + "' doesn't exists");
+      for (int i = 0; i < keyList.size(); i++) {
+        Object key = keyList.get(i);
+        Object value = components.get(key);
+
+        // TODO Change!!!
+        if (value instanceof String) {
+          String normalizedValue = key.toString().replaceAll("-.*", "");
+          switch (normalizedValue) {
+            case "string":
+              logger.info(value.toString());
+              builder.addStringComponent(value.toString(), nester);
+              break;
+            case "date":
+              builder.addDateComponent(value.toString(), nester);
+              break;
+            case "dateperiod":
+              String periodLength = key.toString().replaceAll(".*-", "");
+              builder.addDatePeriodComponent(value.toString(), periodLength, nester);
+              break;
+            case "int":
+              builder.addIntComponent(value.toString(), nester);
+              break;
+            default:
+              throw new ComponentNotFoundException("Component '" + key + "' doesn't exists");
+          }
+        } else if (value instanceof ArrayList && nester.isEmpty()) {
+          nester.add(key.toString());
+          ArrayList<Object> arr = (ArrayList<Object>) value;
+          addComponents(builder, arr);
+          nester = new ArrayList<String>();
+        } else if (value instanceof ArrayList && !nester.isEmpty()) {
+          nester.add(key.toString());
+          ArrayList<Object> arr = (ArrayList<Object>) value;
+          addComponents(builder, arr);
+        } else {
+          throw new SkeletonNotFoundException("This instance does not exist! value: " + value);
         }
-      } else if (value instanceof ArrayList && nester.isEmpty()) {
-        nester.add(key.toString());
-        ArrayList<Object> arr = (ArrayList<Object>) value;
-        addComponents(builder, arr);
-        nester = new ArrayList<String>();
-      } else if (value instanceof ArrayList && !nester.isEmpty()) {
-        nester.add(key.toString());
-        ArrayList<Object> arr = (ArrayList<Object>) value;
-        addComponents(builder, arr);
-      } else {
-        throw new SkeletonNotFoundException("This instance does not exist! value: " + value);
+        //System.out.println("Key: " + key + ", Value: " + value);
       }
-      //System.out.println("Key: " + key + ", Value: " + value);
     }
   }
 

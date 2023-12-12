@@ -32,8 +32,8 @@ public class ActivityTest {
     ArrayList<String> nester = new ArrayList<>();
     nester.add("test");
     when(component.getName()).thenReturn("testComponent");
-    activity.addComponent(component, nester);
-    Map<String, Object> components = activity.getComponents();
+    activity.addComponentToSkeleton(component, nester);
+    Map<String, Object> components = activity.getSkeletons();
     assertEquals(1, components.size());
   }
 
@@ -46,7 +46,7 @@ public class ActivityTest {
 
   @Test
   public void testAddContentSkeleton() {
-    activity.addContentSkeleton();
+    activity.addComponentToSkeleton(new StringComponent(), new ArrayList<>());
     assertEquals(1, activity.getContent().size());
   }
 
@@ -56,8 +56,8 @@ public class ActivityTest {
     nester.add("testNester");
     StringComponent stringComponent = new StringComponent();
     stringComponent.setName("testComponent");
-    activity.addComponent(stringComponent, nester);
-    Map<String, Object> components = activity.getComponents();
+    activity.addComponentToSkeleton(stringComponent, nester);
+    Map<String, Object> components = activity.getSkeletons();
     assertEquals(1, components.size());
     assertTrue(components.get("testNester") instanceof Map);
   }
@@ -67,8 +67,7 @@ public class ActivityTest {
     ArrayList<String> nester = new ArrayList<>();
     StringComponent stringComponent = new StringComponent();
     stringComponent.setName("testComponent");
-    activity.addComponent(stringComponent, nester);
-    activity.addContentSkeleton();
+    activity.addComponentToSkeleton(stringComponent, nester);
     ArrayList<Map<String, Object>> content = activity.getContent();
     assertEquals(1, content.size());
     assertTrue(content.get(0).get("testComponent") instanceof StringComponent);
