@@ -40,9 +40,9 @@ public class Application {
   // (2) Helper function of saveData
   private void fillActivityContent(ArrayList data, Object activity) {
     for (int i = 0; i < data.size(); i++) { // Data in each activity
-      HashMap<String, Object> temp_data = (HashMap<String, Object>) data.get(i);
-      Set<Entry<String, Object>> entrySet = temp_data.entrySet();
-      HashMap comp = temp_data;
+      HashMap<String, Object> tempData = (HashMap<String, Object>) data.get(i);
+      Set<Entry<String, Object>> entrySet = tempData.entrySet();
+      HashMap comp = tempData;
       Iterator<Object> iterator = comp.keySet().iterator();
       Iterator<Object> valueIterator = comp.values().iterator();
       for (Entry<String, Object> entry : entrySet) {
