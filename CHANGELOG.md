@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.6.0...v1.7.0) (2023-12-12)
+
+
+### Bug Fixes
+
+* use skeleton with array for same keys ([fa01852](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/fa01852f0f4740ecc7c0545da71e58d36157339e))
+
+
+### Features
+
+* Change key and value in skeleton.yaml ([f926378](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/f9263781cef627be72f3f1a354a1b85ab2b9ea7f))
+
 # [1.6.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.5.0...v1.6.0) (2023-12-12)
 
 
