@@ -36,6 +36,20 @@ public class GrafanaController {
     return activities;
   }
 
+  @RequestMapping(value = "/activity/{activityName}/nodate", method = RequestMethod.GET)
+  @ResponseBody
+  public HashMap<String,Activity> getActivitiesSimpleNoDate(@PathVariable String activityName) throws Exception {
+    HashMap<String,Activity> activityMap = new HashMap<String,Activity>();
+    for (Application application : applicationDirector.getApplications()) {
+      for (Activity activity : application.getActivities(activityName)) {
+        if (activity.getName().equals(activityName)) {
+          activityMap.put(application.getTeam(), activity);
+        }
+      }
+    }
+    return activityMap;
+  }
+
   @RequestMapping(value = "/", method = RequestMethod.GET)
   @ResponseBody
   public Collection<Application> getApplications() throws Exception {
@@ -78,7 +92,7 @@ public class GrafanaController {
     return applicationDirector.getActivitiesPerTeamAndApplicationFlat(teamName, application, activityName);
   }
 
-  @RequestMapping(value = "/activity/{activityName}", method = RequestMethod.GET)
+  @RequestMapping(value = "/activity/{activityName}/date", method = RequestMethod.GET)
   @ResponseBody
   public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName) throws Exception {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
