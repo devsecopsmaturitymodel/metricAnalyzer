@@ -56,7 +56,7 @@ public class Activity {
     }
   }
 
-  public Map<String, Object> getSkeleton() {
+  public Map<String, Object> getSkeletons() {
     return this.skeleton;
   }
 
