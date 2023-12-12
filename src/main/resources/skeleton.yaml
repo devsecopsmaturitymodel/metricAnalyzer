@@ -12,13 +12,13 @@ activity definitions:
           - string: url
     level: Level 1
   regular conduction of simple threat modeling on a technical level:
-      components:
-        - string: title
-          dateperiod-2y: conduction date
-          links:
-            - string: title
-            - string: url
-      level: Level 2
+    components:
+      - string: title
+        dateperiod-2y: conduction date
+        links:
+          - string: title
+          - string: url
+    level: Level 2
   source control protection:
     level: Level 1
     components:
