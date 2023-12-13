@@ -22,24 +22,15 @@ import java.io.IOException;
 import java.util.*;
 
 @Controller
-public class GrafanaController {
-  private static final Logger logger = LoggerFactory.getLogger(GrafanaController.class);
+public class GrafanaOverviewDashboardController {
+  private static final Logger logger = LoggerFactory.getLogger(GrafanaOverviewDashboardController.class);
 
   @Autowired
   private ApplicationDirector applicationDirector;
 
   @Autowired
   private OverviewDashboard overviewDashboard;
-  @RequestMapping(value = "/teamdashboard", method = RequestMethod.GET, produces="application/json")
-  @ResponseBody
-  public String getTeamDashboard() throws Exception {
-    PanelConfiguration panelConfiguration = new PanelConfiguration("Team Dashboard", "timeseries", "teamdashboard");
-    ArrayList<PanelConfiguration> panelConfigurations = new ArrayList<PanelConfiguration>();
-    panelConfigurations.add(panelConfiguration);
-    panelConfigurations.add(new PanelConfiguration("zweites Panel", "timeseries", "blabl"));
 
-    return overviewDashboard.getDashboard(panelConfigurations);
-  }
   @RequestMapping(value = "/activities", method = RequestMethod.GET)
   @ResponseBody
   public Collection<Activity> getActivities() throws Exception {
