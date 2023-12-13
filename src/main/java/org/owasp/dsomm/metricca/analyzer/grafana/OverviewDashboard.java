@@ -87,12 +87,12 @@ public class OverviewDashboard {
   }
 
   private String getPanel(PanelConfiguration panelConfiguration) throws TemplateException, IOException {
-    Template template = getTemplate(panelBaseName + dashboardType + "/" + panelConfiguration.getType() + templateFilePostfix);
     Map<String, Object> input = new HashMap<>();
     input.put("title", panelConfiguration.getTitle());
     input.put("apiUrl", apiBaseUrl + "/" + panelConfiguration.getUrl());
     input.put("datasource-uuid", datasourceUuid);
 
+    Template template = getTemplate(panelBaseName + dashboardType + "/" + panelConfiguration.getType() + templateFilePostfix);
     StringWriter stringWriter = new StringWriter();
     template.process(input, stringWriter);
     return stringWriter.toString();
