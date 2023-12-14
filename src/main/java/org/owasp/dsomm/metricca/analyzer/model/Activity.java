@@ -1,6 +1,8 @@
-package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
+package org.owasp.dsomm.metricca.analyzer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
+import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,26 +11,17 @@ import java.util.*;
 
 public class Activity {
   private static final Logger logger = LoggerFactory.getLogger(Activity.class);
-
-  private String level;
   private String activityName;
-
 
   @JsonIgnore
   private final Map<String, Object> skeleton;
   private final ArrayList<Map<String, Object>> content;
 
+  private Threshold threshold = new Threshold();
+
   public Activity() {
     skeleton = new HashMap<>();
     content = new ArrayList<>();
-  }
-
-  public String getLevel() {
-    return this.level;
-  }
-
-  public void setLevel(String level) {
-    this.level = level;
   }
 
   public String getName() {
@@ -99,7 +92,7 @@ public class Activity {
 
   @Override
   public String toString() {
-    return getClass().getSimpleName() + "[name=" + activityName + ", level=" + level + "]";
+    return getClass().getSimpleName() + "[name=" + activityName + "]";
   }
 
   // remember: including DatePeriodComponent

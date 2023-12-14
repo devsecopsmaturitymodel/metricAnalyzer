@@ -3,6 +3,7 @@ package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
+import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.owasp.dsomm.metricca.analyzer.model.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodComponent;

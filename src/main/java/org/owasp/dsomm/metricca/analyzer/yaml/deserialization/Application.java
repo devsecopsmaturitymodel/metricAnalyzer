@@ -1,6 +1,7 @@
 package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
 
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
+import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodComponent;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodEndComponent;
 import org.slf4j.Logger;

@@ -1,5 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
 
+import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodComponent;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.IntComponent;

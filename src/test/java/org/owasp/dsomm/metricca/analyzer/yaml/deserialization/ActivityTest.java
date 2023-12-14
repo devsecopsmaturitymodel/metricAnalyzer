@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.StringComponent;
 
 import java.util.ArrayList;

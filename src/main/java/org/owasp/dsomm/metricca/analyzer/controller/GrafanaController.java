@@ -3,7 +3,7 @@ package org.owasp.dsomm.metricca.analyzer.controller;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
 import org.owasp.dsomm.metricca.analyzer.model.FlattenDate;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Activity;
+import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ApplicationDirector;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;

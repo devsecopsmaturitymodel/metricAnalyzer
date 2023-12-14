@@ -2,6 +2,7 @@ package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
 
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
+import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
