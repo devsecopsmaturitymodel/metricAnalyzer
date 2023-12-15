@@ -1,3 +1,11 @@
+# [1.8.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.7.0...v1.8.0) (2023-12-15)
+
+
+### Features
+
+* Add dashboard generation ([5a5832c](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/5a5832c48abb9d8cbd3f9673ff7ccc5f4d1bd7cd))
+* Add dashboard generation ([d25d669](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/d25d669be7b70ab54491018e276b3cddeeaf5af9))
+
 # [1.7.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.6.0...v1.7.0) (2023-12-12)
 
 
