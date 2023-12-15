@@ -1,6 +1,7 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
 import org.owasp.dsomm.metricca.analyzer.model.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Activity;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Application;
@@ -26,6 +27,9 @@ public class GrafanaController {
   @Autowired
   private ApplicationDirector applicationDirector;
 
+  @Autowired
+  private OverviewDashboard overviewDashboard;
+
   @RequestMapping(value = "/activities", method = RequestMethod.GET)
   @ResponseBody
   public Collection<Activity> getActivities() throws Exception {
@@ -38,8 +42,8 @@ public class GrafanaController {
 
   @RequestMapping(value = "/activity/{activityName}/nodate", method = RequestMethod.GET)
   @ResponseBody
-  public HashMap<String,Activity> getActivitiesSimpleNoDate(@PathVariable String activityName) throws Exception {
-    HashMap<String,Activity> activityMap = new HashMap<String,Activity>();
+  public HashMap<String, Activity> getActivitiesSimpleNoDate(@PathVariable String activityName) throws Exception {
+    HashMap<String, Activity> activityMap = new HashMap<String, Activity>();
     for (Application application : applicationDirector.getApplications()) {
       for (Activity activity : application.getActivities(activityName)) {
         if (activity.getName().equals(activityName)) {
