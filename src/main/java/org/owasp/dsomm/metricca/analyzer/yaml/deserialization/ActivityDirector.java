@@ -1,11 +1,16 @@
 package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.model.Activity;
+import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
+import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.*;
 
 public class ActivityDirector {
@@ -20,7 +25,7 @@ public class ActivityDirector {
   }
 
   // (1) Creates activities with its components
-  public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException {
+  public void createActivities(Map<?, ?> javaYaml) throws SkeletonNotFoundException, ComponentNotFoundException, IOException {
     Map<?, ?> activityDefinition = (Map<?, ?>) javaYaml.get("activity definitions");
     for (Map.Entry<?, ?> entry : activityDefinition.entrySet()) {
       String key = (String) entry.getKey();
@@ -31,29 +36,41 @@ public class ActivityDirector {
   }
 
   // (1) Helper function uses ActivityBuilder
-  private void createActivity(String activityName, LinkedHashMap<?, ?> data) throws SkeletonNotFoundException, ComponentNotFoundException {
+  private void createActivity(String activityName, LinkedHashMap<?, ?> data) throws SkeletonNotFoundException, ComponentNotFoundException, IOException {
     // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components which will be added to Activity when builder builds component.
     ActivityBuilder builder = new ActivityBuilder();
 
-    // Get Level
-    String level = (String) data.get("level");
-
     builder = builder
-        .setActivityName(activityName)
-        .setLevel(level);
+        .setActivityName(activityName);
 
-    // Add Components in the builder
-    ArrayList arr = (ArrayList) data.get("components");
-    addComponents(builder, arr);
+    String thresholdsName = "thresholds";
+    String thresoldsString = writeObjectAsString(thresholdsName, data);
+    Thresholds thresholds = ThresholdParser.parseYaml(thresoldsString);
 
-    Activity activity = builder.build();
+    for(Threshold threshold : thresholds.getThresholds()) {
+      // Add Components in the builder
+      ArrayList arr = (ArrayList) data.get("components");
+      addSkeletons(builder, arr, threshold);
 
-    // Add Activity to the HashMap
-    activities.put(activityName, activity);
+      Activity activity = builder.build();
+      activity.setThresholds(thresholds);
+
+
+      // Add Activity to the HashMap
+      activities.put(activityName, activity);
+    }
+  }
+
+  private String writeObjectAsString(String nodeName, LinkedHashMap<?, ?> data) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    String tresholdString = mapper.writeValueAsString(data.get(nodeName));
+    String fullString = "{\""+nodeName+"\":" + tresholdString + "}";
+
+    return fullString;
   }
 
   // (1) Helper function for create Activity
-  private void addComponents(ActivityBuilder builder, ArrayList data) throws SkeletonNotFoundException, ComponentNotFoundException {
+  private void addSkeletons(ActivityBuilder builder, ArrayList data, Threshold threshold) throws SkeletonNotFoundException, ComponentNotFoundException {
     for (int j = 0; j < data.size(); j++) {
       logger.debug("data.get(j)" + data.get(j));
 
@@ -66,8 +83,7 @@ public class ActivityDirector {
 
         // TODO Change!!!
         if (value instanceof String) {
-          String normalizedValue = key.toString().replaceAll("-.*", "");
-          switch (normalizedValue) {
+          switch (key.toString()) {
             case "string":
               logger.info(value.toString());
               builder.addStringComponent(value.toString(), nester);
@@ -76,7 +92,7 @@ public class ActivityDirector {
               builder.addDateComponent(value.toString(), nester);
               break;
             case "dateperiod":
-              String periodLength = key.toString().replaceAll(".*-", "");
+              String periodLength = threshold.getDatePeriod().getPeriod();
               builder.addDatePeriodComponent(value.toString(), periodLength, nester);
               break;
             case "int":
@@ -88,12 +104,12 @@ public class ActivityDirector {
         } else if (value instanceof ArrayList && nester.isEmpty()) {
           nester.add(key.toString());
           ArrayList<Object> arr = (ArrayList<Object>) value;
-          addComponents(builder, arr);
+          addSkeletons(builder, arr, threshold);
           nester = new ArrayList<String>();
         } else if (value instanceof ArrayList && !nester.isEmpty()) {
           nester.add(key.toString());
           ArrayList<Object> arr = (ArrayList<Object>) value;
-          addComponents(builder, arr);
+          addSkeletons(builder, arr, threshold);
         } else {
           throw new SkeletonNotFoundException("This instance does not exist! value: " + value);
         }

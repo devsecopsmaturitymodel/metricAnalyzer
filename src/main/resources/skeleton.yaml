@@ -2,34 +2,49 @@ apiVersion: v1
 kind: skeleton
 
 activity definitions:
+  source control protection:
+    components:
+      - string: url # TODO create type url
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        dateperiod:
+          periodType: "calendar year" # sliding
+          period: 2y
+        targets:
+          - type: "count"
+            "name": "url"
+            "min value": 1
+
+
+
   security training:
     components:
-      - date: dateperiod
-        training hours: int
-        number of people: int
+      - dateperiod: "date"
+      - int: "training hours"
+      - int: "number of people"
     thresholds:
-      - level: Level 1
+      - level: "Level 1"
+        type: "activity"
+        dateperiod:
+          period type: "calendar year" # sliding
+          period: 2y
+        targets:
+          - type: "int"
+            "name": "training hours"
+            "min value": 16
+      - level: "Level 2"
         type: "activity" # "component"
-        target:
-          - "training hours":
-              min value: 12
-          - "date":
-              period type: "calendar year" # sliding
-              period: 1y
-        threshold reached: boolean # maybe not defined here
-      - level: Level 2
-        type: "activity" # "component"
-        target:
+        dateperiod:
+          period type: "calendar year" # sliding
+          period: 1y
+        targets:
           - type: "int"
             "name": "training hours"
             "min value": 16
           - type: "int"
             name: "number of people"
             min value: 2
-          - type: "dateperiod"
-            period type: "calendar year" # sliding
-            period: 1y
-        threshold reached: boolean # maybe not defined here
           # max value: 8 # to compare with training hours; max means the value is not allowed to be higher. If higher, threashold is reached
 
           #threshold info:

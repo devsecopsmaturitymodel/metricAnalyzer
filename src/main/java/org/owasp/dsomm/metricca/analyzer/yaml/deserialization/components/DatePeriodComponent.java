@@ -1,11 +1,16 @@
 package org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 
 import java.util.Date;
 
 public class DatePeriodComponent extends DateComponent implements Component<Date> {
 
+  @JsonProperty("period type")
+  private String periodType;
+
+  @JsonProperty("period")
   private String period;
 
   private boolean isActive = true;

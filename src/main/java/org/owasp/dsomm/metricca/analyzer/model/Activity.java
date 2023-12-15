@@ -1,7 +1,8 @@
 package org.owasp.dsomm.metricca.analyzer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
+import org.owasp.dsomm.metricca.analyzer.model.threshold.TargetContainer;
+import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
 import org.slf4j.Logger;
@@ -17,11 +18,14 @@ public class Activity {
   private final Map<String, Object> skeleton;
   private final ArrayList<Map<String, Object>> content;
 
-  private Threshold threshold = new Threshold();
+  private Thresholds thresholds;
+
+  private TargetContainer targetContainer;
 
   public Activity() {
     skeleton = new HashMap<>();
     content = new ArrayList<>();
+    targetContainer = new TargetContainer();
   }
 
   public String getName() {
@@ -129,5 +133,13 @@ public class Activity {
       }
     }
     return dateComponentToReturn;
+  }
+
+  public Thresholds getThresholds() {
+    return thresholds;
+  }
+
+  public void setThresholds(Thresholds thresholds) {
+    this.thresholds = thresholds;
   }
 }

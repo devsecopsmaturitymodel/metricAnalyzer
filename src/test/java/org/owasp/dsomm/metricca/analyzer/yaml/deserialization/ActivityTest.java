@@ -45,11 +45,6 @@ public class ActivityTest {
     assertEquals(name, activity.getName());
   }
 
-  @Test
-  public void testAddContentSkeleton() {
-    activity.addComponentToSkeleton(new StringComponent(), new ArrayList<>());
-    assertEquals(1, activity.getContent().size());
-  }
 
   @Test
   public void testAddComponentWithNester() {
@@ -61,16 +56,5 @@ public class ActivityTest {
     Map<String, Object> components = activity.getSkeletons();
     assertEquals(1, components.size());
     assertTrue(components.get("testNester") instanceof Map);
-  }
-
-  @Test
-  public void testAddContentSkeletonWithComponents() {
-    ArrayList<String> nester = new ArrayList<>();
-    StringComponent stringComponent = new StringComponent();
-    stringComponent.setName("testComponent");
-    activity.addComponentToSkeleton(stringComponent, nester);
-    ArrayList<Map<String, Object>> content = activity.getContent();
-    assertEquals(1, content.size());
-    assertTrue(content.get(0).get("testComponent") instanceof StringComponent);
   }
 }

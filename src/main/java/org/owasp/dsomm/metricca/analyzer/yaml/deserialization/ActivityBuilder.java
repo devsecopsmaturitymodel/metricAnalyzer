@@ -21,11 +21,6 @@ public class ActivityBuilder {
     return this;
   }
 
-  public ActivityBuilder setLevel(String level) {
-    activity.setLevel(level);
-    return this;
-  }
-
   public ActivityBuilder addStringComponent(String componentName, ArrayList<String> nester) {
     StringComponent comp = new StringComponent();
     comp.setName(componentName);

@@ -10,12 +10,12 @@ The format is as follows:
   conduction of simple threat modeling on a technical level:
     components:
       - string: title
-        dateperiod: conduction date
-        links:
+      - dateperiod: conduction date
+      -  links:
           - string: title
           - string: url
 ```
-In `components` you find `key` and `value`. In yaml, key is allowed only once. Therefore, please use an array to define values of the same type (see links).
+In `components` you find `key` and `value`. In yaml, key is allowed only once. Therefore, please use an array to define values of the same type.
 
 The value can be a string, a dateperiod or a list of links. The dateperiod is a string with the format `yyyy-MM-dd`.
 

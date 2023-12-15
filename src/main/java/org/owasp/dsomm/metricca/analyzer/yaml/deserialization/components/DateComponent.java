@@ -1,12 +1,14 @@
 package org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 
 import java.util.Date;
 
 public class DateComponent implements Component<Date> {
-
   protected String name;
+
   protected Date value;
 
   @Override

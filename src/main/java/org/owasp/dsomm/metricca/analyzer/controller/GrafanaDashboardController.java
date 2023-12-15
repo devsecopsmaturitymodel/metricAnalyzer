@@ -2,7 +2,9 @@ package org.owasp.dsomm.metricca.analyzer.controller;
 
 import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
 import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
+import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ApplicationDirector;
+import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ThresholdParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +35,14 @@ public class GrafanaDashboardController {
 
     return overviewDashboard.getDashboard(panelConfigurations);
   }
+
+  @RequestMapping(value = "/thresholds", method = RequestMethod.GET, produces = "application/json")
+  @ResponseBody
+  public Thresholds getThresholds() throws Exception {
+    Thresholds thresholds = ThresholdParser.parseYamlFile("src/main/resources/threshold.yaml");
+    logger.info("Threshold: " + thresholds);
+
+    return thresholds;
+  }
+
 }

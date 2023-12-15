@@ -5,6 +5,7 @@ import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.owasp.dsomm.metricca.analyzer.model.FlattenDate;
+import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodComponent;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class ApplicationDirector {
       logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());
       Map<?, ?> applicationYamlReader = YamlReader.convertYamlToJavaYaml(yamlApplicationFilePath.getPath());
       assert applicationYamlReader != null;
-      switch ((String) applicationYamlReader.get("kind")) {
+      switch ((String) applicationYamlReader.get("kind")) { // TODO team/application
         case "application":
         case "team":
           logger.debug("applicationYamlReader" + applicationYamlReader);

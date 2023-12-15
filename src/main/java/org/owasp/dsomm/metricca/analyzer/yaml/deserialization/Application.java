@@ -7,6 +7,7 @@ import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePer
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -20,7 +21,7 @@ public class Application {
   private String desiredLevel;
   private String mapKeyForCompare;
 
-  public Application(Map<?, ?> configJavaYaml) throws SkeletonNotFoundException {
+  public Application(Map<?, ?> configJavaYaml) throws SkeletonNotFoundException, IOException {
     activityDirector = new ActivityDirector();
     activityDirector.createActivities(configJavaYaml); // (1) Creates skeleton in activities. Each application has one ActivityDirector
   }
@@ -130,7 +131,7 @@ public class Application {
               HashMap<String, Object> content = new HashMap<String, Object>();
               content.put(((DatePeriodComponent) component).getName(), end);
               if (isPeriodBetweenTwoDates(activity, i, end.getValue())) {
-                logger.info("#####Found date which is between two dates in period, not adding: " + activity.getName() + " in application: " + getApplication() + " with datePeriodComponent: " + component + " team: " + getTeam() + " and value: " + ((DatePeriodComponent) component).isActive());
+                logger.debug("Found date which is between two dates in period, not adding: " + activity.getName() + " in application: " + getApplication() + " with datePeriodComponent: " + component + " team: " + getTeam() + " and value: " + ((DatePeriodComponent) component).isActive());
                 continue;
               }
               newContent.add(content);
