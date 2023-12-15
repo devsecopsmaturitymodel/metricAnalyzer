@@ -47,7 +47,7 @@ public class ActivityDirector {
     String thresoldsString = writeObjectAsString(thresholdsName, data);
     Thresholds thresholds = ThresholdParser.parseYaml(thresoldsString);
 
-    for(Threshold threshold : thresholds.getThresholds()) {
+    for (Threshold threshold : thresholds.getThresholds()) {
       // Add Components in the builder
       ArrayList arr = (ArrayList) data.get("components");
       addSkeletons(builder, arr, threshold);
@@ -64,7 +64,7 @@ public class ActivityDirector {
   private String writeObjectAsString(String nodeName, LinkedHashMap<?, ?> data) throws JsonProcessingException {
     ObjectMapper mapper = new ObjectMapper();
     String tresholdString = mapper.writeValueAsString(data.get(nodeName));
-    String fullString = "{\""+nodeName+"\":" + tresholdString + "}";
+    String fullString = "{\"" + nodeName + "\":" + tresholdString + "}";
 
     return fullString;
   }

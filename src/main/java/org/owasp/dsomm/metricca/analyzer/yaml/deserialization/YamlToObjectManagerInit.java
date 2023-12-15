@@ -1,7 +1,5 @@
 package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
 
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

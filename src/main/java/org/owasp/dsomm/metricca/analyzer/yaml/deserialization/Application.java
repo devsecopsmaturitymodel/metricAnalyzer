@@ -13,11 +13,9 @@ import java.util.Map.Entry;
 
 public class Application {
   private static final Logger logger = LoggerFactory.getLogger(Application.class);
-
+  private final ActivityDirector activityDirector;
   private String team;
   private String application;
-  private final ActivityDirector activityDirector;
-
   private String desiredLevel;
   private String mapKeyForCompare;
 

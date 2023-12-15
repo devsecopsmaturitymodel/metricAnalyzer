@@ -5,7 +5,6 @@ import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.model.Activity;
 import org.owasp.dsomm.metricca.analyzer.model.FlattenDate;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodComponent;
 import org.slf4j.Logger;
@@ -102,7 +101,7 @@ public class ApplicationDirector {
   public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String teamName, String applicationName, String activityName) throws Exception {
     Collection<FlattenDate> activitiesToReturn = new ArrayList<FlattenDate>();
     for (Application application : this.getApplications()) {
-      if(!application.getApplication().equals(applicationName) && applicationName != null) {
+      if (!application.getApplication().equals(applicationName) && applicationName != null) {
         logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName);
         continue;
       }
@@ -111,12 +110,12 @@ public class ApplicationDirector {
           logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName + " and team: " + application.getTeam() + " does not match: " + teamName);
           continue;
         }
-          logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
-          for (DateComponent dateComponent : activity.getDateComponents()) {
-            FlattenDate flattenDate = new FlattenDate(dateComponent.getValue());
-            flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), ((DatePeriodComponent) dateComponent).isActive());
-            activitiesToReturn.add(flattenDate);
-          }
+        logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+        for (DateComponent dateComponent : activity.getDateComponents()) {
+          FlattenDate flattenDate = new FlattenDate(dateComponent.getValue());
+          flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), ((DatePeriodComponent) dateComponent).isActive());
+          activitiesToReturn.add(flattenDate);
+        }
 
       }
     }

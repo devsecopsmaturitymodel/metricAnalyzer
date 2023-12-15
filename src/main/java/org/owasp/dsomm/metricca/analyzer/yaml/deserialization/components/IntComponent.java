@@ -1,6 +1,5 @@
 package org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 
 public class IntComponent implements Component<Integer> {

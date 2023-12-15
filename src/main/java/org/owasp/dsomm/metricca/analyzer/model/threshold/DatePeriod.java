@@ -1,7 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.model.threshold;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Target;
 
 //TODO Mapping für calendar / sliding
 public class DatePeriod {

@@ -12,15 +12,13 @@ import java.util.*;
 
 public class Activity {
   private static final Logger logger = LoggerFactory.getLogger(Activity.class);
-  private String activityName;
-
   @JsonIgnore
   private final Map<String, Object> skeleton;
   private final ArrayList<Map<String, Object>> content;
-
+  private String activityName;
   private Thresholds thresholds;
 
-  private TargetContainer targetContainer;
+  private final TargetContainer targetContainer;
 
   public Activity() {
     skeleton = new HashMap<>();

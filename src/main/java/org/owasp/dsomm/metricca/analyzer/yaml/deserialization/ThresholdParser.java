@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
 import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
