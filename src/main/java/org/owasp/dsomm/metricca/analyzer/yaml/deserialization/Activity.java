@@ -31,7 +31,7 @@ public class Activity {
     this.level = level;
   }
 
-  public String getName() {
+  public String getActivityName() {
     return this.activityName;
   }
 
@@ -42,13 +42,19 @@ public class Activity {
   public void addComponentToSkeleton(Component component, ArrayList<String> nester) {
     if (nester.isEmpty()) {
       skeleton.put(component.getName(), component);
-    } else {
-      for (String key : nester) {
-        if (skeleton.get(nester.get(0)) != null) { // Is key in components
+    } 
+    else 
+    {
+      for (String key : nester) // TODO: Should be fully recursive 
+      {
+        if (skeleton.get(nester.get(0)) != null) // The nester can have multiple components. E.g. links has title StringComponent and url StringComponent --> links={title=StringComponent[name=title, value=null], url=StringComponent[name=url, value=null]}
+        { 
           Map<String, Object> temp = (HashMap) skeleton.get(key);
           temp.put(component.getName(), component);
-        } else {
-          Map<String, Object> temp = new HashMap<>();
+        } 
+        else 
+        {
+          Map<String, Object> temp = new HashMap<>(); // HashMap for nester does not exist
           temp.put(component.getName(), component);
           skeleton.put(key, temp);
         }

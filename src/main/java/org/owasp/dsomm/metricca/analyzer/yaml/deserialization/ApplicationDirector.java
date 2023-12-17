@@ -70,7 +70,7 @@ public class ApplicationDirector {
     Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
     for (Application application : applications) {
       for (Activity activity : application.getActivities()) {
-        if (activity.getName().equals(activityName)) {
+        if (activity.getActivityName().equals(activityName)) {
           activitiesToReturn.add(activity);
         }
       }
@@ -81,7 +81,7 @@ public class ApplicationDirector {
   public Collection<Date> getDatesFromActivities(String activityName) {
     Collection<Date> datesToReturn = new ArrayList<Date>();
     for (Activity activity : this.getActivities(activityName)) {
-      if (activity.getName().equals(activityName)) {
+      if (activity.getActivityName().equals(activityName)) {
         for (DateComponent date : activity.getDateComponents())
           datesToReturn.add(date.getValue());
       }
@@ -109,7 +109,7 @@ public class ApplicationDirector {
           logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName + " and team: " + application.getTeam() + " does not match: " + teamName);
           continue;
         }
-          logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+          logger.debug("Found activity: " + activity.getActivityName() + " in application: " + application.getApplication());
           for (DateComponent dateComponent : activity.getDateComponents()) {
             FlattenDate flattenDate = new FlattenDate(dateComponent.getValue());
             flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), ((DatePeriodComponent) dateComponent).isActive());

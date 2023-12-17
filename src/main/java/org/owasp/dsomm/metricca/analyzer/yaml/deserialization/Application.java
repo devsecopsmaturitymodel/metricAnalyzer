@@ -74,7 +74,7 @@ public class Application {
     Collection<Activity> activities = getActivities();
     Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
     for (Activity activity : activities) {
-      if (activity.getName().equals(activityName)) {
+      if (activity.getActivityName().equals(activityName)) {
         activitiesToReturn.add(activity);
       }
     }
@@ -129,7 +129,7 @@ public class Application {
               HashMap<String, Object> content = new HashMap<String, Object>();
               content.put(((DatePeriodComponent) component).getName(), end);
               if (isPeriodBetweenTwoDates(activity, i, end.getValue())) {
-                logger.info("#####Found date which is between two dates in period, not adding: " + activity.getName() + " in application: " + getApplication() + " with datePeriodComponent: " + component + " team: " + getTeam() + " and value: " + ((DatePeriodComponent) component).isActive());
+                logger.info("#####Found date which is between two dates in period, not adding: " + activity.getActivityName() + " in application: " + getApplication() + " with datePeriodComponent: " + component + " team: " + getTeam() + " and value: " + ((DatePeriodComponent) component).isActive());
                 continue;
               }
               newContent.add(content);

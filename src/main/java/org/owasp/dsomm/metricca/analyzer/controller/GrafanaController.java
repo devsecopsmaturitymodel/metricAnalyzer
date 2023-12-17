@@ -46,7 +46,7 @@ public class GrafanaController {
     HashMap<String, Activity> activityMap = new HashMap<String, Activity>();
     for (Application application : applicationDirector.getApplications()) {
       for (Activity activity : application.getActivities(activityName)) {
-        if (activity.getName().equals(activityName)) {
+        if (activity.getActivityName().equals(activityName)) {
           activityMap.put(application.getTeam(), activity);
         }
       }
@@ -112,7 +112,7 @@ public class GrafanaController {
           if (dateComponent != null) {
             logger.debug("date == dateComponent.getValue()" + dateComponent.getValue());
             if (dateComponent instanceof DatePeriodComponent) {
-              logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
+              logger.debug("Found activity: " + activity.getActivityName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
               value = ((DatePeriodComponent) dateComponent).isActive();
             } else {
               value = true;
@@ -121,7 +121,7 @@ public class GrafanaController {
             dateComponent = activity.getClosestBeforeDatePeriodComponent(date);
             if (dateComponent != null) {
               value = ((DatePeriodComponent) dateComponent).isActive();
-              logger.debug("Found activity without matching date component: " + activity.getName() + " in application: " + application.getApplication() + " with closest dateComponent: " + dateComponent + "for date: " + date + " team: " + application.getTeam() + "and value: " + value);
+              logger.debug("Found activity without matching date component: " + activity.getActivityName() + " in application: " + application.getApplication() + " with closest dateComponent: " + dateComponent + "for date: " + date + " team: " + application.getTeam() + "and value: " + value);
             }
           }
           flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
@@ -141,8 +141,8 @@ public class GrafanaController {
       if (application.getTeam().equals(teamName)) {
         if (application.getApplication().equals(applicationId)) {
           for (Activity activity : application.getActivities()) {
-            if (activity.getName().equals(activityName)) {
-              logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+            if (activity.getActivityName().equals(activityName)) {
+              logger.debug("Found activity: " + activity.getActivityName() + " in application: " + application.getApplication());
               activitiesToReturn.add(activity);
             }
           }

@@ -68,7 +68,7 @@ public class ActivityDirector {
           String normalizedValue = key.toString().replaceAll("-.*", "");
           switch (normalizedValue) {
             case "string":
-              logger.info(value.toString());
+              logger.info("Test: "+value.toString());
               builder.addStringComponent(value.toString(), nester);
               break;
             case "date":
