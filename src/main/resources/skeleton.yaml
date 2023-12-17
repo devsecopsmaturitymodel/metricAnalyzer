@@ -8,9 +8,6 @@ activity definitions:
     thresholds:
       - level: "Level 1"
         type: "activity"
-        dateperiod:
-          periodType: "calendar year" # sliding
-          period: 2y
         targets:
           - type: "count"
             "name": "url"

@@ -21,7 +21,7 @@ public abstract class Target {
   public Target() {
   }
 
-  public Boolean thresholdReached() {
+  public Boolean thresholdReached(ArrayList<Component> componentArrayList) {
     return null;
   }
 

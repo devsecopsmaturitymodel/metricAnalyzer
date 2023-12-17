@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -40,19 +37,7 @@ public class GrafanaController {
     return activities;
   }
 
-  @RequestMapping(value = "/activity/{activityName}/nodate", method = RequestMethod.GET)
-  @ResponseBody
-  public HashMap<String, Activity> getActivitiesSimpleNoDate(@PathVariable String activityName) throws Exception {
-    HashMap<String, Activity> activityMap = new HashMap<String, Activity>();
-    for (Application application : applicationDirector.getApplications()) {
-      for (Activity activity : application.getActivities(activityName)) {
-        if (activity.getName().equals(activityName)) {
-          activityMap.put(application.getTeam(), activity);
-        }
-      }
-    }
-    return activityMap;
-  }
+
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
   @ResponseBody
@@ -153,23 +138,7 @@ public class GrafanaController {
     return activitiesToReturn;
   }
 
-  @RequestMapping(value = "/applications", method = RequestMethod.GET)
-  @ResponseBody
-  public Collection<String> getApplicationIds() throws IOException, GitAPIException {
-    Set<String> applicationIds = new HashSet<>();
-    for (Application application : applicationDirector.getApplications()) {
-      applicationIds.add(application.getApplication());
-    }
-    return applicationIds;
-  }
 
-  @RequestMapping(value = "/teams", method = RequestMethod.GET)
-  @ResponseBody
-  public Collection<String> getTeams() throws IOException, GitAPIException {
-    Set<String> teams = new HashSet<>();
-    for (Application application : applicationDirector.getApplications()) {
-      teams.add(application.getTeam());
-    }
-    return teams;
-  }
+
+
 }

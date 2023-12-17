@@ -28,9 +28,10 @@ public class Application {
   public void saveData(Map<?, ?> appJavaYaml) {
     HashMap allActivities = (HashMap) (appJavaYaml.get("activities"));
     for (Object activityKey : allActivities.keySet()) {
+      if((ArrayList) allActivities.get(activityKey) == null) continue;
       ArrayList data = (ArrayList) allActivities.get(activityKey);
-      for (int i = 0; i < data.size(); i++) {
-        activityDirector.getActivities().get(activityKey).cloneSkeletonAndAddToContent();
+      for (Activity activity : activityDirector.getActivities(activityKey.toString())) {
+        activity.cloneSkeletonAndAddToContent();
       }
       fillActivityContent(data, activityKey);
     }
@@ -57,9 +58,11 @@ public class Application {
             compon.setValue(entry2.getValue());
           }
         } else {
-          Component editComp = (Component) activityDirector.getActivities().get(activity).getContent().get(i).get(iterator.next());
-          Object value = valueIterator.next();
-          editComp.setValue(value);
+          for(Activity activityObject : activityDirector.getActivities(activity.toString())) {
+            Component editComp = (Component) activityObject.getContent().get(i).get(iterator.next());
+            Object value = valueIterator.next();
+            editComp.setValue(value);
+          }
         }
       }
     }
@@ -71,10 +74,20 @@ public class Application {
   }
 
   public Collection<Activity> getActivities(String activityName) {
-    Collection<Activity> activities = getActivities();
     Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
-    for (Activity activity : activities) {
+    for (Activity activity : getActivities()) {
       if (activity.getName().equals(activityName)) {
+        activitiesToReturn.add(activity);
+      }
+    }
+    return activitiesToReturn;
+  }
+
+  public Collection<Activity> getActivities(String activityName, String level) {
+    Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
+    for (Activity activity : getActivities(activityName)) {
+      logger.info("activity: " + activity.getName() + " level: " + activity.getLevel());
+      if (activity.getLevel().equals(level)) {
         activitiesToReturn.add(activity);
       }
     }

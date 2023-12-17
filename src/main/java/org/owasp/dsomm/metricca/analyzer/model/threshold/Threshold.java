@@ -3,8 +3,10 @@ package org.owasp.dsomm.metricca.analyzer.model.threshold;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
+import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.IntComponent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class Threshold {
@@ -38,7 +40,7 @@ public class Threshold {
   public Boolean getThresholdReached(ArrayList<Component> componentArrayList) {
     ArrayList<Component> componentsToCheck = new ArrayList<Component>();
     if (getDatePeriod() == null) {
-      componentsToCheck = componentArrayList;
+      componentsToCheck =  componentArrayList;
     } else {
       for (Component component : componentArrayList) {
         if (component instanceof DateComponent dateComponent) {
@@ -52,7 +54,7 @@ public class Threshold {
 
     Boolean isThresholdReached = true;
     for (Target target : targets) {
-      if (!target.thresholdReached()) {
+      if (target.thresholdReached(componentArrayList) != null && !target.thresholdReached(componentArrayList)) {
         isThresholdReached = false;
       }
     }

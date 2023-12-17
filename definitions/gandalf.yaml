@@ -12,3 +12,7 @@ activities:
     - date: 2023-01-01
       "training hours": 16
       "number of people": 2
+
+  source control protection:
+    - url: "https://test1.com"
+    - url: "https://test1.com"

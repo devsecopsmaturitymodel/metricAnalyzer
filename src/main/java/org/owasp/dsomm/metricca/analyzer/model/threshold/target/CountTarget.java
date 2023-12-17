@@ -13,11 +13,22 @@ public class CountTarget extends Target {
   @JsonProperty("max value")
   private Integer maxValue = Integer.MAX_VALUE;
 
+  private Integer count;
+
   public CountTarget() {
   }
-
+  
   public Boolean thresholdReached(ArrayList<Component> componentArrayList) {
-    ArrayList<Component> components = getComponentsForTarget(componentArrayList);
-    return components.size() >= minValue && components.size() <= maxValue;
+    this.setCount(componentArrayList);
+    return this.count >= minValue && this.count <= maxValue;
+  }
+
+
+  public void setCount(ArrayList<Component> componentArrayList) {
+    this.count = componentArrayList.size();
+  }
+
+  public Integer getCount() {
+    return count;
   }
 }

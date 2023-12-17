@@ -1,0 +1,172 @@
+[
+  {
+    "team": "fellowship of the ring",
+    "application": "gandalf",
+    "desiredLevel": "Level 1",
+    "activities": [
+      {
+        "level": "Level 1",
+        "content": [],
+        "thresholds": {
+          "thresholds": [
+            {
+              "level": "Level 1",
+              "type": "activity",
+              "targets": [
+                {
+                  "type": "count",
+                  "count": null,
+                  "name": "url",
+                  "min value": 1,
+                  "max value": 2147483647
+                }
+              ],
+              "dateperiod": null
+            }
+          ]
+        },
+        "intComponents": [],
+        "dateComponents": [],
+        "skeletons": {
+          "url": {
+            "name": "url",
+            "value": null
+          }
+        },
+        "name": "source control protection (Level 1)"
+      },
+      {
+        "level": "Level 2",
+        "content": [],
+        "thresholds": {
+          "thresholds": [
+            {
+              "level": "Level 1",
+              "type": "activity",
+              "targets": [
+                {
+                  "type": "int",
+                  "name": "training hours",
+                  "min value": 16,
+                  "max value": null
+                }
+              ],
+              "dateperiod": {
+                "period type": "calendar year",
+                "period": "2y"
+              }
+            },
+            {
+              "level": "Level 2",
+              "type": "activity",
+              "targets": [
+                {
+                  "type": "int",
+                  "name": "training hours",
+                  "min value": 16,
+                  "max value": null
+                },
+                {
+                  "type": "int",
+                  "name": "number of people",
+                  "min value": 2,
+                  "max value": null
+                }
+              ],
+              "dateperiod": {
+                "period type": "calendar year",
+                "period": "1y"
+              }
+            }
+          ]
+        },
+        "intComponents": [],
+        "dateComponents": [],
+        "skeletons": {
+          "date": {
+            "name": "date",
+            "value": null,
+            "active": true,
+            "period type": null,
+            "period": "1y"
+          },
+          "number of people": {
+            "name": "number of people",
+            "value": 0
+          },
+          "training hours": {
+            "name": "training hours",
+            "value": 0
+          }
+        },
+        "name": "security training (Level 2)"
+      },
+      {
+        "level": "Level 1",
+        "content": [],
+        "thresholds": {
+          "thresholds": [
+            {
+              "level": "Level 1",
+              "type": "activity",
+              "targets": [
+                {
+                  "type": "int",
+                  "name": "training hours",
+                  "min value": 16,
+                  "max value": null
+                }
+              ],
+              "dateperiod": {
+                "period type": "calendar year",
+                "period": "2y"
+              }
+            },
+            {
+              "level": "Level 2",
+              "type": "activity",
+              "targets": [
+                {
+                  "type": "int",
+                  "name": "training hours",
+                  "min value": 16,
+                  "max value": null
+                },
+                {
+                  "type": "int",
+                  "name": "number of people",
+                  "min value": 2,
+                  "max value": null
+                }
+              ],
+              "dateperiod": {
+                "period type": "calendar year",
+                "period": "1y"
+              }
+            }
+          ]
+        },
+        "intComponents": [],
+        "dateComponents": [],
+        "skeletons": {
+          "date": {
+            "name": "date",
+            "value": null,
+            "active": true,
+            "period type": null,
+            "period": "2y"
+          },
+          "number of people": {
+            "name": "number of people",
+            "value": 0
+          },
+          "training hours": {
+            "name": "training hours",
+            "value": 0
+          }
+        },
+        "name": "security training (Level 1)"
+      }
+    ]
+  }
+]

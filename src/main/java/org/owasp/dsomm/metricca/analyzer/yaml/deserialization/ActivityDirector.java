@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class ActivityDirector {
@@ -37,17 +38,19 @@ public class ActivityDirector {
 
   // (1) Helper function uses ActivityBuilder
   private void createActivity(String activityName, LinkedHashMap<?, ?> data) throws SkeletonNotFoundException, ComponentNotFoundException, IOException {
-    // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components which will be added to Activity when builder builds component.
-    ActivityBuilder builder = new ActivityBuilder();
-
-    builder = builder
-        .setActivityName(activityName);
-
     String thresholdsName = "thresholds";
     String thresoldsString = writeObjectAsString(thresholdsName, data);
     Thresholds thresholds = ThresholdParser.parseYaml(thresoldsString);
 
     for (Threshold threshold : thresholds.getThresholds()) {
+      logger.info("threshold: " + threshold);
+      // Initializes a new Activity Builder, creating a corresponding Activity along with an empty ArrayList for its components which will be added to Activity when builder builds component.
+      ActivityBuilder builder = new ActivityBuilder();
+
+      builder = builder
+          .setActivityName(activityName)
+          .setLevel(threshold.getLevel());
+
       // Add Components in the builder
       ArrayList arr = (ArrayList) data.get("components");
       addSkeletons(builder, arr, threshold);
@@ -57,8 +60,9 @@ public class ActivityDirector {
 
 
       // Add Activity to the HashMap
-      activities.put(activityName, activity);
+      activities.put(activityName + " " + threshold.getLevel(), activity);
     }
+    logger.info("activities created: " + activities);
   }
 
   private String writeObjectAsString(String nodeName, LinkedHashMap<?, ?> data) throws JsonProcessingException {
@@ -120,5 +124,14 @@ public class ActivityDirector {
 
   public Map<String, Activity> getActivities() {
     return activities;
+  }
+  public Collection<Activity> getActivities(String name) {
+    ArrayList<Activity> activitiesToReturn = new ArrayList<>();
+    for(Activity activity : activities.values()) {
+      if(activity.getNameWithLevel().equals(name)) {
+        activitiesToReturn.add(activity);
+      }
+    }
+    return activitiesToReturn;
   }
 }

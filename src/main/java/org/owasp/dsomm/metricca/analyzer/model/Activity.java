@@ -5,6 +5,7 @@ import org.owasp.dsomm.metricca.analyzer.model.threshold.TargetContainer;
 import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
+import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.IntComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,8 @@ import java.util.*;
 
 public class Activity {
   private static final Logger logger = LoggerFactory.getLogger(Activity.class);
+
+  String level;
   @JsonIgnore
   private final Map<String, Object> skeleton;
   private final ArrayList<Map<String, Object>> content;
@@ -28,6 +31,10 @@ public class Activity {
 
   public String getName() {
     return this.activityName;
+  }
+
+  public String getNameWithLevel() {
+    return this.activityName + " (" + this.level + ")";
   }
 
   public void setActivityName(String activityName) {
@@ -139,5 +146,25 @@ public class Activity {
 
   public void setThresholds(Thresholds thresholds) {
     this.thresholds = thresholds;
+  }
+
+  public ArrayList<Component> getIntComponents() {
+    ArrayList<Component> components = new ArrayList<>();
+    for (Map<String, Object> componentMap : content) {
+      for (Object component : componentMap.values()) {
+        if (component instanceof IntComponent) {
+          components.add((IntComponent) component);
+        }
+      }
+    }
+    return components;
+  }
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
   }
 }
