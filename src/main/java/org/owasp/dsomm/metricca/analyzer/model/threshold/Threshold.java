@@ -3,10 +3,9 @@ package org.owasp.dsomm.metricca.analyzer.model.threshold;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.IntComponent;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 
 public class Threshold {
@@ -17,7 +16,7 @@ public class Threshold {
   @JsonProperty("type")
   String type;
   @JsonProperty("targets")
-  private ArrayList<Target> targets;
+  private List<Target> targets;
   @JsonProperty("dateperiod")
   private DatePeriod datePeriod;
 
@@ -61,11 +60,11 @@ public class Threshold {
     return isThresholdReached;
   }
 
-  public ArrayList<Target> getTargets() {
+  public List<Target> getTargets() {
     return targets;
   }
 
-  public void setTargets(ArrayList<Target> targets) {
+  public void setTargets(List<Target> targets) {
     this.targets = targets;
   }
 
@@ -77,8 +76,5 @@ public class Threshold {
     this.datePeriod = datePeriod;
   }
 
-  enum Types {
-    activity,
-    component,
-  }
+
 }

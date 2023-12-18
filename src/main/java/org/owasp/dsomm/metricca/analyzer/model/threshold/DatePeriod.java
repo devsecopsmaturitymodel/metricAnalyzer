@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 //TODO Mapping für calendar / sliding
 public class DatePeriod {
   @JsonProperty("period type")
-  private String periodType;
+  private String periodType; // calendar / sliding
   @JsonProperty("period")
   private String period;
 

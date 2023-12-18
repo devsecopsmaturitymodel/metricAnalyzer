@@ -1,18 +1,5 @@
-apiVersion: v1
-kind: application
-settings:
-  desired level: Level 1 # one team can have multiple applications in different levels
-  application: "gandalf" # e.g. from deployment
-  team: "fellowship of the ring"
 
-# TODO optional fields results in null values in the output is good?
-
-activities:
-  security training:
-    - date: 2023-01-01
-      "training hours": 16
-      "number of people": 2
-
-  source control protection:
-    - url: "https://test1.com"
-    - url: "https://test1.com"
+source control protection:
+  urls:
+    - "https://test1.com"
+    - "https://test1.com"
