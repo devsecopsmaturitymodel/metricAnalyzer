@@ -12,20 +12,20 @@ import java.util.Properties;
 @Configuration
 public class TokenConfiguration {
 
-    public static final String METRIC_CA_ACCESS_TOKEN_SECRET = "metricCA.access.token.secret";
+  public static final String METRIC_CA_ACCESS_TOKEN_SECRET = "metricCA.access.token.secret";
 
-    @Value("${metricCA.access.token.secret.path}")
-    private String secretFilePath;
+  @Value("${metricCA.access.token.secret.path}")
+  private String secretFilePath;
 
-    public String getToken() {
-        Resource resource = new ClassPathResource(secretFilePath);
-        try {
-            Properties properties = PropertiesLoaderUtils.loadProperties(resource);
-            return properties.get(METRIC_CA_ACCESS_TOKEN_SECRET).toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+  public String getToken() {
+    Resource resource = new ClassPathResource(secretFilePath);
+    try {
+      Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+      return properties.get(METRIC_CA_ACCESS_TOKEN_SECRET).toString();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    return null;
+  }
 
 }

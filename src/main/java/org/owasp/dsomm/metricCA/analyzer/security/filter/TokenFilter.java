@@ -14,17 +14,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class TokenFilter extends OncePerRequestFilter {
 
-    @Value("${metricCA.access.token.enabled}")
-    private boolean enabled;
+  @Autowired
+  TokenConfiguration tokenConfiguration;
+  @Value("${metricCA.access.token.enabled}")
+  private boolean enabled;
 
-    @Autowired
-    TokenConfiguration tokenConfiguration;
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
-        if(enabled){
-            //TODO
-            System.out.println(tokenConfiguration.getToken());
-        }
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+    if (enabled) {
+      //TODO
+      System.out.println(tokenConfiguration.getToken());
     }
+  }
 }
