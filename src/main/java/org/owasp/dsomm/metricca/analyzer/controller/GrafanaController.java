@@ -1,20 +1,16 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
+import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
-import org.owasp.dsomm.metricca.analyzer.model.Activity;
-import org.owasp.dsomm.metricca.analyzer.model.FlattenDate;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Application;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ApplicationDirector;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DatePeriodComponent;
+import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
+import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
+import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -85,36 +81,36 @@ public class GrafanaController {
   @ResponseBody
   public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName) throws Exception {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
-    Collection<Date> datesFromActivities = applicationDirector.getDatesFromActivities(activityName);
-    for (Date date : datesFromActivities) {
-      FlattenDate flattenDate = new FlattenDate(date);
-      for (Application application : applicationDirector.getApplications()) {
-        for (Activity activity : application.getActivities(activityName)) {
-          boolean value = false;
-
-          DateComponent dateComponent = activity.getMatchingDatePeriodComponent(date);
-          logger.debug("dateComponent: " + dateComponent);
-          if (dateComponent != null) {
-            logger.debug("date == dateComponent.getValue()" + dateComponent.getValue());
-            if (dateComponent instanceof DatePeriodComponent) {
-              logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
-              value = ((DatePeriodComponent) dateComponent).isActive();
-            } else {
-              value = true;
-            }
-          } else {
-            dateComponent = activity.getClosestBeforeDatePeriodComponent(date);
-            if (dateComponent != null) {
-              value = ((DatePeriodComponent) dateComponent).isActive();
-              logger.debug("Found activity without matching date component: " + activity.getName() + " in application: " + application.getApplication() + " with closest dateComponent: " + dateComponent + "for date: " + date + " team: " + application.getTeam() + "and value: " + value);
-            }
-          }
-          flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
-        }
-      }
-      flattenedActivitiesToReturn.add(flattenDate);
-    }
-    logger.debug("activitiesToReturn: " + flattenedActivitiesToReturn);
+//    Collection<Date> datesFromActivities = getApplications().getDatesFromActivities(activityName);
+//    for (Date date : datesFromActivities) {
+//      FlattenDate flattenDate = new FlattenDate(date);
+//      for (Application application : applicationDirector.getApplications()) {
+//        for (Activity activity : application.getActivities(activityName)) {
+//          boolean value = false;
+//
+//          DateComponent dateComponent = activity.getMatchingDatePeriodComponent(date);
+//          logger.debug("dateComponent: " + dateComponent);
+//          if (dateComponent != null) {
+//            logger.debug("date == dateComponent.getValue()" + dateComponent.getValue());
+//            if (dateComponent instanceof DatePeriodComponent) {
+//              logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
+//              value = ((DatePeriodComponent) dateComponent).isActive();
+//            } else {
+//              value = true;
+//            }
+//          } else {
+//            dateComponent = activity.getClosestBeforeDatePeriodComponent(date);
+//            if (dateComponent != null) {
+//              value = ((DatePeriodComponent) dateComponent).isActive();
+//              logger.debug("Found activity without matching date component: " + activity.getName() + " in application: " + application.getApplication() + " with closest dateComponent: " + dateComponent + "for date: " + date + " team: " + application.getTeam() + "and value: " + value);
+//            }
+//          }
+//          flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
+//        }
+//      }
+//      flattenedActivitiesToReturn.add(flattenDate);
+//    }
+//    logger.debug("activitiesToReturn: " + flattenedActivitiesToReturn);
     return flattenedActivitiesToReturn;
   }
 

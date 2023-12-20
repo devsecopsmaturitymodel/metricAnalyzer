@@ -23,6 +23,7 @@ public class ActivityBuilder {
   }
 
   public Activity build() {
+    activity.finishActivity();
     return activity;
   }
 }

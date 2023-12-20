@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricca.analyzer.controller;
+package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
@@ -40,4 +40,6 @@ public class SkeletonActivity {
   public void setClassName(String className) {
     this.className = className;
   }
+
+
 }

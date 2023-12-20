@@ -53,7 +53,7 @@ public class Threshold {
 
     Boolean isThresholdReached = true;
     for (Target target : targets) {
-      if (target.thresholdReached(componentArrayList) != null && !target.thresholdReached(componentArrayList)) {
+      if (target.thresholdReached() != null && !target.thresholdReached()) {
         isThresholdReached = false;
       }
     }

@@ -1,8 +1,8 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Application;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ApplicationDirector;
+import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
+import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class GrafanaApplicationController {
 
   @RequestMapping(value = "/applications", method = RequestMethod.GET)
   @ResponseBody
-  public Collection<String> getApplicationIds() throws IOException, GitAPIException {
+  public Collection<String> getApplicationIds() throws IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     Set<String> applicationIds = new HashSet<>();
     for (Application application : applicationDirector.getApplications()) {
       applicationIds.add(application.getApplication());

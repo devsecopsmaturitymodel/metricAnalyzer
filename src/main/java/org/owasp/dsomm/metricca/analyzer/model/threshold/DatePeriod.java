@@ -1,6 +1,10 @@
 package org.owasp.dsomm.metricca.analyzer.model.threshold;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 //TODO Mapping für calendar / sliding
 public class DatePeriod {
@@ -22,6 +26,19 @@ public class DatePeriod {
 
   public String getPeriod() {
     return period;
+  }
+
+  @JsonIgnore // Java has problems with jodatime
+  public Period getPeriodAsPeriod() {
+    PeriodFormatter formatter = new PeriodFormatterBuilder()
+        .appendYears().appendSuffix("y")
+        .appendMonths().appendSuffix("m")
+        .appendWeeks().appendSuffix("w")
+        .appendDays().appendSuffix("d")
+        .appendHours().appendSuffix("h")
+        .toFormatter();
+
+    return formatter.parsePeriod(this.period);
   }
 
   public void setPeriod(String period) {

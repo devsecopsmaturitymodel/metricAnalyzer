@@ -1,18 +1,10 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization.activity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.Period;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.DateActivity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class DatePeriodActivity extends DateActivity {
-  @JsonProperty("period")
-  protected Period period;
+public abstract  class DatePeriodActivity extends Activity {
+  private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-  public Period getPeriod() {
-    return period;
-  }
-
-  public void setPeriod(Period period) {
-    this.period = period;
-  }
 }

@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricca.analyzer.model;
+package org.owasp.dsomm.metricca.analyzer.controller.dto;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +15,7 @@ public class FlattenDate {
   public Map<String, Object> getEntries() {
     return entries;
   }
+
 
   public void addDynamicField(String key, Object value) {
     entries.put(key, value);

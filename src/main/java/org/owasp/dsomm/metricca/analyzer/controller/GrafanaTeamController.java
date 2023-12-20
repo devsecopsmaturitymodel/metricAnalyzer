@@ -1,12 +1,8 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
-import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Thresholds;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Application;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ApplicationDirector;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ThresholdParser;
+import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
+import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,12 +25,11 @@ public class GrafanaTeamController {
 
   @RequestMapping(value = "/teams", method = RequestMethod.GET)
   @ResponseBody
-  public Collection<String> getTeams() throws IOException, GitAPIException {
+  public Collection<String> getTeams() throws IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     Set<String> teams = new HashSet<>();
     for (Application application : applicationDirector.getApplications()) {
       teams.add(application.getTeam());
     }
     return teams;
   }
-
 }

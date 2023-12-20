@@ -18,17 +18,24 @@ public class CountTarget extends Target {
   public CountTarget() {
   }
   
-  public Boolean thresholdReached(ArrayList<Component> componentArrayList) {
-    this.setCount(componentArrayList);
+  public Boolean thresholdReached() {
+    if(this.count == null) {
+      return null;
+    }
     return this.count >= minValue && this.count <= maxValue;
   }
 
 
-  public void setCount(ArrayList<Component> componentArrayList) {
-    this.count = componentArrayList.size();
+  public void setCount(Integer count) {
+    this.count = count;
   }
 
   public Integer getCount() {
     return count;
+  }
+
+  @Override
+  public void setThresholdValue(Object count) {
+    this.count =(Integer) count;
   }
 }

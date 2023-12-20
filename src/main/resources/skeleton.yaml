@@ -9,33 +9,44 @@ activity definitions:
     thresholds:
       - level: "Level 1"
         type: "activity"
-        dateperiod:
-          period type: sliding
-          period: "10y"
         targets:
           - type: "count"
-            "name": "url"
             "min value": 1
+        dateperiod:
+          period type: sliding
+          period: "2Y"
+      - level: "Level 2"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        dateperiod:
+          period type: sliding
+          period: "1Y"
 
-  - class name: "TitleAndLinkActivity"
+  - class name: "DateTitleAndLinkActivity"
     activity names:
       - "conduction of simple threat modeling on a technical level"
     thresholds:
       - level: "Level 1"
         dateperiod:
           period type: sliding
-          period: "10y"
+          period: "10Y"
         type: "activity"
         targets:
           - type: "count"
-            "name": "date"
             "min value": 1
       - level: "Level 2"
         type: "activity"
         dateperiod:
           period type: sliding
-          period: "2y"
+          period: "2Y"
         targets:
           - type: "count"
-            "name": "date"
             "min value": 1
+
+#  - class name: "DatePeriodConfirmedPerson" # Date?
+#    activity names:
+#      - "sast"
+#    thresholds:
+##      [...]

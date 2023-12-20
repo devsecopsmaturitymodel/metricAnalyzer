@@ -7,9 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ActivityCount {
-  private final Map<String, Integer> entries = new HashMap<>();
+  private Map<String, Integer> entries;
 
   ActivityCount(Collection<Activity> activities) {
+    entries = new HashMap<>();
     for (Activity activity : activities) {
       if (entries.containsKey(activity.getName())) {
         entries.put(activity.getName(), entries.get(activity.getName()) + 1);

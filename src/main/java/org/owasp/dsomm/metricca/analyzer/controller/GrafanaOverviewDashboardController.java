@@ -1,14 +1,10 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
+import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
 import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
-import org.owasp.dsomm.metricca.analyzer.model.Activity;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Target;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.target.CountTarget;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Application;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.ApplicationDirector;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
+import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
+import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,18 +57,10 @@ public class GrafanaOverviewDashboardController {
   public HashMap<String, Integer> getActivitiesWithCount(@PathVariable String activityName, @PathVariable String level) throws Exception {
     HashMap<String, Integer> activityMap = new HashMap<String, Integer>();
     for (Application application : applicationDirector.getApplications()) {
-      for (Activity activity : application.getActivities(activityName, level)) {
+      for (Activity activity : application.getActivities(activityName)) {
         logger.info("activity: " + activity.getName());
-        for (Threshold threshold : activity.getThresholds().getThresholds()) {
-          ArrayList<Component> components = activity.getIntComponents();
-          threshold.getThresholdReached(components);
-          threshold.getThresholdReached(components);
-          for (Target target : threshold.getTargets()) {
-            if (target instanceof CountTarget countTarget) {
-              activityMap.put(application.getTeam(), countTarget.getCount());
-            }
-          }
-        }
+              activityMap.put(application.getTeam(), activity.getThresholdValue());
+
       }
     }
     return activityMap;
