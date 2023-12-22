@@ -37,7 +37,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "${title}",
-  "uid": "13b1bf8f-5bec-47e8-b648-31cc4df77216",
+  "uid": "${datasourceUuid}",
   "version": 1,
   "weekStart": ""
 }

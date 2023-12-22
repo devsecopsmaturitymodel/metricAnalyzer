@@ -15,9 +15,6 @@ import java.util.Map;
 public class TeamDashboard extends GenericDashboard {
   protected String dashboardType = "team";
 
-  @Value("${metricCA.grafana.datasource.uuid:cfffcb9a-60ce-4250-97d5-4021a21405ff}")
-  protected String datasourceUuid;
-
   public TeamDashboard() {
     super();
   }
@@ -34,3 +31,4 @@ public class TeamDashboard extends GenericDashboard {
     return replacements;
   }
 }
+

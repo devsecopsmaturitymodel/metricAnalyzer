@@ -24,10 +24,6 @@ import java.util.*;
 public class OverviewDashboard extends GenericDashboard {
   protected String dashboardType = "overview";
 
-  @Value("${metricCA.grafana.datasource.uuid:3c843a46-329c-4282-8664-5fd8174db308}")
-  protected String datasourceUuid;
-
-
   public OverviewDashboard() {
     super();
   }

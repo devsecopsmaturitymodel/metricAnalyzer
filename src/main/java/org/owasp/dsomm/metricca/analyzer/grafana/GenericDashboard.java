@@ -67,7 +67,17 @@ public abstract class GenericDashboard {
     Map<String, Object> replacements = new HashMap<>();
     replacements.put("title", StringUtils.capitalize(getDashboardType()));
     replacements.put("panelsAsString", String.join(",", getPanels(panels)));
+    replacements.put("datasourceUuid", replaceLastLetter(datasourceUuid, fetchFirstCharacter(getDashboardType())));
     return replacements;
+  }
+
+  private String replaceLastLetter(String text, String newLetter) {
+    String substring = text.substring(0, text.length() - 1);
+    return substring + newLetter;
+  }
+  private String fetchFirstCharacter(String text) {
+    if(text== null) return null;
+    return text.substring(0,1);
   }
 
   private Template getTemplate(String templatePath) throws IOException, TemplateException {
@@ -94,7 +104,7 @@ public abstract class GenericDashboard {
     Map<String, Object> input = new HashMap<>();
     input.put("title", panelConfiguration.getTitle());
     input.put("apiUrl", apiBaseUrl + "/" + panelConfiguration.getUrl());
-    input.put("datasource-uuid", datasourceUuid);
+//    input.put("datasource-uuid", datasourceUuid); TODO
 
     Template template = getTemplate(panelBaseName + getDashboardType() + "/" + panelConfiguration.getType() + templateFilePostfix);
     StringWriter stringWriter = new StringWriter();

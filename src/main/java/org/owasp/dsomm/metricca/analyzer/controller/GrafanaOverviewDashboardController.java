@@ -26,31 +26,6 @@ public class GrafanaOverviewDashboardController {
   @Autowired
   private ApplicationDirector applicationDirector;
 
-  @Autowired
-  private OverviewDashboard overviewDashboard;
-
-  @RequestMapping(value = "/dashboard/overview", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public String getOverviewDashboard() throws Exception {
-    Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
-    Application application = applicationDirector.getApplications().get(0);
-//    for() {
-    for (Activity activity : application.getActivities()) {
-      PanelConfiguration panelConfiguration = activity.getPanelConfiguration();
-      Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, activity);
-      for (PanelConfiguration fetchedPanelConfiguration : fetchedPanelConfigurations.values()) {
-        if (!panelConfigurations.containsKey(fetchedPanelConfiguration.getTitle())) {
-          panelConfigurations.put(fetchedPanelConfiguration.getTitle(), fetchedPanelConfiguration);
-        }
-      }
-    }
-//    }
-    for (PanelConfiguration panelConfiguration : panelConfigurations.values()) {
-      logger.info("panelConfiguration: " + panelConfiguration.getTitle());
-    }
-    return overviewDashboard.getDashboard(panelConfigurations.values());
-  }
-
   @RequestMapping(value = "/activity/{activityName}", method = RequestMethod.GET)
   @ResponseBody
   public HashMap<String, Activity> getActivitiesSimpleNoDate(@PathVariable String activityName) throws Exception {

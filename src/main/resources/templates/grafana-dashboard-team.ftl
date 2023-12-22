@@ -94,7 +94,7 @@
             "root_selector": "",
             "source": "url",
             "type": "json",
-            "url": "http://${apiUrl}/team/${team}/applicationIds",
+            "url": "http://${apiUrl}/team/${r"${team}"}/applicationIds",
             "url_options": {
               "data": "",
               "method": "GET"
@@ -118,7 +118,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "${title}",
-  "uid": "${uuid}",
+  "uid": "${datasourceUuid}",
   "version": 1,
   "weekStart": ""
 }
