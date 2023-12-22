@@ -53,17 +53,7 @@ public class GrafanaController {
     return applicationsToReturn;
   }
 
-  @RequestMapping(value = "/team/{teamName}/applicationIds", method = RequestMethod.GET)
-  @ResponseBody
-  public Collection<String> getTeamApplicationIds(@PathVariable String teamName) throws Exception {
-    Collection<String> applicationsToReturn = new ArrayList<String>();
-    for (Application application : applicationDirector.getApplications()) {
-      if (application.getTeam().equals(teamName)) {
-        applicationsToReturn.add(application.getApplication());
-      }
-    }
-    return applicationsToReturn;
-  }
+
 
   @RequestMapping(value = "/activity/{activityName}/simple", method = RequestMethod.GET)
   @ResponseBody

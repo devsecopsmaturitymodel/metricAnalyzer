@@ -23,13 +23,5 @@ public class GrafanaTeamController {
   @Autowired
   private ApplicationDirector applicationDirector;
 
-  @RequestMapping(value = "/teams", method = RequestMethod.GET)
-  @ResponseBody
-  public Collection<String> getTeams() throws IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    Set<String> teams = new HashSet<>();
-    for (Application application : applicationDirector.getApplications()) {
-      teams.add(application.getTeam());
-    }
-    return teams;
-  }
+
 }
