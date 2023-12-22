@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.owasp.dsomm.metricca.analyzer.model.threshold.target.CountTarget;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
-
-import java.util.ArrayList;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
@@ -16,7 +13,8 @@ public abstract class Target {
   public Target() {
   }
 
-  public Boolean thresholdReached() {
+  @JsonProperty("implemented")
+  public Boolean implemented() {
     return null;
   }
 

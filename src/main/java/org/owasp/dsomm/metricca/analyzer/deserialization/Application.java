@@ -26,7 +26,7 @@ public class Application {
     return activities;
   }
 
-  public List<Activity> getActivities(String activityName) {
+  public List<Activity> getActivity(String activityName) {
     List<Activity> activitiesToReturn = new ArrayList<Activity>();
     for (Activity activity : getActivities()) {
       if (activity.getName().equals(activityName)) {
@@ -38,7 +38,7 @@ public class Application {
 
   public List<Activity> getActivities(String activityName, String level) {
     List<Activity> activitiesToReturn = new ArrayList<Activity>();
-    for (Activity activity : getActivities(activityName)) {
+    for (Activity activity : getActivity(activityName)) {
         activitiesToReturn.add(activity); // TODO Level
     }
     return activitiesToReturn;
@@ -64,7 +64,15 @@ public class Application {
 //    };
 //    Collections.sort(activity.getContent(), dateComparator);
   }
-
+  public List<Date> getDatesFromActivities() {
+    List<Date> datesToReturn = new ArrayList<Date>();
+    for(Activity activity : getActivities()) {
+      for(org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date date : activity.getDateComponents()) {
+        datesToReturn.add(date.getDate());
+      }
+    }
+    return datesToReturn;
+  }
   private List<Activity> enrichComponentsOfActivities() {
 //    Iterator<Activity> iterator = getActivities().iterator();
 //    while (iterator.hasNext()) {

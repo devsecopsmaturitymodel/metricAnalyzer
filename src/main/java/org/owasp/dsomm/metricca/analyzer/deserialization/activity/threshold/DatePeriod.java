@@ -43,13 +43,12 @@ public class DatePeriod {
   }
 
   public Boolean isInPeriod(java.util.Date givenDate) {
-    if(givenDate.after(this.date) && givenDate.before(this.getEndDate(true)) || givenDate.equals(this.date)) {
+    if(givenDate.after(this.date) && givenDate.before(this.getEndDate(true))) {
       return true;
     }
     return false;
   }
   public java.util.Date getEndDate(boolean enforceShowEndDate) {
-    logger.error("period: " + this.period);
     if(this.period == null) {
       return null;
     }
@@ -84,6 +83,7 @@ public class DatePeriod {
   }
 
   public void setShowEndDate(Boolean showEndDate) {
+    logger.debug("showEndDate: " + showEndDate);
     isShowEndDate = showEndDate;
   }
 }

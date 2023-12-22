@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 public class GrafanaTeamDashboardController {
   private static final Logger logger = LoggerFactory.getLogger(GrafanaTeamDashboardController.class);
 
-  @Autowired
-  private ApplicationDirector applicationDirector;
-
+//  @Autowired
+//  private ApplicationDirector applicationDirector;
+//
 //  @Autowired
 //  private TeamDashboard teamDashboard;
 

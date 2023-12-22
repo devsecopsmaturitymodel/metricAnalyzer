@@ -77,42 +77,7 @@ public class GrafanaController {
     return applicationDirector.getActivitiesPerTeamAndApplicationFlat(teamName, application, activityName);
   }
 
-  @RequestMapping(value = "/activity/{activityName}/date", method = RequestMethod.GET)
-  @ResponseBody
-  public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName) throws Exception {
-    Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
-//    Collection<Date> datesFromActivities = getApplications().getDatesFromActivities(activityName);
-//    for (Date date : datesFromActivities) {
-//      FlattenDate flattenDate = new FlattenDate(date);
-//      for (Application application : applicationDirector.getApplications()) {
-//        for (Activity activity : application.getActivities(activityName)) {
-//          boolean value = false;
-//
-//          DateComponent dateComponent = activity.getMatchingDatePeriodComponent(date);
-//          logger.debug("dateComponent: " + dateComponent);
-//          if (dateComponent != null) {
-//            logger.debug("date == dateComponent.getValue()" + dateComponent.getValue());
-//            if (dateComponent instanceof DatePeriodComponent) {
-//              logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
-//              value = ((DatePeriodComponent) dateComponent).isActive();
-//            } else {
-//              value = true;
-//            }
-//          } else {
-//            dateComponent = activity.getClosestBeforeDatePeriodComponent(date);
-//            if (dateComponent != null) {
-//              value = ((DatePeriodComponent) dateComponent).isActive();
-//              logger.debug("Found activity without matching date component: " + activity.getName() + " in application: " + application.getApplication() + " with closest dateComponent: " + dateComponent + "for date: " + date + " team: " + application.getTeam() + "and value: " + value);
-//            }
-//          }
-//          flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
-//        }
-//      }
-//      flattenedActivitiesToReturn.add(flattenDate);
-//    }
-//    logger.debug("activitiesToReturn: " + flattenedActivitiesToReturn);
-    return flattenedActivitiesToReturn;
-  }
+
 
   @RequestMapping(value = "/team/{teamName}/application/{applicationId}/activity/{activityName}", method = RequestMethod.GET)
   @ResponseBody

@@ -31,3 +31,17 @@ export spring_profiles_active=dev
 mvn spring-boot:run
 ```
 
+## Dashboards
+### Panel Types
+In case an activity with different periods for different levels is used, we couldn't find a way to display the data in a single panel. Therefore, we created multiple panels for each level.
+In a panel, we show the end date of a period, this is not possible in case of multiple periods. It might be possible to have different selectors to switch between Levels in a single panel.
+
+In case an activity with same period for different levels is used, the data can be displayed in a single panel.
+
+### Create new dashboards
+Assuming you are using infinity plugin:
+- Create panel in grafana and click on three dots and then `Inspect` -> `Panel JSON`
+- Put JSON of team and overview panels in `src/main/resources/templates/panel-infinity-overview/<name>.ftl` and/or `src/main/resources/templates/panel-infinity-team/<name>.ftl`
+- Exchange the `title` and `URL` in the JSON with `#{title}` and `#{url}` respectively
+
+### Adjust activities

@@ -8,25 +8,41 @@ settings:
 # TODO optional fields results in null values in the output is good?
 
 activities:
-  source control protection:
-    urls:
-      - url: "https://test1.com"
-        date: 2023-01-01
-      - date: 2022-05-01
-        url: "https://test1.com"
-      - date: 2021-05-01
-        url: "https://test1.com"
-      - date: 2023-12-19
-        url: "https://test1.com"
-
-
+#  source control protection:
+#    urls:
+#      - url: "https://test1.com"
+#        date: 2023-01-01
+#      - date: 2022-05-01
+#        url: "https://test1.com"
+#      - date: 2021-05-01
+#        url: "https://test1.com"
+#      - date: 2023-12-19
+#        url: "https://test1.com"
+#
+#
   conduction of simple threat modeling on a technical level:
     dateLinkTitles:
-      - date: "2023-11-01"
+      - date: "2008-11-01"
         title: "test"
         links:
           - title: "testtitle"
             url: "https://test1.com"
+      - date: "2019-05-01"
+        title: "test"
+        links:
+          - title: "testtitle"
+            url: "https://test1.com"
+      - date: "2019-11-01"
+        title: "test"
+        links:
+          - title: "testtitle"
+            url: "https://test1.com"
+      - date: "2022-11-01"
+        title: "test"
+        links:
+          - title: "testtitle"
+            url: "https://test1.com"
+#  sast:
 #  sast:
 #    confirmation:
 #      - confirmed by: "Max Mustermann"

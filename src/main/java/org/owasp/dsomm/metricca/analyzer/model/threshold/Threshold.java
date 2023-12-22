@@ -36,29 +36,29 @@ public class Threshold {
     this.type = type;
   }
 
-  public Boolean getThresholdReached(ArrayList<Component> componentArrayList) {
-    ArrayList<Component> componentsToCheck = new ArrayList<Component>();
-    if (getDatePeriod() == null) {
-      componentsToCheck =  componentArrayList;
-    } else {
-      for (Component component : componentArrayList) {
-        if (component instanceof DateComponent dateComponent) {
-            //                    if(dateComponent.getValue().after(getDatePeriod().getPeriod())) {
-          componentsToCheck.add(component);
-//                    }
-        }
-      }
-    }
-
-
-    Boolean isThresholdReached = true;
-    for (Target target : targets) {
-      if (target.thresholdReached() != null && !target.thresholdReached()) {
-        isThresholdReached = false;
-      }
-    }
-    return isThresholdReached;
-  }
+//  public Boolean getThresholdReached(ArrayList<Component> componentArrayList) {
+//    ArrayList<Component> componentsToCheck = new ArrayList<Component>();
+//    if (getDatePeriod() == null) {
+//      componentsToCheck =  componentArrayList;
+//    } else {
+//      for (Component component : componentArrayList) {
+//        if (component instanceof DateComponent dateComponent) {
+//            //                    if(dateComponent.getValue().after(getDatePeriod().getPeriod())) {
+//          componentsToCheck.add(component);
+////                    }
+//        }
+//      }
+//    }
+//
+//
+//    Boolean isThresholdReached = true;
+//    for (Target target : targets) {
+//      if (target.implemented() != null && !target.implemented()) {
+//        isThresholdReached = false;
+//      }
+//    }
+//    return isThresholdReached;
+//  }
 
   public List<Target> getTargets() {
     return targets;

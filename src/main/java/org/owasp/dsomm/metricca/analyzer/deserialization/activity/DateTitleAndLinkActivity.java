@@ -25,6 +25,9 @@ public class DateTitleAndLinkActivity extends DatePeriodActivity {
 
   @Override
   public List<Date> getDateComponents() {
+    if(this.dateLinkTitles == null) {
+      return Collections.emptyList();
+    }
     return this.dateLinkTitles.stream().map(x -> (Date)x).collect(Collectors.toList());
   }
 }

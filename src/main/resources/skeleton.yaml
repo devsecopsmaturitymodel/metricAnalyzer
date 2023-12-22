@@ -6,6 +6,7 @@ activity definitions:
     activity names:
       - "source control protection"
       - "build and deployment"
+    grafana panel type: "count"
     thresholds:
       - level: "Level 1"
         type: "activity"
@@ -27,6 +28,7 @@ activity definitions:
   - class name: "DateTitleAndLinkActivity"
     activity names:
       - "conduction of simple threat modeling on a technical level"
+    grafana panel type: "timeseries-flatdate"
     thresholds:
       - level: "Level 1"
         dateperiod:
@@ -40,7 +42,7 @@ activity definitions:
         type: "activity"
         dateperiod:
           period type: sliding
-          period: "2Y"
+          period: "1Y"
         targets:
           - type: "count"
             "min value": 1

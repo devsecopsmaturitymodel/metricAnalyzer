@@ -1,5 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.model.threshold.target;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.owasp.dsomm.metricca.analyzer.model.threshold.Target;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
@@ -18,13 +19,14 @@ public class CountTarget extends Target {
   public CountTarget() {
   }
   
-  public Boolean thresholdReached() {
+  @JsonIgnore
+  @JsonProperty("implemented")
+  public Boolean implemented() {
     if(this.count == null) {
       return null;
     }
     return this.count >= minValue && this.count <= maxValue;
   }
-
 
   public void setCount(Integer count) {
     this.count = count;
@@ -36,6 +38,7 @@ public class CountTarget extends Target {
 
   @Override
   public void setThresholdValue(Object count) {
-    this.count =(Integer) count;
+    if(count instanceof Integer)
+      this.count =(Integer) count;
   }
 }

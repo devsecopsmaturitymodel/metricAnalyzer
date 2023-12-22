@@ -5,12 +5,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.DatePeriodActivity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
-import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.YamlReader;
 import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.YamlScanner;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ import java.util.*;
 public class ApplicationDirector {
   private static final Logger logger = LoggerFactory.getLogger(ApplicationDirector.class);
 
-  private static Collection<Application> applications = new ArrayList<>();
+  private static List<Application> applications = new ArrayList<>();
   @Autowired
   private YamlScanner yamlScanner;
 
@@ -35,7 +34,7 @@ public class ApplicationDirector {
   private ApplicationDirector() {
   }
 
-  public Collection<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+  public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 //        if(activities == null || activities.isEmpty()) {
     yamlScanner.enforceGitCloneIfTargetFolderExists = true; // set in cronjob
     initiateApplications();
@@ -88,20 +87,48 @@ public class ApplicationDirector {
     ApplicationDirector.applications = applications;
   }
 
-//  public Collection<Date> getDatesFromActivities(String activityName) {
-//    Collection<Date> datesToReturn = new ArrayList<Date>();
-//    for (Activity activity : this.getActivities(activityName)) {
-//      if (activity.getName().equals(activityName)) {
-//        for (DateComponent date : activity.getDateComponents())
-//          datesToReturn.add(date.getValue());
-//      }
-//    }
-//    Comparator<Date> dateComparator = (date1, date2) -> {
-//      return date1.compareTo(date2);
-//    };
-//    Collections.sort((ArrayList<Date>) datesToReturn, dateComparator);
-//    return datesToReturn;
-//  }
+  public List<java.util.Date> getDatesFromActivities(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    List<java.util.Date> datesToReturn = new ArrayList<java.util.Date>();
+    for (Activity activity : this.getActivities(activityName)) {
+      if (activity.getName().equals(activityName)) {
+        for (Date date : activity.getDateComponents())
+          datesToReturn.add(date.getDate());
+      }
+    }
+    Comparator<java.util.Date> dateComparator = (date1, date2) -> {
+      return date1.compareTo(date2);
+    };
+    Collections.sort((ArrayList<java.util.Date>) datesToReturn, dateComparator);
+    return datesToReturn;
+  }
+
+  public List<java.util.Date> getStartAndEndDateFromActivities(String activityName, String level) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    List<java.util.Date> datesToReturn = new ArrayList<java.util.Date>();
+    for (Activity activity : this.getActivities(activityName)) {
+      for (java.util.Date date : activity.getThresholdDatePeriodMap().get(level).getStartAndEndDate()) {
+        if(date != null)
+          datesToReturn.add(date);
+      }
+    }
+    Comparator<java.util.Date> dateComparator = (date1, date2) -> {
+      return date1.compareTo(date2);
+    };
+    Collections.sort((ArrayList<java.util.Date>) datesToReturn, dateComparator);
+    return datesToReturn;
+  }
+
+
+  private List<Activity> getActivities(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    List<Activity> activitiesToReturn = new ArrayList<Activity>();
+    for (Application application : this.getApplications()) {
+      for (Activity activity : application.getActivity(activityName)) {
+        if (activity.getName().equals(activityName)) {
+          activitiesToReturn.add(activity);
+        }
+      }
+    }
+    return activitiesToReturn;
+  }
 
   public Collection<FlattenDate> getActivitiesPerTeamFlat(String teamName, String activityName) throws Exception {
     return getActivitiesPerTeamAndApplicationFlat(teamName, null, activityName);

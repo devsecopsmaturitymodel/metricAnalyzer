@@ -17,6 +17,9 @@ public class SkeletonActivity {
   @JsonProperty("class name")
   protected String className;
 
+  @JsonProperty("grafana panel type")
+  protected String grafanaPanelType;
+
   public List<Threshold> getThresholds() {
     return thresholds;
   }
@@ -41,5 +44,11 @@ public class SkeletonActivity {
     this.className = className;
   }
 
+  public String getGrafanaPanelType() {
+    return grafanaPanelType;
+  }
 
+  public void setGrafanaPanelType(String grafanaPanelType) {
+    this.grafanaPanelType = grafanaPanelType;
+  }
 }

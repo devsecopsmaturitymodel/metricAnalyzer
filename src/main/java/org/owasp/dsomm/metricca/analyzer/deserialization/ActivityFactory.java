@@ -21,7 +21,10 @@ public class ActivityFactory {
 
   private static Activity buildActivity(Activity activity, SkeletonActivity skeletonActivity, String activityName) throws InstantiationException, IllegalAccessException {
     ActivityBuilder builder = new ActivityBuilder(activity);
-    builder.withName(activityName).withThresholds(skeletonActivity.getThresholds());
+    builder
+      .withName(activityName)
+      .withThresholds(skeletonActivity.getThresholds())
+      .withGrafanaPanelType(skeletonActivity.getGrafanaPanelType());
     return builder.build();
   }
 

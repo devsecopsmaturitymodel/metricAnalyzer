@@ -11,7 +11,6 @@ public class UrlActivity extends DatePeriodActivity {
   @JsonProperty("urls")
   protected List<Url> urls;
 
-
   public List<Url> getUrls() {
     return urls;
   }

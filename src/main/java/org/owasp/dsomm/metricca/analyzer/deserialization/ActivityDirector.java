@@ -24,14 +24,6 @@ public class ActivityDirector {
         JsonNode activityData = activityObjects.get(activityName);
         SkeletonActivity newSkeletonActivity = copyObject(skeletonActivity);
         org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity activity = ActivityFactory.createActivity(activityName, activityData, clazz, newSkeletonActivity);
-        for(Threshold threshold : activity.getThresholds()) {
-          if(threshold.getDatePeriod() != null) {
-            if(activity instanceof org.owasp.dsomm.metricca.analyzer.deserialization.activity.DatePeriodActivity dateActivity) {
-              dateActivity.generateComponentDatePeriodFromThresholds();
-            }
-          }
-        }
-        activity.generateThresholds();
         activities.add(activity);
       }
     }
