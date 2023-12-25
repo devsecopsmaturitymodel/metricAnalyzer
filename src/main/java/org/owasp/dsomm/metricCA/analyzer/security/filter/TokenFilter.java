@@ -37,7 +37,6 @@ public class TokenFilter extends OncePerRequestFilter {
     } catch (Exception e) {
       e.printStackTrace();
       response.setStatus(401);
-      response.setHeader("Access-Control-Allow-Origin", "*");
     }
   }
 
