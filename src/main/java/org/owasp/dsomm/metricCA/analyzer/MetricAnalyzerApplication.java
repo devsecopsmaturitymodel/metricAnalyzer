@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.io.FileNotFoundException;
@@ -27,4 +28,10 @@ public class MetricAnalyzerApplication {
 
 		SpringApplication.run(MetricAnalyzerApplication.class, args);
 	}
+
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper().registerModule(new JodaModule());
+	}
+
 }
