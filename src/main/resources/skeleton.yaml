@@ -46,7 +46,14 @@ activity definitions:
         targets:
           - type: "count"
             "min value": 1
-
+      - level: "Level 3"
+        type: "activity"
+        period:
+          period type: sliding
+          timeframe: "1Y"
+        targets:
+          - type: "count"
+            "min value": 4
 #  - class name: "DatePeriodConfirmedPerson" # Date?
 #    activity names:
 #      - "sast"

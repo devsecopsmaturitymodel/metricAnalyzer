@@ -69,7 +69,6 @@ public class ApplicationDirector {
           newApp.setApplication(settingsApplicationYamlMap.get("application"));
           newApp.setTeam(settingsApplicationYamlMap.get("team"));
           newApp.setDesiredLevel(settingsApplicationYamlMap.get("desired level"));
-//          newApp.saveData(yamlApplicationFilePath.getPath(), skeletonActivities);
           applications.add(newApp);
           break;
         default:

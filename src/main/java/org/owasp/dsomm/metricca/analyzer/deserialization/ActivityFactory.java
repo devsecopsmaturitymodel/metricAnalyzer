@@ -41,7 +41,6 @@ public class ActivityFactory {
     ObjectMapper mapper = new ObjectMapper();
     String activityDataString = mapper.writeValueAsString(activityData);
     logger.debug("activityDataMap" + activityDataString);
-
     Activity activity = activityObjectMapper.convertValue(activityData, clazz);
 
     return activity;
