@@ -97,7 +97,7 @@ public class ApplicationDirector {
     Comparator<java.util.Date> dateComparator = (date1, date2) -> {
       return date1.compareTo(date2);
     };
-    Collections.sort((ArrayList<java.util.Date>) datesToReturn, dateComparator);
+    Collections.sort(datesToReturn, dateComparator);
     return datesToReturn;
   }
 
@@ -105,14 +105,14 @@ public class ApplicationDirector {
     List<java.util.Date> datesToReturn = new ArrayList<java.util.Date>();
     for (Activity activity : this.getActivities(activityName)) {
       for (java.util.Date date : activity.getThresholdDatePeriodMap().get(level).getStartAndEndDate()) {
-        if(date != null)
+        if (date != null)
           datesToReturn.add(date);
       }
     }
     Comparator<java.util.Date> dateComparator = (date1, date2) -> {
       return date1.compareTo(date2);
     };
-    Collections.sort((ArrayList<java.util.Date>) datesToReturn, dateComparator);
+    Collections.sort(datesToReturn, dateComparator);
     return datesToReturn;
   }
 

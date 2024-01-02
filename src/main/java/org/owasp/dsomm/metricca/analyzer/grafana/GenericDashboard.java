@@ -63,7 +63,8 @@ public abstract class GenericDashboard {
     template1.process(replacements, stringWriter);
     return stringWriter.toString();
   }
-  protected Map<String, Object>  getDashboardTemplateReplacements(Collection<PanelConfiguration> panels) throws TemplateException, IOException {
+
+  protected Map<String, Object> getDashboardTemplateReplacements(Collection<PanelConfiguration> panels) throws TemplateException, IOException {
     Map<String, Object> replacements = new HashMap<>();
     replacements.put("title", StringUtils.capitalize(getDashboardType()));
     replacements.put("panelsAsString", String.join(",", getPanels(panels)));
@@ -75,9 +76,10 @@ public abstract class GenericDashboard {
     String substring = text.substring(0, text.length() - 1);
     return substring + newLetter;
   }
+
   private String fetchFirstCharacter(String text) {
-    if(text== null) return null;
-    return text.substring(0,1);
+    if (text == null) return null;
+    return text.substring(0, 1);
   }
 
   private Template getTemplate(String templatePath) throws IOException, TemplateException {

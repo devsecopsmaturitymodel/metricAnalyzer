@@ -8,12 +8,13 @@ import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Skel
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityDirector {
   private static final Logger logger = LoggerFactory.getLogger(ActivityDirector.class);
 
-  private List<Activity> activities;
+  private final List<Activity> activities;
 
 
   public ActivityDirector(JsonNode activityObjects, List<SkeletonActivity> skeletonActivities) throws JsonProcessingException, InstantiationException, IllegalAccessException, ClassNotFoundException {

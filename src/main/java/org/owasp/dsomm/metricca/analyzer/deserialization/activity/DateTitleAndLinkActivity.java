@@ -1,15 +1,15 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization.activity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.DateLinkTitle;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date;
+import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.DateLinkTitle;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DateTitleAndLinkActivity extends DatePeriodActivity {
-  @JsonProperty("dateLinkTitles")
+  @JsonProperty("components")
   protected List<DateLinkTitle> dateLinkTitles;
 
   public List<DateLinkTitle> getDateLinkTitles() {
@@ -22,9 +22,9 @@ public class DateTitleAndLinkActivity extends DatePeriodActivity {
 
   @Override
   public List<Date> getDateComponents() {
-    if(this.dateLinkTitles == null) {
+    if (this.dateLinkTitles == null) {
       return Collections.emptyList();
     }
-    return this.dateLinkTitles.stream().map(x -> (Date)x).collect(Collectors.toList());
+    return this.dateLinkTitles.stream().map(x -> (Date) x).collect(Collectors.toList());
   }
 }

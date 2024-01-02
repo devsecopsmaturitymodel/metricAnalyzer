@@ -12,45 +12,41 @@ import java.util.Calendar;
 
 public class DatePeriod {
   private static final Logger logger = LoggerFactory.getLogger(DatePeriod.class);
+  protected java.util.Date date;
+  @JsonIgnore
+  protected Period period;
+  protected Boolean isShowEndDate = true;
 
   public DatePeriod(java.util.Date date, Period period) {
     this.date = date;
     this.period = period;
   }
 
-  protected java.util.Date date;
-
-  @JsonIgnore
-  protected Period period;
-
-  protected Boolean isShowEndDate = true;
   public Period getPeriod() {
     return period;
-  }
-
-  @JsonProperty("period")
-  public String getPeriodAsString() {
-    if(period == null) {
-      return null;
-    }
-    return period.toString();
   }
 
   public void setPeriod(Period period) {
     this.period = period;
   }
 
-  public Boolean isInPeriod(java.util.Date givenDate) {
-    if(givenDate.after(this.date) && givenDate.before(this.getEndDate(true))) {
-      return true;
-    }
-    return false;
-  }
-  public java.util.Date getEndDate(boolean enforceShowEndDate) {
-    if(this.period == null) {
+  @JsonProperty("period")
+  public String getPeriodAsString() {
+    if (period == null) {
       return null;
     }
-    if(!enforceShowEndDate && !getShowEndDate()) {
+    return period.toString();
+  }
+
+  public Boolean isInPeriod(java.util.Date givenDate) {
+    return givenDate.after(this.date) && givenDate.before(this.getEndDate(true));
+  }
+
+  public java.util.Date getEndDate(boolean enforceShowEndDate) {
+    if (this.period == null) {
+      return null;
+    }
+    if (!enforceShowEndDate && !getShowEndDate()) {
       return null;
     }
     Calendar c = Calendar.getInstance();
@@ -62,6 +58,7 @@ public class DatePeriod {
     java.util.Date enddate = c.getTime();
     return enddate;
   }
+
   public java.util.Date getEndDate() {
     return getEndDate(false);
   }
@@ -73,7 +70,7 @@ public class DatePeriod {
 
   public void setDate(String date) throws ParseException {
     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-    this.date =  sdf1.parse(date);
+    this.date = sdf1.parse(date);
   }
 
   public Boolean getShowEndDate() {

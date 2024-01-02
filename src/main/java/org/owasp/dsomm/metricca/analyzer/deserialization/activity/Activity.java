@@ -1,22 +1,24 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization.activity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.ThresholdDatePeriodManager;
-import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Target;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Threshold;
+import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
-public abstract  class Activity {
+public abstract class Activity {
   private static final Logger logger = LoggerFactory.getLogger(Activity.class);
 
   @JsonProperty("name")
@@ -27,6 +29,31 @@ public abstract  class Activity {
 
   @JsonProperty("grafana panel type")
   protected String grafanaPanelType;
+  //  @JsonIgnore
+//  public void setDatePeriod() {
+//    for (Threshold threshold : this.getThresholds()) {
+//      if (threshold.getDatePeriod() != null) {
+//        for (DatePeriod component : getDateComponents()) {
+//          component.setPeriod(threshold.getDatePeriod().getPeriodAsPeriod());
+//        }
+//      }
+//    }
+//  }
+//  public List<DatePeriod> getDateComponentsInPeriod() {
+//    List<DatePeriod> datePeriods = getDateComponents();
+//    for(DatePeriod component : getDateComponents()) {
+//      if(component.)) {
+//        getDateComponents().remove(component);
+//      }
+//    }
+//
+//  }
+  protected HashMap<String, ThresholdDatePeriodManager> thresholdDatePeriodMap;
+
+  public static String urlEncode(String value) {
+    return URLEncoder.encode(value, StandardCharsets.UTF_8).replace("+", "%20");
+  }
+
   public List<Threshold> getThresholds() {
     return thresholds;
   }
@@ -35,38 +62,12 @@ public abstract  class Activity {
     this.thresholds = thresholds;
   }
 
-  public void generateThresholds()  {
-    for(Threshold threshold : thresholds) {
+  public void generateThresholds() {
+    for (Threshold threshold : thresholds) {
       for (Target target : threshold.getTargets()) {
         target.setThresholdValue(thresholdDatePeriodMap.get(threshold.getLevel()).getThresholdValue());
       }
     }
-  }
-
-  protected Threshold getThresholdForLevel(String level) {
-    for(Threshold threshold : thresholds) {
-      if(threshold.getLevel().equals(level)) {
-        return threshold;
-      }
-    }
-    return null;
-  }
-
-  @JsonProperty("is activity implemented")
-  public Map<String, Boolean> isActivityImplemented() {
-    Map<String, Boolean> isImplementedMap = new HashMap<>();
-    for(Threshold threshold : thresholds) {
-      Boolean isImplemented = true;
-      for (Target target : threshold.getTargets()) {
-        if(target == null || target.implemented() == null || !target.implemented()) {
-          logger.info("target.implemented() == null" + (target.implemented() == null));
-          isImplemented = false;
-        }
-      }
-      isImplementedMap.put(threshold.getLevel(), isImplemented);
-    }
-
-    return isImplementedMap;
   }
 //        if (containsDate) {
 //          for (Object component : componentMap.values()) {
@@ -95,26 +96,32 @@ public abstract  class Activity {
 //    return false;
 //  }
 
-  //  @JsonIgnore
-//  public void setDatePeriod() {
-//    for (Threshold threshold : this.getThresholds()) {
-//      if (threshold.getDatePeriod() != null) {
-//        for (DatePeriod component : getDateComponents()) {
-//          component.setPeriod(threshold.getDatePeriod().getPeriodAsPeriod());
-//        }
-//      }
-//    }
-//  }
-//  public List<DatePeriod> getDateComponentsInPeriod() {
-//    List<DatePeriod> datePeriods = getDateComponents();
-//    for(DatePeriod component : getDateComponents()) {
-//      if(component.)) {
-//        getDateComponents().remove(component);
-//      }
-//    }
-//
-//  }
-  protected HashMap<String, ThresholdDatePeriodManager> thresholdDatePeriodMap;
+  protected Threshold getThresholdForLevel(String level) {
+    for (Threshold threshold : thresholds) {
+      if (threshold.getLevel().equals(level)) {
+        return threshold;
+      }
+    }
+    return null;
+  }
+
+  @JsonProperty("is activity implemented")
+  public Map<String, Boolean> isActivityImplemented() {
+    Map<String, Boolean> isImplementedMap = new HashMap<>();
+    for (Threshold threshold : thresholds) {
+      Boolean isImplemented = true;
+      for (Target target : threshold.getTargets()) {
+        if (target == null || target.implemented() == null || !target.implemented()) {
+          logger.info("target.implemented() == null" + (target.implemented() == null));
+          isImplemented = false;
+        }
+      }
+      isImplementedMap.put(threshold.getLevel(), isImplemented);
+    }
+
+    return isImplementedMap;
+  }
+
   public void generateComponentDatePeriodFromThresholds() {
     thresholdDatePeriodMap = new HashMap<String, ThresholdDatePeriodManager>();
     for (Threshold threshold : this.getThresholds()) {
@@ -122,33 +129,34 @@ public abstract  class Activity {
     }
   }
 
-
   public void finishActivity() {
     generateComponentDatePeriodFromThresholds();
     generateThresholds();
     setEndDatesBetweenPeriodAsInvisible();
     setTargetThresholdValue();
   }
+
   protected void setTargetThresholdValue() {
-    for(Threshold threshold : thresholds) {
+    for (Threshold threshold : thresholds) {
       Integer count = thresholdDatePeriodMap.get(threshold.getLevel()).getThresholdValue();
       for (Target target : threshold.getTargets()) {
         target.setThresholdValue(count);
       }
     }
   }
+
   private void setEndDatesBetweenPeriodAsInvisible() {
-    for(Threshold threshold : thresholds) {
+    for (Threshold threshold : thresholds) {
       thresholdDatePeriodMap.get(threshold.getLevel()).setEndDatesBetweenPeriodAsInvisible();
     }
   }
+
   public List<DatePeriod> getDateComponents(String level) {
-    if(thresholdDatePeriodMap == null) {
+    if (thresholdDatePeriodMap == null) {
       return null;
     }
     return thresholdDatePeriodMap.get(level).getThresholdDatePeriods();
   }
-
 
   public String getName() {
     return name;
@@ -165,15 +173,13 @@ public abstract  class Activity {
   public void setThresholdDatePeriodMap(HashMap<String, ThresholdDatePeriodManager> thresholdDatePeriodMap) {
     this.thresholdDatePeriodMap = thresholdDatePeriodMap;
   }
+
   public abstract List<Date> getDateComponents();
 
   public PanelConfiguration getPanelConfiguration() {
     return new PanelConfiguration(name, grafanaPanelType, "activity/" + urlEncode(name));
   }
 
-  public static String urlEncode(String value) {
-    return URLEncoder.encode(value, StandardCharsets.UTF_8).replace("+", "%20");
-  }
   public Date getMatchingDatePeriodComponent(java.util.Date givenDate) {
     for (Date dateComponent : this.getDateComponents()) {
       if (dateComponent.getDate().equals(givenDate)) {

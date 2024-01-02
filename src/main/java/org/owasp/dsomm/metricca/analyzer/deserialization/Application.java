@@ -1,14 +1,15 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
   private static final Logger logger = LoggerFactory.getLogger(Application.class);

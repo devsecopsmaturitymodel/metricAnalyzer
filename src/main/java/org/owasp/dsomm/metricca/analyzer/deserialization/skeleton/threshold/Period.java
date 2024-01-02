@@ -12,7 +12,8 @@ public class Period {
   @JsonProperty("timeframe")
   private String timeframe;
 
-  public Period() {}
+  public Period() {
+  }
 
   public String getPeriodType() {
     return periodType;
@@ -26,6 +27,10 @@ public class Period {
     return timeframe;
   }
 
+  public void setTimeframe(String timeframe) {
+    this.timeframe = timeframe;
+  }
+
   @JsonIgnore // Java has problems with jodatime
   public org.joda.time.Period getPeriodAsPeriod() {
     PeriodFormatter formatter = new PeriodFormatterBuilder()
@@ -37,9 +42,5 @@ public class Period {
         .toFormatter();
 
     return formatter.parsePeriod(this.timeframe);
-  }
-
-  public void setTimeframe(String timeframe) {
-    this.timeframe = timeframe;
   }
 }

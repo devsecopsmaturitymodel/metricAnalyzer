@@ -1,8 +1,8 @@
 package org.owasp.dsomm.metricca.analyzer.grafana;
 
 public class PanelConfiguration {
-  private String title;
   private final String type;
+  private String title;
   private String url;
 
   public PanelConfiguration(String title, String type, String url) {
@@ -15,6 +15,10 @@ public class PanelConfiguration {
     return title;
   }
 
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
   public String getType() {
     return type;
   }
@@ -25,9 +29,5 @@ public class PanelConfiguration {
 
   public void setUrl(String url) {
     this.url = url;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
   }
 }

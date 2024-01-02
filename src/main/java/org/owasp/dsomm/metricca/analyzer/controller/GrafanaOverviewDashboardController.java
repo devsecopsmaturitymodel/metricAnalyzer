@@ -70,22 +70,22 @@ public class GrafanaOverviewDashboardController {
             logger.debug("1activity.getThresholdDatePeriodMap().get(level) == null");
           } else {
             if (isDateAStartDatePeriod(date, activity, level)) {
-              logger.info("isDateAStartDatePeriod " +activityName + " " + level + " " + date + " " + application.getTeam());
+              logger.info("isDateAStartDatePeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
               value = true;
             } else if (isDateAEndDatePeriod(date, activity, level)) {
               logger.info("isDateAEndDatePeriod " + activityName + " " + level + " " + date);
               dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
               value = !dateComponent.getShowEndDate();
             } else if (isDateAEndDatePeriodEnforced(date, activity, level)) {
-              logger.info("isDateAEndDateEnforcedPeriod " +activityName + " " + level + " " + date + " " + application.getTeam());
+              logger.info("isDateAEndDateEnforcedPeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
               dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
-              if(dateComponent == null) { //no DatePeriod found, that means it is not implemented (yet)
+              if (dateComponent == null) { //no DatePeriod found, that means it is not implemented (yet)
                 value = false;
               } else {
                 value = dateComponent.isInPeriod(date);
               }
-          } else { // it is a DatePeriod from an other activity
-              logger.info("an other activity " +activityName + " " + level + " " + date + " " + application.getTeam());
+            } else { // it is a DatePeriod from an other activity
+              logger.info("an other activity " + activityName + " " + level + " " + date + " " + application.getTeam());
               dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
               if (dateComponent == null) {
                 value = false; //  no DatePeriod found, that means it is not implemented (yet)
@@ -104,27 +104,16 @@ public class GrafanaOverviewDashboardController {
 
   private boolean isDateAStartDatePeriod(Date date, Activity activity, String level) {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodForDate(date);
-    if (dateComponent == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return dateComponent != null;
   }
 
   private boolean isDateAEndDatePeriod(Date date, Activity activity, String level) {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
-    if (dateComponent == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return dateComponent != null;
   }
+
   private boolean isDateAEndDatePeriodEnforced(Date date, Activity activity, String level) {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDateEnforced(date);
-    if (dateComponent == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return dateComponent != null;
   }
 }

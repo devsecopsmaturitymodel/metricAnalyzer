@@ -51,6 +51,7 @@ public class GrafanaDashboardExportController {
     }
     return overviewDashboard.getDashboard(panelConfigurations.values());
   }
+
   @RequestMapping(value = "/dashboard/team", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
   public String getTeamDashboard() throws Exception {
