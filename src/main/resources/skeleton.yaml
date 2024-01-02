@@ -24,6 +24,22 @@ activity definitions:
         period:
           period type: sliding
           timeframe: "1Y"
+  - class name: "UrlActivity"
+    activity names:
+      - "source control protection"
+      - "security requirements"
+    grafana panel type: "count"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+
+
 
   - class name: "DateTitleAndLinkActivity"
     activity names:

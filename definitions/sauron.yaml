@@ -9,7 +9,7 @@ settings:
 
 activities:
   source control protection:
-    urls:
+    components:
       - url: "https://test1.com"
         date: 2023-05-01
       - date: 2022-10-01

@@ -7,21 +7,15 @@ The file `src/main/resources/sekelton.yaml` contains the metric definitions.
 #### Format
 The format is as follows:
 ```yaml 
-  conduction of simple threat modeling on a technical level:
-    components:
-      - string: title
-      - dateperiod: conduction date
-      -  links:
-          - string: title
-          - string: url
+TODO
 ```
 In `components` you find `key` and `value`. In yaml, key is allowed only once. Therefore, please use an array to define values of the same type.
 
 The value can be a string, a dateperiod or a list of links. The dateperiod is a string with the format `yyyy-MM-dd`.
-
 ### Content
 
 
+Remark: A team YAML is not required. But if there is a team YAML, an application YAML is required. It is not allowed to have the same activity in a team YAML and an application YAML.
 ## Local Installation and Deployment
 
 ### Build and execute with Maven
@@ -49,8 +43,8 @@ Assuming you are using infinity plugin:
 # Development
 ## Deserialization process
 1. Deserialize the YAML in `resources/skeleton.yaml` to Java object skeletons (`sekelton/SeketlonActivity`)
-    1. Using the models in `sekelton/Period` to represent the activity details (e.g. `Thresholds` -> `DatePeriod`)
-2. The `ActivityDirector` creates the activities from the skeletons and the activity YAML files from git (or local file system `/definitions`)
+    1. Using the models in `deserialization/skeleton/Period` to represent the activity details (e.g. `Thresholds` -> `DatePeriod`)
+2. The `ActivityDirector` creates the activities from the skeletons and the activity YAML files from git (or for development local file system `/definitions`)
     1. The `ActivityFactory` is called by the `ActivityDirector` to create the activities
     2. The `ActivityFactory` deserializes the YAML files to Java objects
     3. `ActivityFactory` uses the `ActivityBuilder` to transport the data from the skeleton to the activity

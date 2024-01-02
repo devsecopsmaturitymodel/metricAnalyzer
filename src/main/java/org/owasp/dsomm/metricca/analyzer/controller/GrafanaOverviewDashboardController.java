@@ -57,63 +57,6 @@ public class GrafanaOverviewDashboardController {
   @RequestMapping(value = "/activity/{activityName}/level/{level}/flatdate", method = RequestMethod.GET)
   @ResponseBody
   public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName, @PathVariable String level) throws Exception {
-    Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
-    List<Date> datesFromActivities = applicationDirector.getStartAndEndDateFromActivities(activityName, level);
-    logger.info("datesFromActivities: " + datesFromActivities);
-    for (Date date : datesFromActivities) {
-      FlattenDate flattenDate = new FlattenDate(date);
-      for (Application application : applicationDirector.getApplications()) {
-        for (Activity activity : application.getActivities(activityName)) {
-          boolean value = false;
-          org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod dateComponent = null;
-          if (activity.getThresholdDatePeriodMap().get(level) == null) {
-            logger.debug("1activity.getThresholdDatePeriodMap().get(level) == null");
-          } else {
-            if (isDateStartDatePeriod(date, activity, level)) {
-              logger.info("isDateAStartDatePeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
-              value = true;
-            } else if (isDateEndDatePeriod(date, activity, level)) {
-              logger.info("isDateAEndDatePeriod " + activityName + " " + level + " " + date);
-              dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
-              value = !dateComponent.getShowEndDate();
-            } else if (isDateEndDatePeriodEnforced(date, activity, level)) {
-              logger.info("isDateAEndDateEnforcedPeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
-              dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
-              if (dateComponent == null) { //no DatePeriod found, that means it is not implemented (yet)
-                value = false;
-              } else {
-                value = dateComponent.isInPeriod(date);
-              }
-            } else { // it is a DatePeriod from an other activity
-              logger.info("an other activity " + activityName + " " + level + " " + date + " " + application.getTeam());
-              dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
-              if (dateComponent == null) {
-                value = false; //  no DatePeriod found, that means it is not implemented (yet)
-              } else {
-                value = dateComponent.isInPeriod(date);
-              }
-            }
-          }
-          flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
-        }
-      }
-      flattenedActivitiesToReturn.add(flattenDate);
-    }
-    return flattenedActivitiesToReturn;
-  }
-
-  private boolean isDateStartDatePeriod(Date date, Activity activity, String level) {
-    DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodForDate(date);
-    return dateComponent != null;
-  }
-
-  private boolean isDateEndDatePeriod(Date date, Activity activity, String level) {
-    DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
-    return dateComponent != null;
-  }
-
-  private boolean isDateEndDatePeriodEnforced(Date date, Activity activity, String level) {
-    DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDateEnforced(date);
-    return dateComponent != null;
+    return applicationDirector.getActivitiesPerTeamAndApplicationFlat(null, null, activityName, level);
   }
 }

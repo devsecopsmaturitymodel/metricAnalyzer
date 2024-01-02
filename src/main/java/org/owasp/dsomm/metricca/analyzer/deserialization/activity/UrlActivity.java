@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UrlActivity extends DatePeriodActivity {
-  @JsonProperty("urls")
+  @JsonProperty("components")
   protected List<Url> urls;
 
   public List<Url> getUrls() {

@@ -63,12 +63,6 @@ public class GrafanaController {
     return applicationDirector.getActivitiesFlat(activityName);
   }
 
-  @RequestMapping(value = "/team/{teamName}/application/{application}/activity/{activityName}/simple", method = RequestMethod.GET)
-  @ResponseBody
-  public Collection<FlattenDate> getActivitiesPerTeamFlatSimple(@PathVariable String teamName, @PathVariable String application, @PathVariable String activityName) throws Exception {
-    return applicationDirector.getActivitiesPerTeamAndApplicationFlat(teamName, application, activityName);
-  }
-
 
   @RequestMapping(value = "/team/{teamName}/application/{applicationId}/activity/{activityName}", method = RequestMethod.GET)
   @ResponseBody
