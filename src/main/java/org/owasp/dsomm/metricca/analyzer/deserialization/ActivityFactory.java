@@ -16,7 +16,6 @@ public class ActivityFactory {
 
   public static Activity createActivity(String activityName, JsonNode activityData, Class<? extends Activity> clazz, SkeletonActivity skeletonActivity) throws JsonProcessingException, InstantiationException, IllegalAccessException {
     Activity activity = deserialize(activityName, activityData, clazz);
-
     return buildActivity(activity, skeletonActivity, activityName);
   }
 
@@ -35,15 +34,13 @@ public class ActivityFactory {
       return clazz.newInstance();
     }
     ObjectMapper activityObjectMapper = new ObjectMapper();
-//    activityObjectMapper.enableDefaultTyping();
     activityObjectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     activityObjectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-    //activityObjectMapper.registerSubtypes(new NamedType(Activity.class, activityName));
-    logger.info("activityData for activityName " + activityName + " is not null. Creating a " + clazz.getSimpleName() + " class with activityData" + activityData);
+    logger.debug("activityData for activityName " + activityName + " is not null. Creating a " + clazz.getSimpleName() + " class with activityData" + activityData);
 
     ObjectMapper mapper = new ObjectMapper();
     String activityDataString = mapper.writeValueAsString(activityData);
-    logger.info("activityDataMap" + activityDataString);
+    logger.debug("activityDataMap" + activityDataString);
 
     Activity activity = activityObjectMapper.convertValue(activityData, clazz);
 

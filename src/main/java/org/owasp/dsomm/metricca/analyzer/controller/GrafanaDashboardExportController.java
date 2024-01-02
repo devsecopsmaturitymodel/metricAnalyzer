@@ -35,7 +35,6 @@ public class GrafanaDashboardExportController {
   public String getOverviewDashboard() throws Exception {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
     Application application = applicationDirector.getApplications().get(0);
-//    for() {
     for (Activity activity : application.getActivities()) {
       PanelConfiguration panelConfiguration = activity.getPanelConfiguration();
       Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, activity);
@@ -45,7 +44,6 @@ public class GrafanaDashboardExportController {
         }
       }
     }
-//    }
     for (PanelConfiguration panelConfiguration : panelConfigurations.values()) {
       logger.info("panelConfiguration: " + panelConfiguration.getTitle());
     }
@@ -57,7 +55,6 @@ public class GrafanaDashboardExportController {
   public String getTeamDashboard() throws Exception {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
     Application application = applicationDirector.getApplications().get(0);
-//    for() {
     for (Activity activity : application.getActivities()) {
       PanelConfiguration panelConfiguration = activity.getPanelConfiguration();
       Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, activity);
@@ -67,7 +64,6 @@ public class GrafanaDashboardExportController {
         }
       }
     }
-//    }
     for (PanelConfiguration panelConfiguration : panelConfigurations.values()) {
       logger.info("panelConfiguration: " + panelConfiguration.getTitle());
     }

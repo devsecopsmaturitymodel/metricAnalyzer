@@ -78,7 +78,9 @@ public abstract class GenericDashboard {
   }
 
   private String fetchFirstCharacter(String text) {
-    if (text == null) return null;
+    if (text == null) {
+      return null;
+    }
     return text.substring(0, 1);
   }
 
@@ -106,7 +108,6 @@ public abstract class GenericDashboard {
     Map<String, Object> input = new HashMap<>();
     input.put("title", panelConfiguration.getTitle());
     input.put("apiUrl", apiBaseUrl + "/" + panelConfiguration.getUrl());
-//    input.put("datasource-uuid", datasourceUuid); TODO
 
     Template template = getTemplate(panelBaseName + getDashboardType() + "/" + panelConfiguration.getType() + templateFilePostfix);
     StringWriter stringWriter = new StringWriter();

@@ -34,11 +34,9 @@ public class ApplicationDirector {
   }
 
   public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-//        if(activities == null || activities.isEmpty()) {
     yamlScanner.enforceGitCloneIfTargetFolderExists = true; // set in cronjob
     initiateApplications();
     yamlScanner.enforceGitCloneIfTargetFolderExists = false;
-//        }
     return applications;
   }
 
@@ -50,12 +48,10 @@ public class ApplicationDirector {
     ArrayList<Application> applications = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Map<?, ?> yamlActivityFileMap = YamlReader.convertYamlToJavaYaml(yamlScanner.getSkeletonYaml().getPath());
-    //    ObjectMapper mapper = new ObjectMapper();
     String skeletonString = mapper.writeValueAsString(yamlActivityFileMap.get("activity definitions"));
     logger.info("skeletonString: " + skeletonString);
     List<SkeletonActivity> skeletonActivities = mapper.readValue(skeletonString, new TypeReference<List<SkeletonActivity>>() {
     });
-
 
     for (File yamlApplicationFilePath : yamlScanner.getApplicationYamls()) {
       logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());
@@ -90,8 +86,9 @@ public class ApplicationDirector {
     List<java.util.Date> datesToReturn = new ArrayList<java.util.Date>();
     for (Activity activity : this.getActivities(activityName)) {
       if (activity.getName().equals(activityName)) {
-        for (Date date : activity.getDateComponents())
+        for (Date date : activity.getDateComponents()) {
           datesToReturn.add(date.getDate());
+        }
       }
     }
     Comparator<java.util.Date> dateComparator = (date1, date2) -> {
@@ -105,8 +102,9 @@ public class ApplicationDirector {
     List<java.util.Date> datesToReturn = new ArrayList<java.util.Date>();
     for (Activity activity : this.getActivities(activityName)) {
       for (java.util.Date date : activity.getThresholdDatePeriodMap().get(level).getStartAndEndDate()) {
-        if (date != null)
+        if (date != null) {
           datesToReturn.add(date);
+        }
       }
     }
     Comparator<java.util.Date> dateComparator = (date1, date2) -> {
@@ -136,39 +134,37 @@ public class ApplicationDirector {
   public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String teamName, String applicationName, String activityName) throws Exception {
     Collection<FlattenDate> activitiesToReturn = new ArrayList<FlattenDate>();
     // TODO with level
-//    for (Application application : this.getApplications()) {
-//      if (!application.getApplication().equals(applicationName) && applicationName != null) {
-//        logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName);
-//        continue;
-//      }
-//      for (Activity activity : application.getActivities(activityName)) {
-//        if (!teamName.equals(application.getTeam()) && teamName != null) {
-//          logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName + " and team: " + application.getTeam() + " does not match: " + teamName);
-//          continue;
-//        }
-//        logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
-//        if(activity instanceof DatePeriodActivity) {
-//          for (Date dateComponent : ((DatePeriodActivity) activity).getDateComponents()) {
-//            FlattenDate flattenDate = new FlattenDate(dateComponent.getDate());
-//            flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), true);
-//            activitiesToReturn.add(flattenDate);
-//            if(dateComponent.getEndDate() == null ) {
-//              logger.debug("Found date which is between two dates in period, not adding: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
-//              continue;
-//            }
-//            FlattenDate flattenDateEnd = new FlattenDate(dateComponent.getEndDate());
-//            flattenDateEnd.addDynamicField(application.getTeam() + "-" + application.getApplication(), false); // TODO BUG
-//            activitiesToReturn.add(flattenDateEnd);
-//          }
-//        }
-//      }
-//    }
+    //    for (Application application : this.getApplications()) {
+    //      if (!application.getApplication().equals(applicationName) && applicationName != null) {
+    //        logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName);
+    //        continue;
+    //      }
+    //      for (Activity activity : application.getActivities(activityName)) {
+    //        if (!teamName.equals(application.getTeam()) && teamName != null) {
+    //          logger.debug("Skipping application: " + application.getApplication() + " because it does not match: " + applicationName + " and team: " + application.getTeam() + " does not match: " + teamName);
+    //          continue;
+    //        }
+    //        logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+    //        if(activity instanceof DatePeriodActivity) {
+    //          for (Date dateComponent : ((DatePeriodActivity) activity).getDateComponents()) {
+    //            FlattenDate flattenDate = new FlattenDate(dateComponent.getDate());
+    //            flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), true);
+    //            activitiesToReturn.add(flattenDate);
+    //            if(dateComponent.getEndDate() == null ) {
+    //              logger.debug("Found date which is between two dates in period, not adding: " + activity.getName() + " in application: " + application.getApplication() + " with datePeriodComponent: " + dateComponent + " team: " + application.getTeam());
+    //              continue;
+    //            }
+    //            FlattenDate flattenDateEnd = new FlattenDate(dateComponent.getEndDate());
+    //            flattenDateEnd.addDynamicField(application.getTeam() + "-" + application.getApplication(), false); // TODO BUG
+    //            activitiesToReturn.add(flattenDateEnd);
+    //          }
+    //        }
+    //      }
+    //    }
     return activitiesToReturn;
   }
-
 
   public Collection<FlattenDate> getActivitiesFlat(String activityName) throws Exception {
     return getActivitiesPerTeamFlat(null, activityName);
   }
-
 }

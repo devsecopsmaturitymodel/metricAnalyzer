@@ -69,14 +69,14 @@ public class GrafanaOverviewDashboardController {
           if (activity.getThresholdDatePeriodMap().get(level) == null) {
             logger.debug("1activity.getThresholdDatePeriodMap().get(level) == null");
           } else {
-            if (isDateAStartDatePeriod(date, activity, level)) {
+            if (isDateStartDatePeriod(date, activity, level)) {
               logger.info("isDateAStartDatePeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
               value = true;
-            } else if (isDateAEndDatePeriod(date, activity, level)) {
+            } else if (isDateEndDatePeriod(date, activity, level)) {
               logger.info("isDateAEndDatePeriod " + activityName + " " + level + " " + date);
               dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
               value = !dateComponent.getShowEndDate();
-            } else if (isDateAEndDatePeriodEnforced(date, activity, level)) {
+            } else if (isDateEndDatePeriodEnforced(date, activity, level)) {
               logger.info("isDateAEndDateEnforcedPeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
               dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
               if (dateComponent == null) { //no DatePeriod found, that means it is not implemented (yet)
@@ -102,17 +102,17 @@ public class GrafanaOverviewDashboardController {
     return flattenedActivitiesToReturn;
   }
 
-  private boolean isDateAStartDatePeriod(Date date, Activity activity, String level) {
+  private boolean isDateStartDatePeriod(Date date, Activity activity, String level) {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodForDate(date);
     return dateComponent != null;
   }
 
-  private boolean isDateAEndDatePeriod(Date date, Activity activity, String level) {
+  private boolean isDateEndDatePeriod(Date date, Activity activity, String level) {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
     return dateComponent != null;
   }
 
-  private boolean isDateAEndDatePeriodEnforced(Date date, Activity activity, String level) {
+  private boolean isDateEndDatePeriodEnforced(Date date, Activity activity, String level) {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDateEnforced(date);
     return dateComponent != null;
   }
