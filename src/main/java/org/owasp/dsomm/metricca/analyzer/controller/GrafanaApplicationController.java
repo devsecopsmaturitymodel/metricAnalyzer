@@ -1,6 +1,8 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
+import com.fasterxml.jackson.module.jsonSchema.factories.SchemaFactoryWrapper;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
@@ -17,8 +19,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
-import com.fasterxml.jackson.module.jsonSchema.factories.SchemaFactoryWrapper;
 
 @Controller
 public class GrafanaApplicationController {
@@ -36,6 +36,7 @@ public class GrafanaApplicationController {
     }
     return applicationIds;
   }
+
   @RequestMapping(value = "/activity-schema", method = RequestMethod.GET)
   @ResponseBody
   public String getApplicationSchema() throws IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {

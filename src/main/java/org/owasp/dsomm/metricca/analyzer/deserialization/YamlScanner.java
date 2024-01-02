@@ -10,16 +10,12 @@ import org.springframework.context.annotation.Configuration;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collection;
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.eclipse.jgit.api.errors.GitAPIException;
 
 @Configuration
 public class YamlScanner {

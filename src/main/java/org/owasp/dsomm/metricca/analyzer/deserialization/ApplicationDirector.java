@@ -7,7 +7,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 // Utilizes Singleton Design Pattern
@@ -63,16 +61,16 @@ public class ApplicationDirector {
       JsonNode applicationJsonNode = objectMapper.readTree(new File(yamlApplicationFilePath.getPath()));
       yamlApplicationNodes.addJsonNode(applicationJsonNode);
     }
-    for(String teamName : yamlApplicationNodes.getNodes().keySet()) {
+    for (String teamName : yamlApplicationNodes.getNodes().keySet()) {
 
       ArrayList<Application> teamApplications = new ArrayList<>();
-      for(JsonNode applicationJsonNode : yamlApplicationNodes.getNodes(teamName, "team")) {
+      for (JsonNode applicationJsonNode : yamlApplicationNodes.getNodes(teamName, "team")) {
         Application application = createApplication(applicationJsonNode, skeletonActivities);
         teamApplications.add(application);
       }
-      for(JsonNode applicationJsonNode : yamlApplicationNodes.getNodes(teamName, "application")) {
+      for (JsonNode applicationJsonNode : yamlApplicationNodes.getNodes(teamName, "application")) {
         Application application = createApplication(applicationJsonNode, skeletonActivities);
-        for(Application teamApplication: teamApplications) {
+        for (Application teamApplication : teamApplications) {
           application.getActivities().addAll(teamApplication.getActivities());
         }
         applications.add(application);
@@ -80,24 +78,26 @@ public class ApplicationDirector {
     }
     ApplicationDirector.applications = applications;
   }
+
   private Application createApplication(JsonNode jsonNode, List<SkeletonActivity> skeletonActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     JsonNode settings = jsonNode.get("settings");
     Application newApp = new Application(jsonNode.get("activities"), skeletonActivities);
-    if(settings.has("application")) {
+    if (settings.has("application")) {
       newApp.setApplication(settings.get("application").asText());
     }
-    if(settings.has("team")) {
+    if (settings.has("team")) {
       newApp.setTeam(settings.get("team").asText());
     }
-    if(settings.has("desired level")) {
+    if (settings.has("desired level")) {
       newApp.setDesiredLevel(settings.get("desired level").asText());
     }
     return newApp;
   }
+
   public LinkedHashMap<String, java.util.Date> getStartAndEndDateFromActivitiesAsMap(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     LinkedHashMap<String, java.util.Date> datesToReturn = new LinkedHashMap<String, java.util.Date>();
     for (String level : getLevelsForActivity(activityName)) {
-      for (java.util.Date date : getStartAndEndDateFromActivities(activityName,level)) {
+      for (java.util.Date date : getStartAndEndDateFromActivities(activityName, level)) {
         datesToReturn.put(level, date);
       }
     }
@@ -127,10 +127,10 @@ public class ApplicationDirector {
   }
 
   private List<String> getLevelsForActivity(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-    if(getApplications().size() == 0) {
+    if (getApplications().size() == 0) {
       return Collections.emptyList();
     }
-    for(Activity activity : this.getActivities(activityName)) {
+    for (Activity activity : this.getActivities(activityName)) {
       return activity.getThresholdDatePeriodMap().keySet().stream().toList();
     }
     return Collections.emptyList();
@@ -168,14 +168,15 @@ public class ApplicationDirector {
   public Collection<FlattenDate> getActivitiesPerTeamFlat(String teamName, String activityName) throws Exception {
     return getActivitiesPerTeamAndApplicationFlat(null, teamName, activityName, null);
   }
+
   public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String applicationName, String teamName, String activityName) throws Exception {
-    return getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName,null);
+    return getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName, null);
   }
 
   public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String applicationName, String teamName, String activityName, String level) throws Exception {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
     List<java.util.Date> datesFromActivities;
-    if(level == null) {
+    if (level == null) {
       datesFromActivities = getStartAndEndDateFromActivities(activityName);
       logger.debug("datesFromActivities: " + datesFromActivities);
     } else {
@@ -230,6 +231,7 @@ public class ApplicationDirector {
     }
     return flattenedActivitiesToReturn;
   }
+
   private boolean isDateStartDatePeriod(java.util.Date date, Activity activity, String level) {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodForDate(date);
     return dateComponent != null;
@@ -244,12 +246,14 @@ public class ApplicationDirector {
     DatePeriod dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDateEnforced(date);
     return dateComponent != null;
   }
+
   public Collection<FlattenDate> getActivitiesFlat(String activityName) throws Exception {
     return getActivitiesPerTeamFlat(null, activityName);
   }
+
   public LinkedHashMap<String, Collection<FlattenDate>> getActivitiesPerTeamAndApplicationFlatAsLevelMap(String applicationName, String teamName, String activityName) throws Exception {
     LinkedHashMap<String, Collection<FlattenDate>> flattenedActivitiesToReturn = new LinkedHashMap<String, Collection<FlattenDate>>();
-    for(String level : getLevelsForActivity(activityName)) {
+    for (String level : getLevelsForActivity(activityName)) {
       flattenedActivitiesToReturn.put(level, getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName, level));
     }
     return flattenedActivitiesToReturn;
