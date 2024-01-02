@@ -1,7 +1,7 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Threshold;
 
 import java.util.List;
 

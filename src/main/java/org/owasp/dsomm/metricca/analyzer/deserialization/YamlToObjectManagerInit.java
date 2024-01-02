@@ -1,6 +1,5 @@
-package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
+package org.owasp.dsomm.metricca.analyzer.deserialization;
 
-import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

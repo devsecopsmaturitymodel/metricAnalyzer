@@ -1,11 +1,10 @@
 package org.owasp.dsomm.metricca.analyzer.grafana;
 
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Threshold;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 

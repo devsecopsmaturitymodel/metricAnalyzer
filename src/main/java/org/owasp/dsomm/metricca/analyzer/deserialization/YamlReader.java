@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
+package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import org.yaml.snakeyaml.Yaml;
 

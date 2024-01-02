@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricca.analyzer.model.threshold;
+package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

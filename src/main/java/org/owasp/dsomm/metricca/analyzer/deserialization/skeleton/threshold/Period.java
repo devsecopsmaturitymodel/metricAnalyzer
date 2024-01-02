@@ -1,20 +1,18 @@
-package org.owasp.dsomm.metricca.analyzer.model.threshold;
+package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 //TODO Mapping für calendar / sliding
-public class DatePeriod {
+public class Period {
   @JsonProperty("period type")
   private String periodType; // calendar / sliding
-  @JsonProperty("period")
-  private String period;
+  @JsonProperty("timeframe")
+  private String timeframe;
 
-  public DatePeriod() {
-  }
+  public Period() {}
 
   public String getPeriodType() {
     return periodType;
@@ -24,12 +22,12 @@ public class DatePeriod {
     this.periodType = periodType;
   }
 
-  public String getPeriod() {
-    return period;
+  public String getTimeframe() {
+    return timeframe;
   }
 
   @JsonIgnore // Java has problems with jodatime
-  public Period getPeriodAsPeriod() {
+  public org.joda.time.Period getPeriodAsPeriod() {
     PeriodFormatter formatter = new PeriodFormatterBuilder()
         .appendYears().appendSuffix("y")
         .appendMonths().appendSuffix("m")
@@ -38,10 +36,10 @@ public class DatePeriod {
         .appendHours().appendSuffix("h")
         .toFormatter();
 
-    return formatter.parsePeriod(this.period);
+    return formatter.parsePeriod(this.timeframe);
   }
 
-  public void setPeriod(String period) {
-    this.period = period;
+  public void setTimeframe(String timeframe) {
+    this.timeframe = timeframe;
   }
 }

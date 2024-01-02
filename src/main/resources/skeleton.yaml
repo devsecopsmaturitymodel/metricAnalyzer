@@ -13,17 +13,17 @@ activity definitions:
         targets:
           - type: "count"
             "min value": 1
-        dateperiod:
+        period:
           period type: sliding
-          period: "2Y"
+          timeframe: "2Y"
       - level: "Level 2"
         type: "activity"
         targets:
           - type: "count"
             "min value": 1
-        dateperiod:
+        period:
           period type: sliding
-          period: "1Y"
+          timeframe: "1Y"
 
   - class name: "DateTitleAndLinkActivity"
     activity names:
@@ -31,18 +31,18 @@ activity definitions:
     grafana panel type: "timeseries-flatdate"
     thresholds:
       - level: "Level 1"
-        dateperiod:
+        period:
           period type: sliding
-          period: "10Y"
+          timeframe: "10Y"
         type: "activity"
         targets:
           - type: "count"
             "min value": 1
       - level: "Level 2"
         type: "activity"
-        dateperiod:
+        period:
           period type: sliding
-          period: "1Y"
+          timeframe: "1Y"
         targets:
           - type: "count"
             "min value": 1

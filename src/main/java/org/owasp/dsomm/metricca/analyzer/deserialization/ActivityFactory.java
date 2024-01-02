@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,10 +45,6 @@ public class ActivityFactory {
     String activityDataString = mapper.writeValueAsString(activityData);
     logger.info("activityDataMap" + activityDataString);
 
-
-//    SimpleModule module = new SimpleModule();
-//    module.addDeserializer(DatePeriod.class, new ComponentDeserializer());
-//    activityObjectMapper.registerModule(module);
     Activity activity = activityObjectMapper.convertValue(activityData, clazz);
 
     return activity;

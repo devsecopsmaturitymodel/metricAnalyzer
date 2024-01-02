@@ -1,10 +1,7 @@
-package org.owasp.dsomm.metricca.analyzer.model.threshold;
+package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.Component;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,8 +14,8 @@ public class Threshold {
   String type;
   @JsonProperty("targets")
   private List<Target> targets;
-  @JsonProperty("dateperiod")
-  private DatePeriod datePeriod;
+  @JsonProperty("period")
+  private Period period;
 
   public String getLevel() {
     return level;
@@ -68,12 +65,12 @@ public class Threshold {
     this.targets = targets;
   }
 
-  public DatePeriod getDatePeriod() {
-    return datePeriod;
+  public Period getDatePeriod() {
+    return period;
   }
 
-  public void setDatePeriod(DatePeriod datePeriod) {
-    this.datePeriod = datePeriod;
+  public void setDatePeriod(Period period) {
+    this.period = period;
   }
 
 

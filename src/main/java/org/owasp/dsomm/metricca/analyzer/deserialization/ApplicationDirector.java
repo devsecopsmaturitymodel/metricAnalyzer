@@ -8,10 +8,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.YamlReader;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.YamlScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +120,7 @@ public class ApplicationDirector {
   private List<Activity> getActivities(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     List<Activity> activitiesToReturn = new ArrayList<Activity>();
     for (Application application : this.getApplications()) {
-      for (Activity activity : application.getActivity(activityName)) {
+      for (Activity activity : application.getActivities(activityName)) {
         if (activity.getName().equals(activityName)) {
           activitiesToReturn.add(activity);
         }

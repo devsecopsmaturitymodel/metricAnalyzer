@@ -45,3 +45,13 @@ Assuming you are using infinity plugin:
 - Exchange the `title` and `URL` in the JSON with `#{title}` and `#{url}` respectively
 
 ### Adjust activities
+
+# Development
+## Deserialization process
+1. Deserialize the YAML in `resources/skeleton.yaml` to Java object skeletons (`sekelton/SeketlonActivity`)
+    1. Using the models in `sekelton/Period` to represent the activity details (e.g. `Thresholds` -> `DatePeriod`)
+2. The `ActivityDirector` creates the activities from the skeletons and the activity YAML files from git (or local file system `/definitions`)
+    1. The `ActivityFactory` is called by the `ActivityDirector` to create the activities
+    2. The `ActivityFactory` deserializes the YAML files to Java objects
+    3. `ActivityFactory` uses the `ActivityBuilder` to transport the data from the skeleton to the activity
+3. On request, the `ThresholdDatePeriodManager` calculates the `DatePeriod` based on the given dates form YAMLs and threshold-`Period`s

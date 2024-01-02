@@ -3,8 +3,6 @@ package org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.time.Period;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +56,7 @@ public class DatePeriod {
     Calendar c = Calendar.getInstance();
     c.setTime(this.date);
     c.add(Calendar.HOUR, this.period.getHours());
-    c.add(Calendar.DATE, this.period.getDays()); // TODO Check
+    c.add(Calendar.DATE, this.period.getDays()); // TODO Check in unit test
     c.add(Calendar.MONTH, this.period.getMonths());
     c.add(Calendar.YEAR, this.period.getYears());
     java.util.Date enddate = c.getTime();

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,14 +40,4 @@ public class ActivityDirector {
   public List<Activity> getActivities() {
     return activities;
   }
-//
-//  public Collection<Activity> getActivities(String name) {
-//    ArrayList<Activity> activitiesToReturn = new ArrayList<>();
-//    for(Activity activity : activities) {
-//      if(activity.getNameWithLevel().equals(name)) {
-//        activitiesToReturn.add(activity);
-//      }
-//    }
-//    return activitiesToReturn;
-//  }
 }

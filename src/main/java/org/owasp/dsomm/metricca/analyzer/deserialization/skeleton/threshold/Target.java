@@ -1,9 +1,9 @@
-package org.owasp.dsomm.metricca.analyzer.model.threshold;
+package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.target.CountTarget;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.target.CountTarget;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({

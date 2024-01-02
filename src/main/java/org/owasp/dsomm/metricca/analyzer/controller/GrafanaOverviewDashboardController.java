@@ -5,9 +5,6 @@ import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
-import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
-import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
-import org.owasp.dsomm.metricca.analyzer.grafana.PanelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +28,7 @@ public class GrafanaOverviewDashboardController {
   public HashMap<String, Activity> getActivitiesSimpleNoDate(@PathVariable String activityName) throws Exception {
     HashMap<String, Activity> activityMap = new HashMap<String, Activity>();
     for (Application application : applicationDirector.getApplications()) {
-      for (Activity activity : application.getActivity(activityName)) {
+      for (Activity activity : application.getActivities(activityName)) {
         if (activity.getName().equals(activityName)) {
           activityMap.put(application.getTeam(), activity);
         }
@@ -46,7 +43,7 @@ public class GrafanaOverviewDashboardController {
   public HashMap<String, Integer> getActivitiesWithCount(@PathVariable String activityName, @PathVariable String level) throws Exception {
     HashMap<String, Integer> activityMap = new HashMap<String, Integer>();
     for (Application application : applicationDirector.getApplications()) {
-      for (Activity activity : application.getActivity(activityName)) {
+      for (Activity activity : application.getActivities(activityName)) {
         logger.info("activity: " + activity.getName());
         activityMap.put(application.getTeam(), activity.getThresholdDatePeriodMap().get(level).getThresholdValue());
       }
@@ -66,7 +63,7 @@ public class GrafanaOverviewDashboardController {
     for (Date date : datesFromActivities) {
       FlattenDate flattenDate = new FlattenDate(date);
       for (Application application : applicationDirector.getApplications()) {
-        for (Activity activity : application.getActivity(activityName)) {
+        for (Activity activity : application.getActivities(activityName)) {
           boolean value = false;
           org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod dateComponent = null;
           if (activity.getThresholdDatePeriodMap().get(level) == null) {

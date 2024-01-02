@@ -6,9 +6,8 @@ import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.Date
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.ThresholdDatePeriodManager;
 import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Target;
-import org.owasp.dsomm.metricca.analyzer.model.threshold.Threshold;
-import org.owasp.dsomm.metricca.analyzer.yaml.deserialization.components.DateComponent;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Target;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Threshold;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

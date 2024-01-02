@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricca.analyzer.yaml.deserialization;
+package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
