@@ -26,7 +26,6 @@ activity definitions:
           timeframe: "1Y"
   - class name: "UrlActivity"
     activity names:
-      - "source control protection"
       - "security requirements"
     grafana panel type: "count"
     thresholds:
@@ -75,3 +74,28 @@ activity definitions:
 #      - "sast"
 #    thresholds:
 ##      [...]
+
+
+#  - class name: ""
+#    activity names:
+#      - "Security Training"
+#    grafana panel type: "count"
+#    thresholds:
+#      - level: "Level 1"
+#        type: "activity"
+#        targets:
+#          - type: "count"
+#            "min value": 1
+#        period:
+#          period type: sliding
+#          timeframe: "1Y"
+#      - level: "Level 2"
+#        type: "activity"
+#        targets:
+#          - type: "count"
+#            "min value": 1
+#          - type: "countMembers"
+#            "min value": 2
+#        period:
+#          period type: sliding
+#          timeframe: "1Y"
