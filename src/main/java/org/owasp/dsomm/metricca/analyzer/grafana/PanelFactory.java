@@ -19,7 +19,8 @@ public class PanelFactory {
           PanelConfiguration newPanelConfiguration = new PanelConfiguration(
               panelConfiguration.getTitle() + " " + threshold.getLevel(),
               panelConfiguration.getType(),
-              "activity/" + Activity.urlEncode(activity.getName()) + "/level/" + Activity.urlEncode(threshold.getLevel()) + "/flatdate");
+              "activity/" + Activity.urlEncode(activity.getName()) + "/level/" + Activity.urlEncode(threshold.getLevel()) + "/flatdate",
+              threshold.getDescription());
           panelConfigurations.put(newPanelConfiguration.getTitle(), newPanelConfiguration);
         }
         break;
@@ -28,7 +29,8 @@ public class PanelFactory {
           PanelConfiguration newPanelConfiguration = new PanelConfiguration(
               panelConfiguration.getTitle() + " " + threshold.getLevel(),
               panelConfiguration.getType(),
-              "activity/" + Activity.urlEncode(activity.getName()) + "/level/" + Activity.urlEncode(threshold.getLevel()) + "/count");
+              "activity/" + Activity.urlEncode(activity.getName()) + "/level/" + Activity.urlEncode(threshold.getLevel()) + "/count",
+              threshold.getDescription());
           panelConfigurations.put(newPanelConfiguration.getTitle(), newPanelConfiguration);
         }
         break;

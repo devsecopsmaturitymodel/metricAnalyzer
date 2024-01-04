@@ -177,7 +177,7 @@ public abstract class Activity {
   public abstract List<Date> getDateComponents();
 
   public PanelConfiguration getPanelConfiguration() {
-    return new PanelConfiguration(name, grafanaPanelType, "activity/" + urlEncode(name));
+    return new PanelConfiguration(name, grafanaPanelType, "activity/" + urlEncode(name), "");
   }
 
   public Date getMatchingDatePeriodComponent(java.util.Date givenDate) {

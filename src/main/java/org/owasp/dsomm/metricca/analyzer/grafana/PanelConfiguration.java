@@ -5,10 +5,13 @@ public class PanelConfiguration {
   private String title;
   private String url;
 
-  public PanelConfiguration(String title, String type, String url) {
+  private String description;
+
+  public PanelConfiguration(String title, String type, String url, String description) {
     this.title = title;
     this.type = type;
     this.url = url;
+    this.description = description;
   }
 
   public String getTitle() {
@@ -29,5 +32,9 @@ public class PanelConfiguration {
 
   public void setUrl(String url) {
     this.url = url;
+  }
+
+  public String getDescription() {
+    return description;
   }
 }

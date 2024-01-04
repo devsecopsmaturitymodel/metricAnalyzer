@@ -1,6 +1,7 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.target.CountTarget;
 
 import java.util.List;
 
@@ -31,6 +32,17 @@ public class Threshold {
 
   public void setType(String type) {
     this.type = type;
+  }
+
+  public String getDescription() {
+    String description = "";
+    for (Target target : targets) {
+      if(target instanceof CountTarget) {
+        description += "Min value: " + ((CountTarget) target).getMinValue() + " max value: " + ((CountTarget) target).getMaxValue();
+      }
+      description += " count: " + ((CountTarget) target).getCount() + "\n";
+    }
+    return description;
   }
 
 //  public Boolean getThresholdReached(ArrayList<Component> componentArrayList) {

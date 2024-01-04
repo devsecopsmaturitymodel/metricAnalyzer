@@ -66,10 +66,13 @@ public abstract class GenericDashboard {
 
   protected Map<String, Object> getDashboardTemplateReplacements(Collection<PanelConfiguration> panels) throws TemplateException, IOException {
     Map<String, Object> replacements = new HashMap<>();
-    replacements.put("title", StringUtils.capitalize(getDashboardType()));
+    replacements.put("title", getTitle());
     replacements.put("panelsAsString", String.join(",", getPanels(panels)));
     replacements.put("datasourceUuid", replaceLastLetter(datasourceUuid, fetchFirstCharacter(getDashboardType())));
     return replacements;
+  }
+  public String getTitle() {
+    return StringUtils.capitalize(getDashboardType());
   }
 
   private String replaceLastLetter(String text, String newLetter) {

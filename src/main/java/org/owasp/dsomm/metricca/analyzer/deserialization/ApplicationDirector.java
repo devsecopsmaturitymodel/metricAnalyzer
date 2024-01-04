@@ -1,5 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,29 +41,34 @@ public class ApplicationDirector {
     return applications;
   }
 
-
   // TODO: CronJob
   private void initiateApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    List<SkeletonActivity> skeletonActivities = getDeserializeSkeletons();
+    List<Application> applications = getDeserializedApplications(skeletonActivities);
+    ApplicationDirector.applications = applications;
+  }
+
+  private List<SkeletonActivity> getDeserializeSkeletons() throws IOException, GitAPIException {
     logger.info("yamlConfigurationFilePath: " + yamlScanner.getSkeletonYaml());
 
-    ArrayList<Application> applications = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Map<?, ?> yamlActivityFileMap = YamlReader.convertYamlToJavaYaml(yamlScanner.getSkeletonYaml().getPath());
     String skeletonString = mapper.writeValueAsString(yamlActivityFileMap.get("activity definitions"));
     logger.info("skeletonString: " + skeletonString);
     List<SkeletonActivity> skeletonActivities = mapper.readValue(skeletonString, new TypeReference<List<SkeletonActivity>>() {
     });
+    return skeletonActivities;
+  }
+  private List<Application> getDeserializedApplications(List<SkeletonActivity> skeletonActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, GitAPIException {
+    List<Application> applications = new ArrayList<>();
     YamlApplicationNodes yamlApplicationNodes = new YamlApplicationNodes();
-
     for (File yamlApplicationFilePath : yamlScanner.getApplicationYamls()) {
       logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());
-      Map<?, ?> applicationYamlReader = YamlReader.convertYamlToJavaYaml(yamlApplicationFilePath.getPath());
       ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
       JsonNode applicationJsonNode = objectMapper.readTree(new File(yamlApplicationFilePath.getPath()));
       yamlApplicationNodes.addJsonNode(applicationJsonNode);
     }
     for (String teamName : yamlApplicationNodes.getNodes().keySet()) {
-
       ArrayList<Application> teamApplications = new ArrayList<>();
       for (JsonNode applicationJsonNode : yamlApplicationNodes.getNodes(teamName, "team")) {
         Application application = createApplication(applicationJsonNode, skeletonActivities);
@@ -76,7 +82,7 @@ public class ApplicationDirector {
         applications.add(application);
       }
     }
-    ApplicationDirector.applications = applications;
+    return applications;
   }
 
   private Application createApplication(JsonNode jsonNode, List<SkeletonActivity> skeletonActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
