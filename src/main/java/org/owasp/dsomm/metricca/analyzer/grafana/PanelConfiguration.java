@@ -5,7 +5,7 @@ public class PanelConfiguration {
   private String title;
   private String url;
 
-  private String description;
+  private final String description;
 
   public PanelConfiguration(String title, String type, String url, String description) {
     this.title = title;

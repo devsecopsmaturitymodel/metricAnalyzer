@@ -71,6 +71,7 @@ public abstract class GenericDashboard {
     replacements.put("datasourceUuid", replaceLastLetter(datasourceUuid, fetchFirstCharacter(getDashboardType())));
     return replacements;
   }
+
   public String getTitle() {
     return StringUtils.capitalize(getDashboardType());
   }

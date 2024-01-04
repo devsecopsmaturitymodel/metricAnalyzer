@@ -1,15 +1,12 @@
 package org.owasp.dsomm.metricca.analyzer.grafana;
 
-import org.owasp.dsomm.metricca.analyzer.MetricAnalyzerApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpHeaders;
 import java.time.Duration;
 
 public class GrafanaDashboardCreator {
@@ -20,20 +17,23 @@ public class GrafanaDashboardCreator {
   private final String jsonContent;
 
   private int connectTimeout = 10;
+
   public GrafanaDashboardCreator(String grafanaUrl, String apiKey, String jsonContent) {
     this.grafanaUrl = grafanaUrl;
     this.apiKey = apiKey;
     this.jsonContent = jsonContent;
   }
+
   public GrafanaDashboardCreator(String grafanaUrl, String apiKey, String jsonContent, int connectTimeout) {
     this.grafanaUrl = grafanaUrl;
     this.apiKey = apiKey;
     this.jsonContent = jsonContent;
     this.connectTimeout = connectTimeout;
   }
+
   public boolean pushDashboard() throws Exception {
     String grafanaUrl = this.grafanaUrl + "/api/dashboards/db";
-    String jsonContentWrapper = "{ \"dashboard\": "+jsonContent+", \"overwrite\": true }";
+    String jsonContentWrapper = "{ \"dashboard\": " + jsonContent + ", \"overwrite\": true }";
 
     HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(connectTimeout)).build();
 

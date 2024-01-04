@@ -1,5 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
+import com.appnexus.grafana.client.GrafanaClient;
 import com.appnexus.grafana.client.models.Dashboard;
 import com.appnexus.grafana.client.models.GrafanaDashboard;
 import com.appnexus.grafana.configuration.GrafanaConfiguration;
@@ -17,10 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.appnexus.grafana.client.GrafanaClient;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,11 +43,13 @@ public class GrafanaDashboardExportController {
 
   @Value("${metricCA.grafana.timeoutInSeconds:10}")
   private Integer grafanaApiTimeoutInSeconds;
+
   @RequestMapping(value = "/dashboard/overview", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
   public String getOverviewDashboard() throws Exception {
     return overviewDashboard.getDashboard(getPanelConfigurations().values());
   }
+
   @RequestMapping(value = "/dashboard/overview/push-lib", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
   public String pushOverviewDashboardWithLib() throws GrafanaException, IOException {
@@ -84,6 +85,7 @@ public class GrafanaDashboardExportController {
     }
     return "{\"status\": \"pushed?\"}";
   }
+
   @RequestMapping(value = "/dashboard/overview/push", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
   public String pushOverviewDashboard() throws GrafanaException, IOException {
@@ -110,7 +112,7 @@ public class GrafanaDashboardExportController {
     try {
       String dashboardString = overviewDashboard.getDashboard(getPanelConfigurations().values());
       GrafanaDashboardCreator grafanaDashboardCreator = new GrafanaDashboardCreator(grafanaBaseUrl, grafanaApiKey, dashboardString, grafanaApiTimeoutInSeconds);
-      if(grafanaDashboardCreator.pushDashboard()) {
+      if (grafanaDashboardCreator.pushDashboard()) {
         status = "{\"status\": \"pushed\", \"dashboard\": \"" + dashboardString + "\"}";
       } else {
         status = "{\"status\": \"error\", \"dashboard\": \"" + dashboardString + "\"}";
@@ -122,6 +124,7 @@ public class GrafanaDashboardExportController {
     }
     return status;
   }
+
   private Map<String, PanelConfiguration> getPanelConfigurations() throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
     Application application = applicationDirector.getApplications().get(0);

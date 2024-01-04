@@ -1,6 +1,5 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,6 +58,7 @@ public class ApplicationDirector {
     });
     return skeletonActivities;
   }
+
   private List<Application> getDeserializedApplications(List<SkeletonActivity> skeletonActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, GitAPIException {
     List<Application> applications = new ArrayList<>();
     YamlApplicationNodes yamlApplicationNodes = new YamlApplicationNodes();

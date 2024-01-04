@@ -37,7 +37,7 @@ public class Threshold {
   public String getDescription() {
     String description = "";
     for (Target target : targets) {
-      if(target instanceof CountTarget) {
+      if (target instanceof CountTarget) {
         description += "Min value: " + ((CountTarget) target).getMinValue() + " max value: " + ((CountTarget) target).getMaxValue();
       }
       description += " count: " + ((CountTarget) target).getCount() + "\n";
