@@ -34,6 +34,7 @@ public class Threshold {
     this.type = type;
   }
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   public String getDescription() {
     String description = "";
     for (Target target : targets) {

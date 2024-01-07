@@ -15,3 +15,12 @@ activities:
         url: "https://test1.com"
       - date: 2023-12-19
         url: "https://test1.com"
+
+  Security Training:
+    components:
+      - date: "2020-11-01"
+        people: 2
+        hours: 5
+      - date: "2023-11-01"
+        people: 2
+        hours: 5
