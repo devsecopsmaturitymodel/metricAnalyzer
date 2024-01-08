@@ -45,15 +45,6 @@ activities:
           - title: "testtitle"
             url: "https://test1.com"
 
-  Security Training:
-    components:
-      - date: "2020-11-01"
-        people: 2
-        hours: 5
-      - date: "2023-11-01"
-        people: 2
-        hours: 5
-
 #  sast:
 #    confirmation:
 #      - confirmed by: "Max Mustermann"

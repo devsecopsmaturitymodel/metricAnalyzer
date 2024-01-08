@@ -21,5 +21,7 @@ public abstract class Target {
   }
 
   public abstract void setThresholdValue(Object count);
-}
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  public abstract String getDescription();
+}

@@ -1,10 +1,5 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
-import com.appnexus.grafana.client.GrafanaClient;
-import com.appnexus.grafana.client.models.Dashboard;
-import com.appnexus.grafana.client.models.GrafanaDashboard;
-import com.appnexus.grafana.configuration.GrafanaConfiguration;
-import com.appnexus.grafana.exceptions.GrafanaException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
@@ -50,64 +45,9 @@ public class GrafanaDashboardExportController {
     return overviewDashboard.getDashboard(getPanelConfigurations().values());
   }
 
-  @RequestMapping(value = "/dashboard/overview/push-lib", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public String pushOverviewDashboardWithLib() throws GrafanaException, IOException {
-    //Setup the client
-    GrafanaConfiguration grafanaConfiguration =
-        new GrafanaConfiguration().host(grafanaBaseUrl).apiKey("Bearer " + grafanaApiKey);
-    GrafanaClient grafanaClient = new GrafanaClient(grafanaConfiguration);
-
-//Setup the dashboard
-    String DASHBOARD_NAME = "testdashboard";
-
-    Dashboard dashboard = new Dashboard()
-        .title(DASHBOARD_NAME)
-        .version(1);
-
-    GrafanaDashboard grafanaDashboard = new GrafanaDashboard().dashboard(dashboard);
-
-//Make API calls
-    try {
-      grafanaClient.deleteDashboard(DASHBOARD_NAME);
-    } catch (GrafanaException e) {
-      logger.error("Error deleteDashboard", e);
-    }
-    try {
-      grafanaClient.createDashboard(grafanaDashboard);
-    } catch (GrafanaException e) {
-      logger.error("Error creating dashboard", e);
-    }
-    try {
-      grafanaClient.getDashboard(DASHBOARD_NAME);
-    } catch (GrafanaException e) {
-      logger.error("Error getting dashboard", e);
-    }
-    return "{\"status\": \"pushed?\"}";
-  }
-
   @RequestMapping(value = "/dashboard/overview/push", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
-  public String pushOverviewDashboard() throws GrafanaException, IOException {
-//    GrafanaConfiguration grafanaConfiguration =
-//        new GrafanaConfiguration().host(grafanaBaseUrl).apiKey("Bearer " + grafanaApiKey);
-//    GrafanaClient grafanaClient = new GrafanaClient(grafanaConfiguration);
-////Make API calls
-//    //Setup the dashboard
-//
-//
-//    Dashboard dashboard = new Dashboard()
-//        .title(overviewDashboard.getTitle())
-//        .version(1);
-//
-//    GrafanaDashboard grafanaDashboard = new GrafanaDashboard().dashboard(dashboard);
-//    try {
-//      grafanaClient.createDashboard(grafanaDashboard);
-//      logger.info("Dashboard created" + overviewDashboard.getTitle());
-//    } catch (GrafanaException e) {
-//      logger.error("Error creating dashboard", e);
-//    }
-
+  public String pushOverviewDashboard() throws IOException {
     String status = "{\"status\": \"error\"}";
     try {
       String dashboardString = overviewDashboard.getDashboard(getPanelConfigurations().values());
