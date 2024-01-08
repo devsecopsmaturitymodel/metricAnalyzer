@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @EnableConfigurationProperties
 @SpringBootApplication
@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 public class MetricAnalyzerApplication {
   private static final Logger logger = LoggerFactory.getLogger(MetricAnalyzerApplication.class);
 
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String[] args) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     for (String arg : args) {
       logger.info("arg: " + arg);
     }
