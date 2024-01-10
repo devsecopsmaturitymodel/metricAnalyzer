@@ -20,8 +20,8 @@ public class TargetTest extends ApplicationTest {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
     boolean found = false;
     String activityName = "Security requirements";
-    assert(applicationDirector.getSkeletonActivities().size() > 0);
-    for (SkeletonActivity skeletonActivity : applicationDirector.getSkeletonActivities()) {
+    assertTrue(ApplicationDirector.getSkeletonActivities().size() > 0);
+    for (SkeletonActivity skeletonActivity : ApplicationDirector.getSkeletonActivities()) {
       if (skeletonActivity.getActivityNames().contains("Security requirements")) {
         for (PanelConfiguration panelConfiguration : skeletonActivity.getPanelConfigurations()) {
           if (panelConfiguration.getDescription() != null) {

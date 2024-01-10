@@ -36,7 +36,7 @@ public class ApplicationDirector {
   }
 
   public static List<SkeletonActivity> getSkeletonActivities() {
-    if(skeletonActivities == null) {
+    if (skeletonActivities == null) {
       logger.error("skeletonActivities is null, please run initiateApplications() first!");
     }
     return skeletonActivities;
