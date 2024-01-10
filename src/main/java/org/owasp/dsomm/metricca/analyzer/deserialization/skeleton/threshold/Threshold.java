@@ -1,7 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.target.CountTarget;
 
 import java.util.List;
 

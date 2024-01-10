@@ -1,20 +1,15 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.UrlActivity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -22,7 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,12 +74,14 @@ public class ApplicationDirectorWithSecurityRequirementsTest {
     Date givenDate = isoFormat.parse(givenDateString);
     return activity.getThresholdDatePeriodMap().get("Level 1").getDatePeriodForDate(givenDate);
   }
+
   @Test
   public void testDateNotExists() throws Exception {
     DatePeriod datePeriod = getMatchingDatePeriodComponent("1980-01-01");
     logger.error("datePeriod: " + datePeriod);
     assertNull(datePeriod);
   }
+
   @Test
   public void testShowEndDateWithOtherDatesInPeriod() throws Exception {
     DatePeriod startOfDatePeriod = getMatchingDatePeriodComponent("2022-05-01");
@@ -109,5 +105,4 @@ public class ApplicationDirectorWithSecurityRequirementsTest {
     assertNotNull(endDateForExistingDate);
     assertTrue(endDateForExistingDate.getShowEndDate());
   }
-
 }

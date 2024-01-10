@@ -2,10 +2,9 @@ package org.owasp.dsomm.metricca.analyzer.grafana;
 
 public class PanelConfiguration {
   private final String type;
+  private final String description;
   private String title;
   private String url;
-
-  private final String description;
 
   public PanelConfiguration(String title, String type, String url, String description) {
     this.title = title;

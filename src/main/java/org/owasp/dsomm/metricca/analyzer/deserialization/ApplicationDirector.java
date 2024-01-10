@@ -84,11 +84,13 @@ public class ApplicationDirector {
     }
     return applications;
   }
-  private boolean isNameInList(List<Activity> activities , String name) {
+
+  private boolean isNameInList(List<Activity> activities, String name) {
     boolean isInList = false;
     for (Activity activity : activities) {
-      if(activity.getName().equals(name)) {
+      if (activity.getName().equals(name)) {
         isInList = true;
+        break;
       }
     }
     return isInList;
@@ -119,17 +121,18 @@ public class ApplicationDirector {
 
     return sortLinkedHashMap(datesToReturn);
   }
+
   public List<java.util.Date> getStartDateFromActivitiesAsMap(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     List<java.util.Date> datesToReturn = new ArrayList<java.util.Date>();
-     for(Application application : getApplications()) {
-       for (Activity activity : application.getActivities(activityName)) {
-          for (String level : activity.getThresholdDatePeriodMap().keySet()) {
-            for (DatePeriod datePeriod : activity.getThresholdDatePeriodMap().get(level).getThresholdDatePeriods()) {
-              if (datePeriod.getDate()!= null) {
-                datesToReturn.add(datePeriod.getDate());
-              }
+    for (Application application : getApplications()) {
+      for (Activity activity : application.getActivities(activityName)) {
+        for (String level : activity.getThresholdDatePeriodMap().keySet()) {
+          for (DatePeriod datePeriod : activity.getThresholdDatePeriodMap().get(level).getThresholdDatePeriods()) {
+            if (datePeriod.getDate() != null) {
+              datesToReturn.add(datePeriod.getDate());
             }
           }
+        }
       }
     }
 

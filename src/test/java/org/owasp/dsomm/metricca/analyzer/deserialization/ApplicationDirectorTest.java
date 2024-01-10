@@ -1,22 +1,15 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ApplicationDirectorTest {
 
@@ -41,6 +34,7 @@ public class ApplicationDirectorTest {
     yamlScanner.getApplicationYamls();
     setPrivateField(this.applicationDirector, "yamlScanner", yamlScanner);
   }
+
   private void setPrivateField(Object targetObject, String fieldName, Object valueToSet) {
     try {
       Field field = targetObject.getClass().getDeclaredField(fieldName);

@@ -19,6 +19,7 @@ public class SecurityTrainingActivity extends DatePeriodActivity {
 
   @JsonProperty("components")
   protected List<DatePeriodHoursAndPeople> learningTimePerDate;
+
   @Override
   public List<Date> getDateComponents() {
     if (learningTimePerDate == null) {
@@ -34,18 +35,18 @@ public class SecurityTrainingActivity extends DatePeriodActivity {
   protected void setTargetThresholdValue() {
     for (Threshold threshold : thresholds) {
       for (Target target : threshold.getTargets()) {
-        if(target instanceof CountHoursAndPeopleTarget) {
+        if (target instanceof CountHoursAndPeopleTarget) {
           List<DatePeriod> dateComponentsInCurrentPeriod = thresholdDatePeriodMap.get(threshold.getLevel()).getDateComponentsInCurrentPeriod();
           int count = 0;
-          for(DatePeriod dateComponentInCurrentPeriod : dateComponentsInCurrentPeriod) {
-            for(DatePeriodHoursAndPeople datePeriodAndPeople : learningTimePerDate) {
-              if(datePeriodAndPeople.getDate().equals(dateComponentInCurrentPeriod.getDate())) {
+          for (DatePeriod dateComponentInCurrentPeriod : dateComponentsInCurrentPeriod) {
+            for (DatePeriodHoursAndPeople datePeriodAndPeople : learningTimePerDate) {
+              if (datePeriodAndPeople.getDate().equals(dateComponentInCurrentPeriod.getDate())) {
                 count += datePeriodAndPeople.getPeople() * datePeriodAndPeople.getHours();
               }
             }
           }
           ((CountHoursAndPeopleTarget) target).setPeopleAndHours(count);
-        }else {
+        } else {
           super.setTargetThresholdValue();
         }
       }
@@ -68,10 +69,12 @@ public class SecurityTrainingActivity extends DatePeriodActivity {
 
     return isImplementedMap;
   }
+
   @Override
   public HashMap<String, ThresholdDatePeriodManager> getThresholdDatePeriodMap() {
     return null;
   }
+
   public List<DatePeriodHoursAndPeople> getLearningTimePerDate() {
     return learningTimePerDate;
   }

@@ -1,7 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
 import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
-import org.owasp.dsomm.metricca.analyzer.controller.dto.SecurityTraining;
 import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
@@ -71,15 +70,15 @@ public class GrafanaOverviewDashboardController {
   @RequestMapping(value = "/activity/{activityName}/level/{level}/hoursAndPeople", method = RequestMethod.GET)
   @ResponseBody
   public List<DatePeriodHoursAndPeople> getActivitiesHoursAndPeople(@PathVariable String activityName, @PathVariable String level) throws Exception {
-    List<Date> allActivityDates =  applicationDirector.getStartDateFromActivitiesAsMap(activityName);
+    List<Date> allActivityDates = applicationDirector.getStartDateFromActivitiesAsMap(activityName);
     for (Application application : applicationDirector.getApplications()) {
       for (Activity activity : application.getActivities(activityName)) {
         logger.info("activity: " + activity.getName());
-        if(!(activity instanceof SecurityTrainingActivity)) {
+        if (!(activity instanceof SecurityTrainingActivity)) {
           throw new Exception("SecurityTrainingActivity not implemented yet");
         }
 
-        for(DatePeriodHoursAndPeople datePeriodHoursAndPeople : ((SecurityTrainingActivity) activity).getLearningTimePerDate()) {
+        for (DatePeriodHoursAndPeople datePeriodHoursAndPeople : ((SecurityTrainingActivity) activity).getLearningTimePerDate()) {
           logger.info("datePeriodHoursAndPeople: " + datePeriodHoursAndPeople.getDate());
           FlattenDate flattenDate = new FlattenDate(datePeriodHoursAndPeople.getDate());
           flattenDate.addDynamicField(application.getTeam(), datePeriodHoursAndPeople.getHours());
