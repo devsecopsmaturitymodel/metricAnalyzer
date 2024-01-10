@@ -36,11 +36,10 @@ public class ApplicationDirector {
   }
 
   public static List<SkeletonActivity> getSkeletonActivities() {
+    if(skeletonActivities == null) {
+      logger.error("skeletonActivities is null, please run initiateApplications() first!");
+    }
     return skeletonActivities;
-  }
-
-  public static void setSkeletonActivities(List<SkeletonActivity> skeletonActivities) {
-    ApplicationDirector.skeletonActivities = skeletonActivities;
   }
 
   public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {

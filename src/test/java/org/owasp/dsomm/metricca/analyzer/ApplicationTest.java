@@ -31,6 +31,7 @@ public class ApplicationTest {
     setPrivateField(yamlScanner, "yamlSkeletonFilePath", "src/main/resources/skeleton.yaml");
     yamlScanner.getApplicationYamls();
     setPrivateField(this.applicationDirector, "yamlScanner", yamlScanner);
+    applicationDirector.getApplications();
   }
 
   private void setPrivateField(Object targetObject, String fieldName, Object valueToSet) {

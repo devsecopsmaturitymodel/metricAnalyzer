@@ -111,6 +111,7 @@ public abstract class GenericDashboard {
   private String getPanel(PanelConfiguration panelConfiguration) throws TemplateException, IOException {
     Map<String, Object> input = new HashMap<>();
     input.put("title", panelConfiguration.getTitle());
+    input.put("description", panelConfiguration.getDescription());
     input.put("apiUrl", apiBaseUrl + "/" + panelConfiguration.getUrl());
 
     Template template = getTemplate(panelBaseName + getDashboardType() + "/" + panelConfiguration.getType() + templateFilePostfix);

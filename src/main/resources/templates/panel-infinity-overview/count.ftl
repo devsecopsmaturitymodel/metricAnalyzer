@@ -74,5 +74,6 @@
   ],
   "title": "${title}",
   "transformations": [],
-  "type": "stat"
+  "type": "stat",
+  "description": "${description}"
 }

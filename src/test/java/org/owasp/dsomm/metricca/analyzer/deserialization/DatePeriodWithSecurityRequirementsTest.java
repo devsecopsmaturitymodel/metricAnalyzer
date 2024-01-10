@@ -78,7 +78,6 @@ public class DatePeriodWithSecurityRequirementsTest {
   @Test
   public void testDateNotExists() throws Exception {
     DatePeriod datePeriod = getMatchingDatePeriodComponent("1980-01-01");
-    logger.error("datePeriod: " + datePeriod);
     assertNull(datePeriod);
   }
 

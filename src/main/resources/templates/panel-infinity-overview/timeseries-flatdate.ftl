@@ -159,5 +159,6 @@
       "options": {}
     }
   ],
-  "type": "timeseries"
+  "type": "timeseries",
+  "description": "${description}"
 }
