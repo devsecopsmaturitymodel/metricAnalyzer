@@ -5,7 +5,7 @@ activity definitions:
   - class name: "UrlActivity" # class defines attributes
     activity names:
       - "Source Control Protection"
-      - "Defined build process"
+      - "build and deployment"
     grafana panel type: "count"
     kind: "application"
     thresholds:
@@ -25,48 +25,11 @@ activity definitions:
         period:
           period type: sliding
           timeframe: "1Y"
-
   - class name: "UrlActivity"
     activity names:
       - "Security requirements"
-      - "Data privacy requirements"
-    kind: "team"
-    grafana panel type: "timeseries-flatdate"
-    thresholds:
-      - level: "Level 1"
-        type: "activity"
-        targets:
-          - type: "count"
-            "min value": 1
-        period:
-          period type: sliding
-          timeframe: "1Y"
-
-  - class name: "PersonActivity"
-    activity names:
-      - "Security champion"
-    kind: "team"
-    grafana panel type: "timeseries-flatdate"
-    thresholds:
-      - level: "Level 1"
-        type: "activity"
-        targets:
-          - type: "count"
-            "min value": 1
-        period:
-          period type: sliding
-          timeframe: "1Y"
-
-  - class name: "UrlActivity"
-    activity names:
-      - "Environment depending configuration parameters (secrets)"
-      - "Same artifact for environments"
-      - "Centralized system logging" # TODO, is a project id or simular needed? Might it be in the URL?
-      - "Definition of simple BCDR practices for critical components"
-      - "Simple application metrics"
-      - "Advanced app. metrics"
     grafana panel type: "count"
-    kind: "application"
+    kind: "team"
     thresholds:
       - level: "Level 1"
         type: "activity"
@@ -75,26 +38,9 @@ activity definitions:
             "min value": 1
         period:
           period type: sliding
-          timeframe: "10Y"
+          timeframe: "1Y"
 
-  - activity names:
-      - "Reduction of the attack surface"
-      - "Security code review"
-      - "Test for stored secrets"
-      - "Static analysis for important server side components"
-      - "Alerting"
-    class name: "DatePeriodActivity" # Just a date for confirmation
-    grafana panel type: "timeseries-flatdate"
-    kind: "application"
-    thresholds:
-      - level: "Level 1"
-        type: "activity"
-        targets:
-          - type: "count"
-            "min value": 1
-        period:
-          period type: sliding
-          timeframe: "5Y"
+
 
   - class name: "DateTitleAndLinkActivity"
     activity names:
@@ -126,6 +72,12 @@ activity definitions:
         targets:
           - type: "count"
             "min value": 4
+#  - class name: "DatePeriodConfirmedPerson" # Date?
+#    activity names:
+#      - "sast"
+#    thresholds:
+##      [...]
+
 
   - class name: "SecurityTrainingActivity"
     activity names:
