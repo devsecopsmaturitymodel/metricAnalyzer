@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: team
+
+settings:
+  team: "fellowship of the ring"
+
+activities:
+  Security requirements:
+    components:
+      - url: "https://test1.com"
+        date: 2023-01-01
+      - date: 2022-05-01
+        url: "https://test1.com"
+      - date: 2021-05-01
+        url: "https://test1.com"
+      - date: 2023-12-19
+        url: "https://test1.com"
+
+  Data privacy requirements:
+    components:
+      - date: 2022-05-01
+      - date: 2021-05-01
+      - date: 2023-12-19
+
+  Security champion:
+    components:
+      - firstname: "Max"
+        lastname: "Mustermann"
+        date: "2020-11-01"
+
+  Security Training:
+    components:
+      - date: "2020-11-01"
+        people: 2
+        hours: 5
+      - date: "2023-11-01"
+        people: 2
+        hours: 5

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: team
+
+settings:
+  team: "fellowship of the ring"
+
+activities:

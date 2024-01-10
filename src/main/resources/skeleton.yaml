@@ -2,199 +2,152 @@ apiVersion: v1
 kind: skeleton
 
 activity definitions:
+  - class name: "UrlActivity" # class defines attributes
+    activity names:
+      - "Source Control Protection"
+      - "Defined build process"
+    grafana panel type: "count"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "2Y"
+      - level: "Level 2"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
 
-  conduction of simple threat modeling on a technical level:
-    components:
-      - string: title
-        dateperiod-5y: conduction date
-        links:
-          - string: title
-          - string: url
-    level: Level 1
-  regular conduction of simple threat modeling on a technical level:
-    components:
-      - string: title
-        dateperiod-2y: conduction date
-        links:
-          - string: title
-          - string: url
-    level: Level 2
-  source control protection:
-    level: Level 1
-    components:
-      - string: url # TODO create type url
+  - class name: "UrlActivity"
+    activity names:
+      - "Security requirements"
+      - "Data privacy requirements"
+    kind: "team"
+    grafana panel type: "timeseries-flatdate"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
 
+  - class name: "PersonActivity"
+    activity names:
+      - "Security champion"
+    kind: "team"
+    grafana panel type: "timeseries-flatdate"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
 
-  # One application might have multiple images
-  reduction of the attack surface: # check on merge that the image is distroless or an organization specific image
-    level: Level 1
-    components:
-      - string: confirmed by # optional
-        dateperiod-5y: confirmation date # optional, might need re-assessment after two years
+  - class name: "UrlActivity"
+    activity names:
+      - "Environment depending configuration parameters (secrets)"
+      - "Same artifact for environments"
+      - "Centralized system logging" # TODO, is a project id or simular needed? Might it be in the URL?
+      - "Definition of simple BCDR practices for critical components"
+      - "Simple application metrics"
+      - "Advanced app. metrics"
+    grafana panel type: "count"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "10Y"
 
+  - activity names:
+      - "Reduction of the attack surface"
+      - "Security code review"
+      - "Test for stored secrets"
+      - "Static analysis for important server side components"
+      - "Alerting"
+    class name: "DatePeriodActivity" # Just a date for confirmation
+    grafana panel type: "timeseries-flatdate"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "5Y"
 
-  security code review:
-    level: Level 1
-    components:
-      - string: confirmed by # optional
-        dateperiod-5y: confirmation date # optional, might need re-assessment after two years
+  - class name: "DateTitleAndLinkActivity"
+    activity names:
+      - "Conduction of simple threat modeling on technical level"
+    grafana panel type: "timeseries-flatdate"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        period:
+          period type: sliding
+          timeframe: "10Y"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+      - level: "Level 2"
+        type: "activity"
+        period:
+          period type: sliding
+          timeframe: "1Y"
+        targets:
+          - type: "count"
+            "min value": 1
+      - level: "Level 3"
+        type: "activity"
+        period:
+          period type: sliding
+          timeframe: "1Y"
+        targets:
+          - type: "count"
+            "min value": 4
 
-  # Build
-  defined build process:
-    level: Level 1
-    components:
-      - string: url # TODO URL type
-
-  test for stored secrets:
-    level: Level 1
-    components:
-      - string: confirmed by # optional
-        dateperiod-5y: confirmation date # optional, might need re-assessment
-
-  #  continuous penetration tests: # usage of collector
-
-  iast: # e.g. contrast security
-    level: Level 1
-    components:
-      - string: confirmed by # optional
-        dateperiod-5y: confirmation date # optional, might need re-assessment
-
-  sast: # e.g. findsecuritybugs, checkmarx
-    level: Level 1
-    components:
-      - string: confirmed by # optional
-        dateperiod-5y: confirmation date # optional, might need re-assessment
-
-  # release and deployment
-
-  environment depending configuration parameters (secrets):
-    level: Level 1
-    components:
-      - string: secret handling url # later url
-
-  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
-  same artifact for environments:
-    level: Level 1
-    components:
-      - string: artifact url # later url
-
-  # Operate
-  # mean time to patch: Hard to identify
-  #  automated PRs for patches:
-  #    configuration url: https://github.com/org/repo/dependabot.yaml # or .github/renovate.json
-
-  # Monitor
-  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
-  logging capabilities:
-    level: Level 1
-    components:
-      - string: confirmed by security team member
-      - date: confirmed date
-      - string: project id
-      - string: logging url
-
-  thresholds for logging and monitoring:
-    level: Level 2
-    components:
-      - string: confirmed by security team member
-        date: confirmed date
-
-  alerting for logging and monitoring:
-    level: Level 2
-    components:
-      - string: confirmed by security team member
-        date: confirmed date
-
-  response documentation:
-    level: Level 1
-    components:
-      - string: url
-        dateperiod-5y: confirmed date
-
-  # TODO we could ask for an infrastructure component, e.g. openshift, aws-k8s, local docker platform and inherit this
-  simple application metrics:
-    level: Level 1
-    components:
-      - string: confirmed by po
-        date: confirmed date
-    # supported?
-    # configured?
-
-  # TODO link to a sample instead of confirmed?
-  advanced app. metrics:
-    level: Level 2
-    components:
-      - string: confirmed by po
-        date: confirmed date
-
-  targeted alerting:
-    level: Level 1
-    components:
-      - string: confirmed by po
-        date: confirmed date
-
-  definition of simple BCDR practices for critical components:
-    level: Level 1
-    components:
-      - string: url
-      - string: confirmed by po
-        date: confirmed date
-
-  # TODO link to a sample instead of confirmed?
-  advanced logging:
-    level: Level 1
-    components:
-      - string: confirmed by
-        date: confirmed date
-
-
-
-  ############### TEAM Activity definitions #####################
-  security requirements:
-    components:
-      - dateperiod-1y: read date
-    level: Level 1
-
-  data privacy requirements:
-    components:
-      - dateperiod-1y: read date
-    level: Level 1
-  #    threshold:
-  #      target: "read date"
-  #      threshold reached: boolean # fetch last date and check !isActive
-
-  # TODO: Once activity for two level
-  security training:
-    level: Level 1
-    components:
-      - dateperiod-1y: date
-      - int: total team hours
-      - int: number of people
-
-
-  security champion:
-    level: Level 1
-    components:
-      - string: nominated
-
-
-
-
-
-
-
-
-
-
-
-  #mttr:
-  #  components:
-  #    - title: string
-  #      fetch date: date
-  #      mttr: int # float
-  #      threshold:
-  #        target: "mttr"
-  #        max value: 90 # to compare with mttr; max means the value is not allowed to be higher. If higher, threashold is reached
-  #        # min value: 90
-  #        threshold reached: boolean # maybe not defined here
-  #  level: Level 1
+  - class name: "SecurityTrainingActivity"
+    activity names:
+      - "Security Training"
+    grafana panel type: "count"
+    kind: "team"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+      - level: "Level 2"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+          - type: "countHoursAndPeople"
+            "min value": 5
+        period:
+          period type: sliding
+          timeframe: "1Y"
