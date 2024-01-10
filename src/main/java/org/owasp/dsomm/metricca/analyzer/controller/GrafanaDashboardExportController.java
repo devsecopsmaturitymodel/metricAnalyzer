@@ -1,9 +1,8 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
-import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
 import org.owasp.dsomm.metricca.analyzer.grafana.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,13 +66,13 @@ public class GrafanaDashboardExportController {
 
   private Map<String, PanelConfiguration> getPanelConfigurations() throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
-    Application application = applicationDirector.getApplications().get(0);
-    for (Activity activity : application.getActivities()) {
-      PanelConfiguration panelConfiguration = activity.getPanelConfiguration();
-      Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, activity);
-      for (PanelConfiguration fetchedPanelConfiguration : fetchedPanelConfigurations.values()) {
-        if (!panelConfigurations.containsKey(fetchedPanelConfiguration.getTitle())) {
-          panelConfigurations.put(fetchedPanelConfiguration.getTitle(), fetchedPanelConfiguration);
+    for (SkeletonActivity activity : ApplicationDirector.getSkeletonActivities()) {
+      for (PanelConfiguration panelConfiguration : activity.getPanelConfigurations()) {
+        Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, activity);
+        for (PanelConfiguration fetchedPanelConfiguration : fetchedPanelConfigurations.values()) {
+          if (!panelConfigurations.containsKey(fetchedPanelConfiguration.getTitle())) {
+            panelConfigurations.put(fetchedPanelConfiguration.getTitle(), fetchedPanelConfiguration);
+          }
         }
       }
     }
@@ -83,17 +82,18 @@ public class GrafanaDashboardExportController {
     return panelConfigurations;
   }
 
+
   @RequestMapping(value = "/dashboard/team", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
   public String getTeamDashboard() throws Exception {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
-    Application application = applicationDirector.getApplications().get(0);
-    for (Activity activity : application.getActivities()) {
-      PanelConfiguration panelConfiguration = activity.getPanelConfiguration();
-      Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, activity);
-      for (PanelConfiguration fetchedPanelConfiguration : fetchedPanelConfigurations.values()) {
-        if (!panelConfigurations.containsKey(fetchedPanelConfiguration.getTitle())) {
-          panelConfigurations.put(fetchedPanelConfiguration.getTitle(), fetchedPanelConfiguration);
+    for (SkeletonActivity skeletonActivity : ApplicationDirector.getSkeletonActivities()) {
+      for (PanelConfiguration panelConfiguration : skeletonActivity.getPanelConfigurations()) {
+        Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, skeletonActivity);
+        for (PanelConfiguration fetchedPanelConfiguration : fetchedPanelConfigurations.values()) {
+          if (!panelConfigurations.containsKey(fetchedPanelConfiguration.getTitle())) {
+            panelConfigurations.put(fetchedPanelConfiguration.getTitle(), fetchedPanelConfiguration);
+          }
         }
       }
     }

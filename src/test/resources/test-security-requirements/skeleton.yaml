@@ -4,9 +4,9 @@ kind: skeleton
 activity definitions:
   - class name: "UrlActivity"
     activity names:
-      - "security requirements"
-    grafana panel type: "count"
+      - "Security requirements"
     kind: "team"
+    grafana panel type: "timeseries-flatdate"
     thresholds:
       - level: "Level 1"
         type: "activity"

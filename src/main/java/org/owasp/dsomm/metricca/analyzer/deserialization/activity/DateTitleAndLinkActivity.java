@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DateTitleAndLinkActivity extends DatePeriodActivity {
+public class DateTitleAndLinkActivity extends Activity {
   @JsonProperty("components")
   protected List<DateLinkTitle> dateLinkTitles;
 

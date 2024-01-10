@@ -26,11 +26,21 @@ public class ApplicationDirector {
   private static final Logger logger = LoggerFactory.getLogger(ApplicationDirector.class);
 
   private static List<Application> applications = new ArrayList<>();
+
+  private static List<SkeletonActivity> skeletonActivities = new ArrayList<>();
   @Autowired
   private YamlScanner yamlScanner;
 
   // Direct instantiation not possible
   private ApplicationDirector() {
+  }
+
+  public static List<SkeletonActivity> getSkeletonActivities() {
+    return skeletonActivities;
+  }
+
+  public static void setSkeletonActivities(List<SkeletonActivity> skeletonActivities) {
+    ApplicationDirector.skeletonActivities = skeletonActivities;
   }
 
   public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -42,7 +52,7 @@ public class ApplicationDirector {
 
   // TODO: CronJob
   private void initiateApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    List<SkeletonActivity> skeletonActivities = getDeserializeSkeletons();
+    skeletonActivities = getDeserializeSkeletons();
     List<Application> applications = getDeserializedApplications(skeletonActivities);
     ApplicationDirector.applications = applications;
   }
@@ -186,7 +196,6 @@ public class ApplicationDirector {
     return datesToReturn;
   }
 
-
   private List<Activity> getActivities(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     List<Activity> activitiesToReturn = new ArrayList<Activity>();
     for (Application application : this.getApplications()) {
@@ -258,12 +267,25 @@ public class ApplicationDirector {
               }
             }
           }
-          flattenDate.addDynamicField(application.getTeam() + "-" + application.getApplication(), value);
+          String label = getLabel(application.getTeam(), application.getApplication(), activity);
+          flattenDate.addDynamicField(label, value);
         }
       }
       flattenedActivitiesToReturn.add(flattenDate);
     }
     return flattenedActivitiesToReturn;
+  }
+
+  private String getLabel(String team, String applicationName, Activity activity) {
+    switch (activity.getKind()) {
+      case "team":
+        return team;
+      case "application":
+        return team + " - " + applicationName;
+      default:
+        return "";
+    }
+
   }
 
   private boolean isDateStartDatePeriod(java.util.Date date, Activity activity, String level) {

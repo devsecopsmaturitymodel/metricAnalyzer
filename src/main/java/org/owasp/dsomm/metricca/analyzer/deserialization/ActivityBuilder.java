@@ -22,11 +22,6 @@ public class ActivityBuilder {
     return this;
   }
 
-  public ActivityBuilder withGrafanaPanelType(String grafanaPanelType) {
-    activity.setGrafanaPanelType(grafanaPanelType);
-    return this;
-  }
-
   public ActivityBuilder withKind(String kind) {
     activity.setKind(kind);
     return this;

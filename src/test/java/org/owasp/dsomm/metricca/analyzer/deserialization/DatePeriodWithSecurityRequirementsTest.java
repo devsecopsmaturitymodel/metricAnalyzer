@@ -21,8 +21,8 @@ import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ApplicationDirectorWithSecurityRequirementsTest {
-  private static final Logger logger = LoggerFactory.getLogger(ApplicationDirectorWithSecurityRequirementsTest.class);
+public class DatePeriodWithSecurityRequirementsTest {
+  private static final Logger logger = LoggerFactory.getLogger(DatePeriodWithSecurityRequirementsTest.class);
 
 
   private ApplicationDirector applicationDirector;

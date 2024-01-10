@@ -5,7 +5,7 @@ settings:
   team: "fellowship of the ring"
 
 activities:
-  security requirements:
+  Security requirements:
     components:
       - url: "https://test1.com"
         date: 2023-01-01

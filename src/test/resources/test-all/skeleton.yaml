@@ -4,7 +4,7 @@ kind: skeleton
 activity definitions:
   - class name: "UrlActivity" # class defines attributes
     activity names:
-      - "source control protection"
+      - "Source Control Protection"
       - "build and deployment"
     grafana panel type: "count"
     kind: "application"
@@ -27,7 +27,7 @@ activity definitions:
           timeframe: "1Y"
   - class name: "UrlActivity"
     activity names:
-      - "security requirements"
+      - "Security requirements"
     grafana panel type: "count"
     kind: "team"
     thresholds:
@@ -44,7 +44,7 @@ activity definitions:
 
   - class name: "DateTitleAndLinkActivity"
     activity names:
-      - "conduction of simple threat modeling on a technical level"
+      - "Conduction of simple threat modeling on technical level"
     grafana panel type: "timeseries-flatdate"
     kind: "application"
     thresholds:

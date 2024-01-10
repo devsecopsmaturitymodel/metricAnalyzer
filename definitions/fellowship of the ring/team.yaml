@@ -5,7 +5,7 @@ settings:
   team: "fellowship of the ring"
 
 activities:
-  security requirements:
+  Security requirements:
     components:
       - url: "https://test1.com"
         date: 2023-01-01
@@ -15,6 +15,18 @@ activities:
         url: "https://test1.com"
       - date: 2023-12-19
         url: "https://test1.com"
+
+  Data privacy requirements:
+    components:
+      - date: 2022-05-01
+      - date: 2021-05-01
+      - date: 2023-12-19
+
+  Security champion:
+    components:
+      - firstname: "Max"
+        lastname: "Mustermann"
+        date: "2020-11-01"
 
   Security Training:
     components:

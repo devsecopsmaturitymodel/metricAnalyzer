@@ -1,5 +1,7 @@
 package org.owasp.dsomm.metricca.analyzer.grafana;
 
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
+
 public class PanelConfiguration {
   private final String type;
   private final String description;
@@ -35,5 +37,9 @@ public class PanelConfiguration {
 
   public String getDescription() {
     return description;
+  }
+
+  public String getTitleUrlEncoded() {
+    return SkeletonActivity.urlEncode(title);
   }
 }

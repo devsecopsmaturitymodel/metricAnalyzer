@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -51,4 +52,18 @@ public class ApplicationDirectorTest {
     assertTrue(actualApplications.size() > 0);
   }
 
+  @Test
+  public void testTeamActivitySecurityRequirementsExists() throws Exception {
+    List<Application> actualApplications = applicationDirector.getApplications();
+    boolean foundSecurityRequirements = false;
+    for (Application application : actualApplications) {
+      for (Activity activity : application.getActivities()) {
+        if (activity.getName().equals("Security requirements")) {
+          foundSecurityRequirements = true;
+          break;
+        }
+      }
+    }
+    assertTrue(foundSecurityRequirements);
+  }
 }

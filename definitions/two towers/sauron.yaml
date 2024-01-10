@@ -8,7 +8,7 @@ settings:
 # TODO optional fields results in null values in the output is good?
 
 activities:
-  source control protection:
+  Source Control Protection:
     components:
       - url: "https://test1.com"
         date: 2023-05-01
@@ -22,7 +22,7 @@ activities:
         url: "https://test2.com"
       - date: 2023-12-19
         url: "https://test2.com"
-  conduction of simple threat modeling on a technical level:
+  Conduction of simple threat modeling on technical level:
     components:
       - date: "2009-11-01"
         title: "test"
@@ -44,7 +44,9 @@ activities:
         links:
           - title: "testtitle"
             url: "https://test1.com"
-
+  Reduction of the attack surface:
+    components:
+      - date: "2023-01-01"
 #  sast:
 #    confirmation:
 #      - confirmed by: "Max Mustermann"

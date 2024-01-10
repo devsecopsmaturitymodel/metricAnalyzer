@@ -24,7 +24,6 @@ public class ActivityFactory {
     builder
         .withName(activityName)
         .withThresholds(skeletonActivity.getThresholds())
-        .withGrafanaPanelType(skeletonActivity.getGrafanaPanelType())
         .withKind(skeletonActivity.getKind());
     return builder.build();
   }

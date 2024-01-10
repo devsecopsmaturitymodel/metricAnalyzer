@@ -6,12 +6,9 @@ import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.Date
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.ThresholdDatePeriodManager;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Target;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Threshold;
-import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,32 +27,7 @@ public abstract class Activity {
   @JsonProperty("kind")
   protected String kind;
 
-  @JsonProperty("grafana panel type")
-  protected String grafanaPanelType;
-  //  @JsonIgnore
-//  public void setDatePeriod() {
-//    for (Threshold threshold : this.getThresholds()) {
-//      if (threshold.getDatePeriod() != null) {
-//        for (DatePeriod component : getDateComponents()) {
-//          component.setPeriod(threshold.getDatePeriod().getPeriodAsPeriod());
-//        }
-//      }
-//    }
-//  }
-//  public List<DatePeriod> getDateComponentsInPeriod() {
-//    List<DatePeriod> datePeriods = getDateComponents();
-//    for(DatePeriod component : getDateComponents()) {
-//      if(component.)) {
-//        getDateComponents().remove(component);
-//      }
-//    }
-//
-//  }
   protected HashMap<String, ThresholdDatePeriodManager> thresholdDatePeriodMap;
-
-  public static String urlEncode(String value) {
-    return URLEncoder.encode(value, StandardCharsets.UTF_8).replace("+", "%20");
-  }
 
   public List<Threshold> getThresholds() {
     return thresholds;
@@ -72,32 +44,6 @@ public abstract class Activity {
       }
     }
   }
-//        if (containsDate) {
-//          for (Object component : componentMap.values()) {
-//            if (component instanceof DatePeriodComponent && !(component instanceof DatePeriodEndComponent)) {
-//              DatePeriodEndComponent end = new DatePeriodEndComponent(((DatePeriodComponent) component).getPeriod());
-//              end.setName(((DatePeriodComponent) component).getName());
-//              end.setValue(((DatePeriodComponent) component).getValue());
-//              HashMap<String, Object> content = new HashMap<String, Object>();
-//              content.put(((DatePeriodComponent) component).getName(), end);
-//              if (isPeriodBetweenTwoDates(activity, i, end.getValue())) {
-//                logger.debug("Found date which is between two dates in period, not adding: " + activity.getName() + " in application: " + getApplication() + " with datePeriodComponent: " + component + " team: " + getTeam() + " and value: " + ((DatePeriodComponent) component).isActive());
-//                continue;
-//              }
-//              newContent.add(content);
-//            }
-//          }
-
-//  private boolean isDateBetweenTwoDates(Date date, int i, DatePeriodActivity activity) {
-//    List<DatePeriod> datePeriods = activity.getDateComponents();
-//    for (;i< datePeriods.size();i++ ) {
-//      DatePeriod datePeriod = datePeriods.get(i);
-//      if(datePeriod.isInPeriod(date)) {
-//        return true;
-//      }
-//    }
-//    return false;
-//  }
 
   protected Threshold getThresholdForLevel(String level) {
     for (Threshold threshold : thresholds) {
@@ -179,9 +125,6 @@ public abstract class Activity {
 
   public abstract List<Date> getDateComponents();
 
-  public PanelConfiguration getPanelConfiguration() {
-    return new PanelConfiguration(name, grafanaPanelType, "activity/" + urlEncode(name), "");
-  }
 
   public Date getMatchingDatePeriodComponent(java.util.Date givenDate) {
     for (Date dateComponent : this.getDateComponents()) {
@@ -190,14 +133,6 @@ public abstract class Activity {
       }
     }
     return null;
-  }
-
-  public String getGrafanaPanelType() {
-    return grafanaPanelType;
-  }
-
-  public void setGrafanaPanelType(String grafanaPanelType) {
-    this.grafanaPanelType = grafanaPanelType;
   }
 
   public String getKind() {

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SecurityTrainingActivity extends DatePeriodActivity {
+public class SecurityTrainingActivity extends Activity {
   private static final Logger logger = LoggerFactory.getLogger(Activity.class);
 
   @JsonProperty("components")

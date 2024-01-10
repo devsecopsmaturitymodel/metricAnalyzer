@@ -88,8 +88,6 @@ public class ThresholdDatePeriodManager {
 
   public org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod getDatePeriodForDate(java.util.Date date) {
     for (org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod datePeriod : thresholdDatePeriods) {
-      logger.error("getDatePeriodForDate: " + datePeriod.getDate() + " GIVEN " + date);
-
       if (datePeriod.getDate().equals(date)) {
         return datePeriod;
       }
