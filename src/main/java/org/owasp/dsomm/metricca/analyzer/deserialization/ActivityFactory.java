@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,8 @@ public class ActivityFactory {
     builder
         .withName(activityName)
         .withThresholds(skeletonActivity.getThresholds())
-        .withGrafanaPanelType(skeletonActivity.getGrafanaPanelType());
+        .withGrafanaPanelType(skeletonActivity.getGrafanaPanelType())
+        .withKind(skeletonActivity.getKind());
     return builder.build();
   }
 

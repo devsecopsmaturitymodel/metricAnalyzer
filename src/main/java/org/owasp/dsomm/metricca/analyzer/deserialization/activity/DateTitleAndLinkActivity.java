@@ -25,6 +25,6 @@ public class DateTitleAndLinkActivity extends DatePeriodActivity {
     if (this.dateLinkTitles == null) {
       return Collections.emptyList();
     }
-    return this.dateLinkTitles.stream().map(x -> (Date) x).collect(Collectors.toList());
+    return this.dateLinkTitles.stream().map(x -> (Date) x).collect(Collectors.toList()); // sort
   }
 }

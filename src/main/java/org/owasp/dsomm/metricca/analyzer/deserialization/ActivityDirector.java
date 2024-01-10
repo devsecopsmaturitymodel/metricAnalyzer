@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +17,12 @@ public class ActivityDirector {
   private final List<Activity> activities;
 
 
-  public ActivityDirector(JsonNode activityObjects, List<SkeletonActivity> skeletonActivities) throws JsonProcessingException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+  public ActivityDirector(JsonNode activityObjects, List<SkeletonActivity> skeletonActivities, String kind) throws JsonProcessingException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     List<Activity> activities = new ArrayList<>();
     for (SkeletonActivity skeletonActivity : skeletonActivities) {
+      if(!skeletonActivity.getKind().equals(kind)){
+        continue;
+      }
       for (String activityName : skeletonActivity.getActivityNames()) {
         Class<? extends org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity> clazz = (Class<? extends org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity>) Class.forName("org.owasp.dsomm.metricca.analyzer.deserialization.activity." + skeletonActivity.getClassName());
         JsonNode activityData = activityObjects.get(activityName);

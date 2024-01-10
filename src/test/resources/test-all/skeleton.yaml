@@ -1,0 +1,105 @@
+apiVersion: v1
+kind: skeleton
+
+activity definitions:
+  - class name: "UrlActivity" # class defines attributes
+    activity names:
+      - "source control protection"
+      - "build and deployment"
+    grafana panel type: "count"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "2Y"
+      - level: "Level 2"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+  - class name: "UrlActivity"
+    activity names:
+      - "security requirements"
+    grafana panel type: "count"
+    kind: "team"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+
+
+
+  - class name: "DateTitleAndLinkActivity"
+    activity names:
+      - "conduction of simple threat modeling on a technical level"
+    grafana panel type: "timeseries-flatdate"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        period:
+          period type: sliding
+          timeframe: "10Y"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+      - level: "Level 2"
+        type: "activity"
+        period:
+          period type: sliding
+          timeframe: "1Y"
+        targets:
+          - type: "count"
+            "min value": 1
+      - level: "Level 3"
+        type: "activity"
+        period:
+          period type: sliding
+          timeframe: "1Y"
+        targets:
+          - type: "count"
+            "min value": 4
+#  - class name: "DatePeriodConfirmedPerson" # Date?
+#    activity names:
+#      - "sast"
+#    thresholds:
+##      [...]
+
+
+  - class name: "SecurityTrainingActivity"
+    activity names:
+      - "Security Training"
+    grafana panel type: "count"
+    kind: "team"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+      - level: "Level 2"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+          - type: "countHoursAndPeople"
+            "min value": 5
+        period:
+          period type: sliding
+          timeframe: "1Y"

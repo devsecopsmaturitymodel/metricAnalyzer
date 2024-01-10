@@ -27,6 +27,11 @@ public class ActivityBuilder {
     return this;
   }
 
+  public ActivityBuilder withKind(String kind) {
+    activity.setKind(kind);
+    return this;
+  }
+
   public Activity build() {
     activity.finishActivity();
     return activity;

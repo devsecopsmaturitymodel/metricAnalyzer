@@ -17,8 +17,10 @@ public class ThresholdDatePeriodManager {
 
   public ThresholdDatePeriodManager(Threshold threshold, List<Date> dates) {
     thresholdDatePeriods = new ArrayList<org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod>();
-    if (threshold.getDatePeriod() != null) for (Date component : dates) {
-      thresholdDatePeriods.add(new org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod(component.getDate(), threshold.getDatePeriod().getPeriodAsPeriod()));
+    if (threshold.getDatePeriod() != null) {
+      for (Date component : dates) {
+        thresholdDatePeriods.add(new org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod(component.getDate(), threshold.getDatePeriod().getPeriodAsPeriod()));
+      }
     }
     thresholdDatePeriods.sort(Comparator.comparing(org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod::getDate));
     Collections.sort(thresholdDatePeriods, (dp1, dp2) -> dp1.getDate().compareTo(dp2.getDate()));
@@ -86,6 +88,8 @@ public class ThresholdDatePeriodManager {
 
   public org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod getDatePeriodForDate(java.util.Date date) {
     for (org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod datePeriod : thresholdDatePeriods) {
+      logger.error("getDatePeriodForDate: " + datePeriod.getDate() + " GIVEN " + date);
+
       if (datePeriod.getDate().equals(date)) {
         return datePeriod;
       }
@@ -95,7 +99,9 @@ public class ThresholdDatePeriodManager {
 
   public org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod getDatePeriodEndForDate(java.util.Date date) {
     for (org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod datePeriod : thresholdDatePeriods) {
-      if (datePeriod.getEndDate() == null) return null;
+      if (datePeriod.getEndDate() == null) {
+        return null;
+      }
       if (datePeriod.getEndDate().equals(date)) {
         return datePeriod;
       }

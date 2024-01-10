@@ -27,6 +27,9 @@ public abstract class Activity {
   @JsonProperty("thresholds")
   protected List<Threshold> thresholds = new ArrayList<Threshold>();
 
+  @JsonProperty("kind")
+  protected String kind;
+
   @JsonProperty("grafana panel type")
   protected String grafanaPanelType;
   //  @JsonIgnore
@@ -195,5 +198,13 @@ public abstract class Activity {
 
   public void setGrafanaPanelType(String grafanaPanelType) {
     this.grafanaPanelType = grafanaPanelType;
+  }
+
+  public String getKind() {
+    return kind;
+  }
+
+  public void setKind(String kind) {
+    this.kind = kind;
   }
 }

@@ -2,7 +2,7 @@ package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
-import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,8 @@ public class Application {
   private String application;
   private String desiredLevel;
 
-  public Application(JsonNode applicationYamlReader, List<SkeletonActivity> skeletonActivities) throws SkeletonNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    ActivityDirector activityDirector = new ActivityDirector(applicationYamlReader, skeletonActivities);
+  public Application(JsonNode applicationYamlReader, List<SkeletonActivity> skeletonActivities, String kind) throws SkeletonNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    ActivityDirector activityDirector = new ActivityDirector(applicationYamlReader, skeletonActivities, kind);
     this.activities = activityDirector.getActivities();
   }
 

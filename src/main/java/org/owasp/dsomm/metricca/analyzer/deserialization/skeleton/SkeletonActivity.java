@@ -1,6 +1,7 @@
-package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold;
+package org.owasp.dsomm.metricca.analyzer.deserialization.skeleton;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.Threshold;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ public class SkeletonActivity {
 
   @JsonProperty("class name")
   protected String className;
+
+  @JsonProperty("kind")
+  protected String kind;
 
   @JsonProperty("grafana panel type")
   protected String grafanaPanelType;
@@ -49,5 +53,13 @@ public class SkeletonActivity {
 
   public void setGrafanaPanelType(String grafanaPanelType) {
     this.grafanaPanelType = grafanaPanelType;
+  }
+
+  public String getKind() {
+    return kind;
+  }
+
+  public void setKind(String kind) {
+    this.kind = kind;
   }
 }

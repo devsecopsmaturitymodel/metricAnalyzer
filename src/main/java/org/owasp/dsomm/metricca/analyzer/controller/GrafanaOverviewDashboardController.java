@@ -1,9 +1,12 @@
 package org.owasp.dsomm.metricca.analyzer.controller;
 
 import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
+import org.owasp.dsomm.metricca.analyzer.controller.dto.SecurityTraining;
 import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.activity.SecurityTrainingActivity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.activity.component.DatePeriodHoursAndPeople;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class GrafanaOverviewDashboardController {
@@ -58,5 +63,31 @@ public class GrafanaOverviewDashboardController {
   @ResponseBody
   public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName, @PathVariable String level) throws Exception {
     return applicationDirector.getActivitiesPerTeamAndApplicationFlat(null, null, activityName, level);
+  }
+
+  /**
+   * Grafana type: hours-and-people
+   */
+  @RequestMapping(value = "/activity/{activityName}/level/{level}/hoursAndPeople", method = RequestMethod.GET)
+  @ResponseBody
+  public List<DatePeriodHoursAndPeople> getActivitiesHoursAndPeople(@PathVariable String activityName, @PathVariable String level) throws Exception {
+    List<Date> allActivityDates =  applicationDirector.getStartDateFromActivitiesAsMap(activityName);
+    for (Application application : applicationDirector.getApplications()) {
+      for (Activity activity : application.getActivities(activityName)) {
+        logger.info("activity: " + activity.getName());
+        if(!(activity instanceof SecurityTrainingActivity)) {
+          throw new Exception("SecurityTrainingActivity not implemented yet");
+        }
+
+        for(DatePeriodHoursAndPeople datePeriodHoursAndPeople : ((SecurityTrainingActivity) activity).getLearningTimePerDate()) {
+          logger.info("datePeriodHoursAndPeople: " + datePeriodHoursAndPeople.getDate());
+          FlattenDate flattenDate = new FlattenDate(datePeriodHoursAndPeople.getDate());
+          flattenDate.addDynamicField(application.getTeam(), datePeriodHoursAndPeople.getHours());
+        }
+
+        ((SecurityTrainingActivity) activity).getLearningTimePerDate();
+      }
+    }
+    return null;
   }
 }

@@ -8,7 +8,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
-import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.threshold.SkeletonActivity;
+import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.slf4j.Logger;
@@ -71,11 +71,11 @@ public class ApplicationDirector {
     for (String teamName : yamlApplicationNodes.getNodes().keySet()) {
       ArrayList<Application> teamApplications = new ArrayList<>();
       for (JsonNode applicationJsonNode : yamlApplicationNodes.getNodes(teamName, "team")) {
-        Application application = createApplication(applicationJsonNode, skeletonActivities);
+        Application application = createApplication(applicationJsonNode, skeletonActivities, "team");
         teamApplications.add(application);
       }
       for (JsonNode applicationJsonNode : yamlApplicationNodes.getNodes(teamName, "application")) {
-        Application application = createApplication(applicationJsonNode, skeletonActivities);
+        Application application = createApplication(applicationJsonNode, skeletonActivities, "application");
         for (Application teamApplication : teamApplications) {
           application.getActivities().addAll(teamApplication.getActivities());
         }
@@ -84,10 +84,19 @@ public class ApplicationDirector {
     }
     return applications;
   }
+  private boolean isNameInList(List<Activity> activities , String name) {
+    boolean isInList = false;
+    for (Activity activity : activities) {
+      if(activity.getName().equals(name)) {
+        isInList = true;
+      }
+    }
+    return isInList;
+  }
 
-  private Application createApplication(JsonNode jsonNode, List<SkeletonActivity> skeletonActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+  private Application createApplication(JsonNode jsonNode, List<SkeletonActivity> skeletonActivities, String kind) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     JsonNode settings = jsonNode.get("settings");
-    Application newApp = new Application(jsonNode.get("activities"), skeletonActivities);
+    Application newApp = new Application(jsonNode.get("activities"), skeletonActivities, kind);
     if (settings.has("application")) {
       newApp.setApplication(settings.get("application").asText());
     }
@@ -109,6 +118,22 @@ public class ApplicationDirector {
     }
 
     return sortLinkedHashMap(datesToReturn);
+  }
+  public List<java.util.Date> getStartDateFromActivitiesAsMap(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    List<java.util.Date> datesToReturn = new ArrayList<java.util.Date>();
+     for(Application application : getApplications()) {
+       for (Activity activity : application.getActivities(activityName)) {
+          for (String level : activity.getThresholdDatePeriodMap().keySet()) {
+            for (DatePeriod datePeriod : activity.getThresholdDatePeriodMap().get(level).getThresholdDatePeriods()) {
+              if (datePeriod.getDate()!= null) {
+                datesToReturn.add(datePeriod.getDate());
+              }
+            }
+          }
+      }
+    }
+
+    return datesToReturn;
   }
 
   private List<java.util.Date> getStartAndEndDateFromActivities(String activityName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
