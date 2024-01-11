@@ -48,6 +48,7 @@ public class YamlScanner {
     }
   }
 
+
   private void gitClone() throws GitAPIException {
     File yamlGitTargetPathFile = new File(yamlGitTargetPath);
     if (yamlGitTargetPathFile.exists()) {
@@ -96,7 +97,14 @@ public class YamlScanner {
   }
 
   private boolean isGit() {
-    return yamlGitUrl != null && !yamlGitUrl.isEmpty();
+    if (yamlGitUrl == null || yamlGitUrl.isEmpty()) {
+      return false;
+    }
+    if (!new File(yamlGitTargetPath).exists()) {
+      return true;
+    }
+
+    return enforceGitCloneIfTargetFolderExists;
   }
 
   private String getYamlSkeletonFilePath() {
