@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.9.0...v1.9.1) (2024-01-11)
+
+
+### Bug Fixes
+
+* YamlScanner git clone execution ([fd87771](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/fd877717649781dae13c930ff30c92de28152e32))
+
 # [1.9.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.8.1...v1.9.0) (2024-01-11)
 
 
