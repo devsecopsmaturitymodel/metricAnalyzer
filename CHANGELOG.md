@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.8.0...v1.8.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* add targets ([139a834](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/139a834b489dd5ee3430316bc9e6e8bc7f2872a2))
+
 # [1.8.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.7.0...v1.8.0) (2023-12-15)
 
 
