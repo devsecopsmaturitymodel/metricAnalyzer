@@ -16,6 +16,24 @@ The value can be a string, a dateperiod or a list of links. The dateperiod is a 
 
 
 Remark: A team YAML is not required. But if there is a team YAML, an application YAML is required. It is not allowed to have the same activity in a team YAML and an application YAML.
+
+### Run image
+Create application.properties file with the following content:
+```properties
+#metricCA.skeleton.path=src/main/resources/skeleton.yaml
+#metricCA.application.path=definitions/
+metricCA.git.branch=TODO
+metricCA.git.url=https://github.com/TODO/TODO.git
+
+metricCA.api.baseurl=http://todo
+metricCA.grafana.baseurl=http://todo
+metricCA.grafana.apiKey=TODO
+metricCA.grafana.template.path=/app/resources/templates/
+```
+```bash
+docker compose up
+```
+
 ## Local Installation and Deployment
 ### Local run
 ```bash
@@ -26,7 +44,9 @@ In an other shell:
 docker compose up # to startup grafana (or use your own grafana instance)
 ```
 Go to grafana (e.g. localhost:3000) and setup a service account token with admin rights. 
-Put the token in the `application.properties` file.
+Put the token in the `application.properties` for the property `metricCA.grafana.apiKey` file.
+
+Install _Infinity_ and add it as Data Source via _Connection_ in Grafana as admin.
 
 ### Build and execute with Maven
 
