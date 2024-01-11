@@ -17,6 +17,16 @@ The value can be a string, a dateperiod or a list of links. The dateperiod is a 
 
 Remark: A team YAML is not required. But if there is a team YAML, an application YAML is required. It is not allowed to have the same activity in a team YAML and an application YAML.
 ## Local Installation and Deployment
+### Local run
+```bash
+./mvnw spring-boot:run
+```
+In an other shell:
+```bash
+docker compose up # to startup grafana (or use your own grafana instance)
+```
+Go to grafana (e.g. localhost:3000) and setup a service account token with admin rights. 
+Put the token in the `application.properties` file.
 
 ### Build and execute with Maven
 
