@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.8.1...v1.9.0) (2024-01-11)
+
+
+### Features
+
+* fetch from github via cronjob ([50f2ffe](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/50f2ffe833d17c1c97c7d72a67e82adf1ea1edf8))
+
 ## [1.8.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.8.0...v1.8.1) (2024-01-10)
 
 
