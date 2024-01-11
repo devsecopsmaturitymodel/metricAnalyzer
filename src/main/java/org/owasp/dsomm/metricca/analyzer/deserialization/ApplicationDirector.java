@@ -14,6 +14,7 @@ import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -42,10 +43,19 @@ public class ApplicationDirector {
     return skeletonActivities;
   }
 
-  public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    yamlScanner.enforceGitCloneIfTargetFolderExists = true; // set in cronjob
+  @Scheduled(cron = "*/2 * * * * ?")
+  public void cronJob() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    logger.info("running cronJob and fetching from git");
+    yamlScanner.enforceGitCloneIfTargetFolderExists = true;
     initiateApplications();
     yamlScanner.enforceGitCloneIfTargetFolderExists = false;
+  }
+
+
+  public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    if(applications.size() == 0) {
+      initiateApplications();
+    }
     return applications;
   }
 
