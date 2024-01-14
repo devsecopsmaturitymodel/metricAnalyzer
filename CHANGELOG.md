@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.1...v1.10.2) (2024-01-14)
+
+
+### Bug Fixes
+
+* do not clone in Init ([9e477af](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/9e477afcec642e143c88c0261b554c3c17ef6dd3))
+
 ## [1.10.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.0...v1.10.1) (2024-01-14)
 
 
