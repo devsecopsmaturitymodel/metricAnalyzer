@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.9.1...v1.10.0) (2024-01-14)
+
+
+### Features
+
+* change enforceGit ([841c49e](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/841c49e1959683159eaba60011b6fec7bb4f6706))
+
 ## [1.9.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.9.0...v1.9.1) (2024-01-11)
 
 
