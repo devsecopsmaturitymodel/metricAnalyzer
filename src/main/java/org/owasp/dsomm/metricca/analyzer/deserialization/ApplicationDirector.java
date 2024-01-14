@@ -43,7 +43,7 @@ public class ApplicationDirector {
     return skeletonActivities;
   }
 
-  @Scheduled(cron = "*/5 * * * * ?")
+  @Scheduled(cron = "*/1 * * * * ?")
   public void initiateApplicationsViaCron() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     logger.info("running cronJob and fetching from git");
     yamlScanner.initiateEnforced();

@@ -55,7 +55,7 @@ public class YamlScanner {
     File yamlGitTargetPathFile = new File(yamlGitTargetPath);
     if (yamlGitTargetPathFile.exists()) {
       if (enforceGitCloneIfTargetFolderExists) {
-        logger.info("yamlGitTargetPath exists, deleting it " + yamlGitTargetPath);
+        logger.info("yamlGitTargetPath exists, deleting it: " + yamlGitTargetPath + " enforceGitCloneIfTargetFolderExists:" + enforceGitCloneIfTargetFolderExists);
         deleteDirectoryRecursively(yamlGitTargetPathFile);
       } else {
         logger.info("yamlGitTargetPath exists, skipping cloning " + yamlGitTargetPath);

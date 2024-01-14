@@ -34,8 +34,11 @@ public abstract class GenericDashboard {
   protected String dashboardTemplatePrefix;
   @Value("${metricCA.grafana.template.filepostfix:.ftl}")
   protected String templateFilePostfix;
-  @Value("${metricCA.grafana.datasource.uuid:e407f775-8b38-4c67-b2c3-298086473afa}")
-  protected String datasourceUuid;
+  @Value("${metricCA.grafana.dashboard.uuid:e407f775-8b38-4c67-b2c3-298086473aee}")
+  protected String dashboardUuid;
+
+  @Value("${metricCA.grafana.infinity.datasource.id}")
+  protected String infinityDatasourceId;
 
   public GenericDashboard() {
   }
@@ -68,7 +71,7 @@ public abstract class GenericDashboard {
     Map<String, Object> replacements = new HashMap<>();
     replacements.put("title", getTitle());
     replacements.put("panelsAsString", String.join(",", getPanels(panels)));
-    replacements.put("datasourceUuid", replaceLastLetter(datasourceUuid, fetchFirstCharacter(getDashboardType())));
+    replacements.put("datasourceUuid", replaceLastLetter(dashboardUuid, fetchFirstCharacter(getDashboardType())));
     return replacements;
   }
 
@@ -113,6 +116,7 @@ public abstract class GenericDashboard {
     input.put("title", panelConfiguration.getTitle());
     input.put("description", panelConfiguration.getDescription());
     input.put("apiUrl", apiBaseUrl + "/" + panelConfiguration.getUrl());
+    input.put("infinityDatasourceId", infinityDatasourceId);
 
     Template template = getTemplate(panelBaseName + getDashboardType() + "/" + panelConfiguration.getType() + templateFilePostfix);
     StringWriter stringWriter = new StringWriter();

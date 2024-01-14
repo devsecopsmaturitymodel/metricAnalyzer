@@ -48,6 +48,8 @@ Put the token in the `application.properties` for the property `metricCA.grafana
 
 Install _Infinity_ and add it as Data Source via _Connection_ in Grafana as admin.
 
+Extract the _Infinity_ datasource id from Grafana and put it in the `application.properties` for the property `metricCA.grafana.infinity.datasource.id`.
+
 ### Build and execute with Maven
 
 ```bash

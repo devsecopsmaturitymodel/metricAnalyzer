@@ -1,8 +1,5 @@
 {
-  "datasource": {
-    "uid": "e407f775-8b38-4c67-b2c3-298086473afa",
-    "type": "yesoreyeram-infinity-datasource"
-  },
+  "datasource": {},
   "fieldConfig": {
     "defaults": {
       "mappings": [],
@@ -53,7 +50,7 @@
     {
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
-        "uid": "b16ab68b-982a-48aa-9e85-1784182e6b78"
+        "uid": "${infinityDatasourceId}"
       },
       "columns": [],
       "data": "",
