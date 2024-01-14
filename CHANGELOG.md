@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.2...v1.10.3) (2024-01-14)
+
+
+### Bug Fixes
+
+* use datasource Id ([93a3a60](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/93a3a600557960213d8a1c60846e0b00b1437107))
+
 ## [1.10.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.1...v1.10.2) (2024-01-14)
 
 
