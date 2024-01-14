@@ -51,7 +51,7 @@ public class ApplicationDirector {
 
 
   public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    if(applications.size() == 0) {
+    if (applications.size() == 0) {
       initiateApplications(false);
     }
     return applications;

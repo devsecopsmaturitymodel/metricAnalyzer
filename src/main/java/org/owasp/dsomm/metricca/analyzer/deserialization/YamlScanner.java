@@ -46,6 +46,7 @@ public class YamlScanner {
       gitClone(false);
     }
   }
+
   public void initiateEnforced() throws GitAPIException {
     gitClone(true);
   }
@@ -88,6 +89,7 @@ public class YamlScanner {
           .collect(Collectors.toList());
     }
   }
+
   public File getSkeletonYaml() throws IOException, GitAPIException {
     this.initiate();
     logger.info("getYamlSkeletonFilePath() " + getYamlSkeletonFilePath());
@@ -102,11 +104,7 @@ public class YamlScanner {
       return false;
     }
     Path yamlGitTargetPath = Paths.get(this.yamlGitTargetPath);
-    if (Files.notExists(yamlGitTargetPath)) {
-      return true;
-    }
-
-    return false;
+    return Files.notExists(yamlGitTargetPath);
   }
 
   private String getYamlSkeletonFilePath() {
