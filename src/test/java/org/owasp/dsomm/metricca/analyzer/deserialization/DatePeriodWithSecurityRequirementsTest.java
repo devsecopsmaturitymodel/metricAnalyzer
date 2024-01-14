@@ -39,7 +39,7 @@ public class DatePeriodWithSecurityRequirementsTest {
     constructor.setAccessible(true);
     applicationDirector = constructor.newInstance();
     YamlScanner yamlScanner = new YamlScanner();
-    yamlScanner.initiate(false);
+    yamlScanner.initiate();
     setPrivateField(yamlScanner, "yamlApplicationFolderPath", "src/test/resources/test-security-requirements/definitions");
     setPrivateField(yamlScanner, "yamlSkeletonFilePath", "src/test/resources/test-security-requirements/skeleton.yaml");
     yamlScanner.getApplicationYamls();
