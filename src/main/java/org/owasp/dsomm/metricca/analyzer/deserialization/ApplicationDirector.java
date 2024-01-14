@@ -46,7 +46,7 @@ public class ApplicationDirector {
   @Scheduled(cron = "*/5 * * * * ?")
   public void initiateApplicationsViaCron() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     logger.info("running cronJob and fetching from git");
-    initiateApplications(true);
+    yamlScanner.initiateEnforced();
   }
 
 
@@ -65,7 +65,7 @@ public class ApplicationDirector {
 
   private List<SkeletonActivity> getDeserializeSkeletons(boolean enforceGitCloneIfTargetFolderExists) throws IOException, GitAPIException {
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-    yamlScanner.initiate(enforceGitCloneIfTargetFolderExists);
+    yamlScanner.initiate();
     Map<?, ?> yamlActivityFileMap = YamlReader.convertYamlToJavaYaml(yamlScanner.getSkeletonYaml().getPath());
     String skeletonString = mapper.writeValueAsString(yamlActivityFileMap.get("activity definitions"));
     logger.info("skeletonString: " + skeletonString);
