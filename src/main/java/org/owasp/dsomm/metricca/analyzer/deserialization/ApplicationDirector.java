@@ -43,31 +43,29 @@ public class ApplicationDirector {
     return skeletonActivities;
   }
 
-  @Scheduled(cron = "*/2 * * * * ?")
-  public void cronJob() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+  @Scheduled(cron = "*/5 * * * * ?")
+  public void initiateApplicationsViaCron() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     logger.info("running cronJob and fetching from git");
-    yamlScanner.enforceGitCloneIfTargetFolderExists = true;
-    initiateApplications();
-    yamlScanner.enforceGitCloneIfTargetFolderExists = false;
+    initiateApplications(true);
   }
 
 
   public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     if(applications.size() == 0) {
-      initiateApplications();
+      initiateApplications(false);
     }
     return applications;
   }
 
   // TODO: CronJob
-  private void initiateApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    skeletonActivities = getDeserializeSkeletons();
+  private void initiateApplications(boolean enforceGitCloneIfTargetFolderExists) throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    skeletonActivities = getDeserializeSkeletons(enforceGitCloneIfTargetFolderExists);
     List<Application> applications = getDeserializedApplications(skeletonActivities);
     ApplicationDirector.applications = applications;
   }
 
-  private List<SkeletonActivity> getDeserializeSkeletons() throws IOException, GitAPIException {
-    logger.info("yamlConfigurationFilePath: " + yamlScanner.getSkeletonYaml());
+  private List<SkeletonActivity> getDeserializeSkeletons(boolean enforceGitCloneIfTargetFolderExists) throws IOException, GitAPIException {
+    logger.info("yamlConfigurationFilePath: " + yamlScanner.getSkeletonYaml(enforceGitCloneIfTargetFolderExists));
 
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Map<?, ?> yamlActivityFileMap = YamlReader.convertYamlToJavaYaml(yamlScanner.getSkeletonYaml().getPath());

@@ -20,7 +20,6 @@ import java.util.stream.Stream;
 @Configuration
 public class YamlScanner {
   private static final Logger logger = LoggerFactory.getLogger(YamlScanner.class);
-  public boolean enforceGitCloneIfTargetFolderExists = false;
   @Value("${metricCA.git.url}")
   private String yamlGitUrl;
   @Value("${metricCA.git.branch:master}")
@@ -42,14 +41,14 @@ public class YamlScanner {
     dir.delete();
   }
 
-  public void initiate() throws IOException, GitAPIException {
-    if (isGit()) {
-      gitClone();
+  public void initiate(boolean enforceGitCloneIfTargetFolderExists) throws IOException, GitAPIException {
+    if (isGit(enforceGitCloneIfTargetFolderExists)) {
+      gitClone(enforceGitCloneIfTargetFolderExists);
     }
   }
 
 
-  private void gitClone() throws GitAPIException {
+  private void gitClone(boolean enforceGitCloneIfTargetFolderExists) throws GitAPIException {
     File yamlGitTargetPathFile = new File(yamlGitTargetPath);
     if (yamlGitTargetPathFile.exists()) {
       if (enforceGitCloneIfTargetFolderExists) {
@@ -72,7 +71,7 @@ public class YamlScanner {
   }
 
   public Collection<File> getApplicationYamls() throws IOException, GitAPIException {
-    this.initiate();
+    this.initiate(false);
     File yamlApplicationFolder = new File(getYamlApplicationFolderPath());
     if (!yamlApplicationFolder.exists()) {
       throw new FileNotFoundException(getYamlApplicationFolderPath());
@@ -86,9 +85,8 @@ public class YamlScanner {
           .collect(Collectors.toList());
     }
   }
-
-  public File getSkeletonYaml() throws IOException, GitAPIException {
-    this.initiate();
+  public File getSkeletonYaml(boolean enforceGitCloneIfTargetFolderExists) throws IOException, GitAPIException {
+    this.initiate(enforceGitCloneIfTargetFolderExists);
     logger.info("getYamlSkeletonFilePath() " + getYamlSkeletonFilePath());
     File skeletonConfig = new File(getYamlSkeletonFilePath());
     if (!skeletonConfig.exists()) throw new FileNotFoundException(getYamlSkeletonFilePath());
@@ -96,15 +94,23 @@ public class YamlScanner {
     return skeletonConfig;
   }
 
-  private boolean isGit() {
+  public File getSkeletonYaml() throws IOException, GitAPIException {
+    return getSkeletonYaml(false);
+  }
+
+  private boolean isGit(boolean enforceGitCloneIfTargetFolderExists) {
     if (yamlGitUrl == null || yamlGitUrl.isEmpty()) {
       return false;
     }
-    if (!new File(yamlGitTargetPath).exists()) {
+    Path yamlGitTargetPath = Paths.get(this.yamlGitTargetPath);
+    if (Files.notExists(yamlGitTargetPath)) {
       return true;
     }
 
     return enforceGitCloneIfTargetFolderExists;
+  }
+  private boolean isGit() {
+    return isGit(false);
   }
 
   private String getYamlSkeletonFilePath() {
@@ -115,6 +121,7 @@ public class YamlScanner {
   }
 
   private String getYamlApplicationFolderPath() {
+    logger.info("yamlApplicationFolderPath() " + yamlApplicationFolderPath);
     if (isGit()) {
       return yamlGitTargetPath + "/" + yamlApplicationFolderPath;
     }
