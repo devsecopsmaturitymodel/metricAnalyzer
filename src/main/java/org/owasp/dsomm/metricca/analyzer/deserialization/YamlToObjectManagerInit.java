@@ -17,6 +17,5 @@ public class YamlToObjectManagerInit {
 
   @PostConstruct
   private void postConstruct() throws Exception {
-    applicationDirector.initiateApplicationsViaCron();
   }
 }

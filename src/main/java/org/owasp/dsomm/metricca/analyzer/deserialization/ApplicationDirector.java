@@ -57,7 +57,6 @@ public class ApplicationDirector {
     return applications;
   }
 
-  // TODO: CronJob
   private void initiateApplications(boolean enforceGitCloneIfTargetFolderExists) throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     skeletonActivities = getDeserializeSkeletons(enforceGitCloneIfTargetFolderExists);
     List<Application> applications = getDeserializedApplications(skeletonActivities);
