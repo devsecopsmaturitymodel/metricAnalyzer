@@ -64,9 +64,8 @@ public class ApplicationDirector {
   }
 
   private List<SkeletonActivity> getDeserializeSkeletons(boolean enforceGitCloneIfTargetFolderExists) throws IOException, GitAPIException {
-    logger.info("yamlConfigurationFilePath: " + yamlScanner.getSkeletonYaml(enforceGitCloneIfTargetFolderExists));
-
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+    yamlScanner.initiate(enforceGitCloneIfTargetFolderExists);
     Map<?, ?> yamlActivityFileMap = YamlReader.convertYamlToJavaYaml(yamlScanner.getSkeletonYaml().getPath());
     String skeletonString = mapper.writeValueAsString(yamlActivityFileMap.get("activity definitions"));
     logger.info("skeletonString: " + skeletonString);

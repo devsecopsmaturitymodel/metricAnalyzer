@@ -85,17 +85,13 @@ public class YamlScanner {
           .collect(Collectors.toList());
     }
   }
-  public File getSkeletonYaml(boolean enforceGitCloneIfTargetFolderExists) throws IOException, GitAPIException {
-    this.initiate(enforceGitCloneIfTargetFolderExists);
+  public File getSkeletonYaml() throws IOException, GitAPIException {
+    this.initiate(false);
     logger.info("getYamlSkeletonFilePath() " + getYamlSkeletonFilePath());
     File skeletonConfig = new File(getYamlSkeletonFilePath());
     if (!skeletonConfig.exists()) throw new FileNotFoundException(getYamlSkeletonFilePath());
 
     return skeletonConfig;
-  }
-
-  public File getSkeletonYaml() throws IOException, GitAPIException {
-    return getSkeletonYaml(false);
   }
 
   private boolean isGit(boolean enforceGitCloneIfTargetFolderExists) {
