@@ -106,7 +106,7 @@ public class DatePeriodWithSecurityRequirementsTest {
 
     Date existingDate = isoFormat.parse("2021-05-01");
     DatePeriod endDateForExistingDate = activity.getThresholdDatePeriodMap().get("Level 1").getDatePeriodForDate(existingDate);
-//    assertNotNull(endDateForExistingDate);
-//    assertTrue(endDateForExistingDate.getShowEndDate());
+    assertNotNull(endDateForExistingDate);
+    assertTrue(endDateForExistingDate.getShowEndDate());
   }
 }
