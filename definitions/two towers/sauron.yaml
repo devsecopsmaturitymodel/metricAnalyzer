@@ -22,6 +22,8 @@ activities:
         url: "https://test2.com"
       - date: 2023-12-19
         url: "https://test2.com"
+      - date: 2024-01-19
+        url: "https://test2.com"        
   Conduction of simple threat modeling on technical level:
     components:
       - date: "2009-11-01"
