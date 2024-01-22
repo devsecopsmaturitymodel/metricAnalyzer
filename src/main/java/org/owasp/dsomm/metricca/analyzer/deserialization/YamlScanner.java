@@ -48,6 +48,9 @@ public class YamlScanner {
   }
 
   public void initiateEnforced() throws GitAPIException {
+    if (!isGitEnabled()) {
+      return;
+    }
     gitClone(true);
   }
 
@@ -99,8 +102,12 @@ public class YamlScanner {
     return skeletonConfig;
   }
 
+  private boolean isGitEnabled() {
+    return yamlGitUrl != null && !yamlGitUrl.isEmpty();
+  }
+
   private boolean isGit() {
-    if (yamlGitUrl == null || yamlGitUrl.isEmpty()) {
+    if (!isGitEnabled()) {
       return false;
     }
     Path yamlGitTargetPath = Paths.get(this.yamlGitTargetPath);

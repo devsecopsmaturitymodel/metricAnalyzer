@@ -45,27 +45,28 @@ public class ApplicationDirector {
     return skeletonActivities;
   }
 
-  @Scheduled(fixedRate = 1000)
+  @Scheduled(fixedRate = 10000)
   public void initiateApplicationsViaCron() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    logger.info("running cronJob and fetching from git");
+    logger.debug("initiateApplicationsViaCron");
     yamlScanner.initiateEnforced();
+    initiateApplications();
   }
 
 
   public List<Application> getApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     if (applications.size() == 0) {
-      initiateApplications(false);
+      initiateApplications();
     }
     return applications;
   }
 
-  private void initiateApplications(boolean enforceGitCloneIfTargetFolderExists) throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-    skeletonActivities = getDeserializeSkeletons(enforceGitCloneIfTargetFolderExists);
+  private void initiateApplications() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    skeletonActivities = getDeserializeSkeletons();
     List<Application> applications = getDeserializedApplications(skeletonActivities);
     ApplicationDirector.applications = applications;
   }
 
-  private List<SkeletonActivity> getDeserializeSkeletons(boolean enforceGitCloneIfTargetFolderExists) throws IOException, GitAPIException {
+  private List<SkeletonActivity> getDeserializeSkeletons() throws IOException, GitAPIException {
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     yamlScanner.initiate();
     Map<?, ?> yamlActivityFileMap = YamlReader.convertYamlToJavaYaml(yamlScanner.getSkeletonYaml().getPath());
