@@ -34,9 +34,6 @@ public abstract class GenericDashboard {
   protected String dashboardTemplatePrefix;
   @Value("${metricCA.grafana.template.filepostfix:.ftl}")
   protected String templateFilePostfix;
-  @Value("${metricCA.grafana.dashboard.uuid:e407f775-8b38-4c67-b2c3-298086473aee}")
-  protected String dashboardUuid;
-
   @Value("${metricCA.grafana.infinity.datasource.id}")
   protected String infinityDatasourceId;
 
@@ -71,7 +68,6 @@ public abstract class GenericDashboard {
     Map<String, Object> replacements = new HashMap<>();
     replacements.put("title", getTitle());
     replacements.put("panelsAsString", String.join(",", getPanels(panels)));
-    replacements.put("datasourceUuid", replaceLastLetter(dashboardUuid, fetchFirstCharacter(getDashboardType())));
     return replacements;
   }
 

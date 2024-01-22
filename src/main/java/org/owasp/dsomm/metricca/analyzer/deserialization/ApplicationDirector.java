@@ -14,6 +14,7 @@ import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,7 @@ import java.util.*;
 
 // Utilizes Singleton Design Pattern
 @Component
+@EnableScheduling
 public class ApplicationDirector {
   private static final Logger logger = LoggerFactory.getLogger(ApplicationDirector.class);
 
@@ -43,7 +45,7 @@ public class ApplicationDirector {
     return skeletonActivities;
   }
 
-  @Scheduled(cron = "*/1 * * * * ?")
+  @Scheduled(fixedRate = 1000)
   public void initiateApplicationsViaCron() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     logger.info("running cronJob and fetching from git");
     yamlScanner.initiateEnforced();
