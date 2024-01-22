@@ -48,8 +48,7 @@ activities:
             url: "https://test1.com"
   Reduction of the attack surface:
     components:
-      - date: "2023-01-01"
-      - date: "2022-01-01"      
+      - date: "2023-01-01"   
 #  sast:
 #    confirmation:
 #      - confirmed by: "Max Mustermann"
