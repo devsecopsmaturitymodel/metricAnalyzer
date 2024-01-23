@@ -1,3 +1,10 @@
+## [1.10.4](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.3...v1.10.4) (2024-01-22)
+
+
+### Bug Fixes
+
+* Add @EnableScheduling ([5bc4a92](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/5bc4a9272dac844c2de86a157ab5229f513559a0))
+
 ## [1.10.3](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.2...v1.10.3) (2024-01-14)
 
 
