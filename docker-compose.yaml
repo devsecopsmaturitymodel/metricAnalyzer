@@ -4,12 +4,16 @@ services:
     container_name: grafana
     image: grafana/grafana:latest
     user: "0:0"
-      #    environment:
     restart: unless-stopped
     ports:
       - 3111:3000
     volumes:
-      - grafana:/var/lib/grafana
-volumes:
-  grafana:
-    driver: local
+      - ./grafana:/var/lib/grafana
+  metricCa:
+    container_name: metric-analzer
+    image: wurstbrot/metric-analyzer:latest
+    restart: unless-stopped
+    ports:
+      - 3122:8080
+    volumes:
+      - ./metricCa/application.properties:/app/resources/application.properties:ro

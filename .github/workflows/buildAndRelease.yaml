@@ -2,7 +2,7 @@ name: buildAndRelease
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
     workflow_dispatch:
 
 jobs:
@@ -20,7 +20,12 @@ jobs:
       - name: Get Semantic Release Version
         id: get-version
         run: |
-          echo "::set-output name=version::$(grep -oP '\[\d+\.\d+\.\d+\]' CHANGELOG.md | tr -d '[]')"
+          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          if [ "branch" == "main" ]; then
+            echo "::set-output name=version::$(grep -oP '\[\d+\.\d+\.\d+\]' CHANGELOG.md | tr -d '[]')"
+          else
+            echo "::set-output name=version::${branch}"
+          fi
 
       - name: show version
         run: |
@@ -38,15 +43,24 @@ jobs:
           #registry: registry.hub.docker.com
           username: wurstbrot
           password: ${{ secrets.HUB_TOKEN }}
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: temurin
       - name: build
-        run: | 
-          mvn compile com.google.cloud.tools:jib-maven-plugin:2.8.0:build \
-          -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${{ steps.get-version.outputs.version }},latest
+        run: |
+          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          tag="${{ steps.get-version.outputs.version }}"
+          if [ "branch" == "main" ]; then
+            tag="${$tag},latest"
+          fi        
+          ./mvnw compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Djib.from.image=eclipse-temurin:17-jre -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${tag}
       # Commit all changed files back to the repository
       - uses: planetscale/ghcommit-action@v0.1.6
         with:
           commit_message: "🤖 BOT based relase commit"
           repo: ${{ github.repository }}
-          branch: ${{ github.head_ref || github.ref_name }}
+          branch: 'main'
         env:
           GITHUB_TOKEN: ${{secrets.ACCESS_TOKEN}}

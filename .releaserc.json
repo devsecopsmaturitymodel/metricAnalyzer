@@ -5,8 +5,14 @@
       "@semantic-release/commit-analyzer",
       {
         "releaseRules": [
-          {"breaking": true, "release": "minor"},
-          {"tag": "Breaking", "release": "minor"}
+          {
+            "breaking": true,
+            "release": "minor"
+          },
+          {
+            "tag": "Breaking",
+            "release": "minor"
+          }
         ]
       }
     ],

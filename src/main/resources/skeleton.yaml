@@ -1,32 +1,153 @@
-data privacy requirements:
-  components:
-    - read date: dateperiod-1y
-  level: Level 1
-  treshold:
-    target: "read date"
-    threshold reached: boolean # fetch last date and check !isActive
-conduction of simple threat modeling on a technical level:
-  components:
-    - title: string
-      conduction date: date
-      link:
-        - title: string
-          url: string
-  level: Level 2
-    # treshold:
-    # target: "[].conduction date"
-    # timeframe: "year"
-  # count: 1
-  # TODO: threshold
+apiVersion: v1
+kind: skeleton
 
-#mttr:
-#  components:
-#    - title: string
-#      fetch date: date
-#      mttr: int # float
-#      threshold:
-#        target: "mttr"
-#        max value: 90 # to compare with mttr; max means the value is not allowed to be higher. If higher, threashold is reached
-#        # min value: 90
-#        threshold reached: boolean # maybe not defined here
-#  level: Level 1
+activity definitions:
+  - class name: "UrlActivity" # class defines attributes
+    activity names:
+      - "Source Control Protection"
+      - "Defined build process"
+    grafana panel type: "count"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "2Y"
+      - level: "Level 2"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+
+  - class name: "UrlActivity"
+    activity names:
+      - "Security requirements"
+      - "Data privacy requirements"
+    kind: "team"
+    grafana panel type: "timeseries-flatdate"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+
+  - class name: "PersonActivity"
+    activity names:
+      - "Security champion"
+    kind: "team"
+    grafana panel type: "timeseries-flatdate"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+
+  - class name: "UrlActivity"
+    activity names:
+      - "Environment depending configuration parameters (secrets)"
+      - "Same artifact for environments"
+      - "Centralized system logging" # TODO, is a project id or simular needed? Might it be in the URL?
+      - "Definition of simple BCDR practices for critical components"
+      - "Simple application metrics"
+      - "Advanced app. metrics"
+    grafana panel type: "count"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "10Y"
+
+  - activity names:
+      - "Reduction of the attack surface"
+      - "Security code review"
+      - "Test for stored secrets"
+      - "Static analysis for important server side components"
+      - "Alerting"
+    class name: "DatePeriodActivity" # Just a date for confirmation
+    grafana panel type: "timeseries-flatdate"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "5Y"
+
+  - class name: "DateTitleAndLinkActivity"
+    activity names:
+      - "Conduction of simple threat modeling on technical level"
+    grafana panel type: "timeseries-flatdate"
+    kind: "application"
+    thresholds:
+      - level: "Level 1"
+        period:
+          period type: sliding
+          timeframe: "10Y"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+      - level: "Level 2"
+        type: "activity"
+        period:
+          period type: sliding
+          timeframe: "1Y"
+        targets:
+          - type: "count"
+            "min value": 1
+      - level: "Level 3"
+        type: "activity"
+        period:
+          period type: sliding
+          timeframe: "1Y"
+        targets:
+          - type: "count"
+            "min value": 4
+
+  - class name: "SecurityTrainingActivity"
+    activity names:
+      - "Security Training"
+    grafana panel type: "count"
+    kind: "team"
+    thresholds:
+      - level: "Level 1"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+        period:
+          period type: sliding
+          timeframe: "1Y"
+      - level: "Level 2"
+        type: "activity"
+        targets:
+          - type: "count"
+            "min value": 1
+          - type: "countHoursAndPeople"
+            "min value": 5
+        period:
+          period type: sliding
+          timeframe: "1Y"
