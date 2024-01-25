@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.4...v1.11.0) (2024-01-25)
+
+
+### Features
+
+* add jgit credentials provider ([dfc9f9e](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/dfc9f9e8dc84974ba7aff2cf268a9517b6fea82b))
+
 ## [1.10.4](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.3...v1.10.4) (2024-01-22)
 
 
