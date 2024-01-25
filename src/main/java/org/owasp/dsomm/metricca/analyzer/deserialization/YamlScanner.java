@@ -2,6 +2,8 @@ package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +32,10 @@ public class YamlScanner {
   private String yamlSkeletonFilePath;
   @Value("${metricCA.application.path}")
   private String yamlApplicationFolderPath;
+  @Value("${metricCA.git.usernameOrToken}")
+  private String gitUsernameOrToken;
+  @Value("${metricCA.git.password}")
+  private String gitPassword;
 
   private static void deleteDirectoryRecursively(File dir) {
     File[] allContents = dir.listFiles();
@@ -69,11 +75,15 @@ public class YamlScanner {
     if (yamlGitTargetPathFile.exists()) {
       logger.info("yamlGitTargetPath STILL exists");
     }
+
+    CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken, gitPassword);
+
     logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
     Git.cloneRepository()
         .setURI(yamlGitUrl)
         .setDirectory(yamlGitTargetPathFile)
         .setBranch(yamlGitBranch)
+        .setCredentialsProvider(credentialsProvider)
         .call();
   }
 
