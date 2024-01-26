@@ -73,7 +73,7 @@ public class YamlScanner {
       }
     }
     if (yamlGitTargetPathFile.exists()) {
-      logger.info("yamlGitTargetPath STILL exists");
+      logger.warn("yamlGitTargetPath STILL exists");
     }
 
     CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken, gitPassword);
