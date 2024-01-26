@@ -1,4 +1,4 @@
-package org.owasp.dsomm.metricca.analyzer.yamlDeserialization;
+package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

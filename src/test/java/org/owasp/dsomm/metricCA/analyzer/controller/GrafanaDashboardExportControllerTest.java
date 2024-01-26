@@ -46,7 +46,7 @@ public class GrafanaDashboardExportControllerTest {
   }
 
   @Test
-  public void ShouldGetOverviewDashboardTest() throws Exception {
+  public void shouldGetOverviewDashboardTest() throws Exception {
     try (MockedStatic<ApplicationDirector> mockedFactory = Mockito.mockStatic(ApplicationDirector.class);
          MockedStatic<PanelFactory> panelFactory = Mockito.mockStatic(PanelFactory.class)) {
       when(panelConfiguration.getTitle()).thenReturn(TITLE);
