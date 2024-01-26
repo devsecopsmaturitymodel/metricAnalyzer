@@ -1,5 +1,6 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -75,15 +76,22 @@ public class YamlScanner {
     if (yamlGitTargetPathFile.exists()) {
       logger.warn("yamlGitTargetPath STILL exists");
     }
-
-    CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken, gitPassword);
-
-    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
-    Git.cloneRepository()
+    CloneCommand repoCloneCommand = Git.cloneRepository()
         .setURI(yamlGitUrl)
         .setDirectory(yamlGitTargetPathFile)
-        .setBranch(yamlGitBranch)
-        .setCredentialsProvider(credentialsProvider)
+        .setBranch(yamlGitBranch);
+
+    if(gitUsernameOrToken != null && !gitUsernameOrToken.isEmpty()) {
+      if(gitPassword == null || gitPassword.isEmpty()) {
+        logger.info("Password is empty, assuming a token is used");
+      }else {
+        logger.debug("gitUsernameOrToken is set to " + gitUsernameOrToken);
+      }
+      CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken, gitPassword);
+      repoCloneCommand.setCredentialsProvider(credentialsProvider);
+    }
+    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
+    repoCloneCommand
         .call();
   }
 
