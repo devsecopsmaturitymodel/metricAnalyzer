@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.11.0...v1.11.1) (2024-01-26)
+
+
+### Bug Fixes
+
+* Git clone with cred. provider only if cred. are provided ([c65e5b4](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/c65e5b48bbd5b353e4a0ed3e726eedeb9fd5516e))
+
 # [1.11.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.4...v1.11.0) (2024-01-25)
 
 
