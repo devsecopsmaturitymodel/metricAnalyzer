@@ -43,20 +43,17 @@ public class GrafanaDashboardCreator {
         .header("Authorization", "Bearer " + apiKey)
         .POST(HttpRequest.BodyPublishers.ofString(jsonContentWrapper))
         .build();
-    System.out.println("URI: " + request.uri());
-    System.out.println("Method: " + request.method());
-    System.out.println("Headers: " + request.headers().map());
+    logger.info("URI: " + request.uri() + " - method " + request.method());
+    logger.debug("Headers: " + request.headers().map());
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
     if (response.statusCode() != 200) {
-      logger.info("apiKey: " + apiKey);
+      logger.debug("apiKey: " + apiKey);
       logger.info("grafanaUrl: " + grafanaUrl);
-      logger.error("Status Code: " + response.statusCode());
-      logger.error("Response Body: " + response.body());
+      logger.error("Status Code: " + response.statusCode() + " - Response Body" + response.body());
       return false;
     } else {
-      logger.debug("Status Code: " + response.statusCode());
-      logger.debug("Response Body: " + response.body());
+      logger.debug("Status Code: " + response.statusCode() + " - Response Body" + response.body());
       return true;
     }
   }
