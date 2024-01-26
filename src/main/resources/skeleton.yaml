@@ -122,10 +122,10 @@ activity definitions:
         type: "activity"
         period:
           period type: sliding
-          timeframe: "1Y"
+          timeframe: "3m"
         targets:
           - type: "count"
-            "min value": 4
+            "min value": 1
 
   - class name: "SecurityTrainingActivity"
     activity names:
