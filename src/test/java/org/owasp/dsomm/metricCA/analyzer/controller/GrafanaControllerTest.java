@@ -11,7 +11,6 @@ import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
