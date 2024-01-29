@@ -25,7 +25,10 @@ public class TeamDashboard extends GenericDashboard {
   protected Map<String, Object> getDashboardTemplateReplacements(Collection<PanelConfiguration> panels) throws TemplateException, IOException {
     Map<String, Object> replacements = super.getDashboardTemplateReplacements(panels);
     replacements.put("apiUrl", apiBaseUrl);
+    replacements.put("infinityDatasourceId", infinityDatasourceId);
     return replacements;
   }
+
+
 }
 

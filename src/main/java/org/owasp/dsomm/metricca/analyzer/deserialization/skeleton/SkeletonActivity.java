@@ -32,10 +32,10 @@ public class SkeletonActivity {
   }
 
   @JsonIgnore
-  public List<PanelConfiguration> getPanelConfigurations() {
+  public List<PanelConfiguration> getPanelConfigurations(String dashboardType) {
     List<PanelConfiguration> panelConfigurations = new ArrayList<PanelConfiguration>();
     for (String name : activityNames) {
-      panelConfigurations.add(new PanelConfiguration(name, grafanaPanelType, "activity/" + urlEncode(name), ""));
+      panelConfigurations.add(new PanelConfiguration(name, grafanaPanelType, "activity/" + urlEncode(name), "", dashboardType));
     }
     return panelConfigurations;
   }

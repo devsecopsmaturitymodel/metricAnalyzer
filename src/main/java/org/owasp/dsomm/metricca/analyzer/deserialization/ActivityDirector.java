@@ -20,6 +20,7 @@ public class ActivityDirector {
   public ActivityDirector(JsonNode activityObjects, List<SkeletonActivity> skeletonActivities, String kind) throws JsonProcessingException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     List<Activity> activities = new ArrayList<>();
     for (SkeletonActivity skeletonActivity : skeletonActivities) {
+      logger.debug("Skeleton Activity kind: " + skeletonActivity.getKind() + " " + skeletonActivity.getClassName());
       if (!skeletonActivity.getKind().equals(kind)) {
         continue;
       }

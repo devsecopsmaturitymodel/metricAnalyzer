@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 
 @Controller
 public class GrafanaTeamDashboardController {
@@ -27,9 +26,11 @@ public class GrafanaTeamDashboardController {
     return applicationDirector.getActivitiesPerTeamAndApplicationFlat(application, teamName, activityName);
   }
 
-  @RequestMapping(value = "/team/{teamName}/application/{application}/activity/{activityName}/map", method = RequestMethod.GET)
+  @RequestMapping(value = "/team/{teamName}/application/{application}/activity/{activityName}/entries", method = RequestMethod.GET)
   @ResponseBody
-  public LinkedHashMap<String, Collection<FlattenDate>> getActivitiesPerTeamFlatAsMap(@PathVariable String teamName, @PathVariable String application, @PathVariable String activityName) throws Exception {
+  public Collection<FlattenDate> getActivitiesPerTeamFlatAsMap(@PathVariable String teamName, @PathVariable String application, @PathVariable String activityName) throws Exception {
     return applicationDirector.getActivitiesPerTeamAndApplicationFlatAsLevelMap(application, teamName, activityName);
   }
 }
+
+//http://192.168.178.27:8080/team/${team}/application/${application}/activity/Conduction%20of%20simple%20threat%20modeling%20on%20technical%20level/simple

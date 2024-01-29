@@ -8,11 +8,22 @@ public class PanelConfiguration {
   private String title;
   private String url;
 
+  private String dashboardType;
+
   public PanelConfiguration(String title, String type, String url, String description) {
     this.title = title;
     this.type = type;
     this.url = url;
     this.description = description;
+    this.dashboardType = "overview";
+  }
+
+  public PanelConfiguration(String title, String type, String url, String description, String dashboardType) {
+    this.title = title;
+    this.type = type;
+    this.url = url;
+    this.description = description;
+    this.dashboardType = dashboardType;
   }
 
   public String getTitle() {
@@ -41,5 +52,13 @@ public class PanelConfiguration {
 
   public String getTitleUrlEncoded() {
     return SkeletonActivity.urlEncode(title);
+  }
+
+  public String getDashboardType() {
+    return dashboardType;
+  }
+
+  public void setDashboardType(String dashboardType) {
+    this.dashboardType = dashboardType;
   }
 }

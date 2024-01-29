@@ -56,6 +56,17 @@ public class GrafanaController {
     return applicationsToReturn;
   }
 
+  @RequestMapping(value = "/team/{teamName}/application/names", method = RequestMethod.GET)
+  @ResponseBody
+  public Collection<String> getTeamApplicationNames(@PathVariable String teamName) throws Exception {
+    Collection<String> applicationsToReturn = new ArrayList<String>();
+    for (Application application : applicationDirector.getApplications()) {
+      if (application.getTeam().equals(teamName)) {
+        applicationsToReturn.add(application.getName());
+      }
+    }
+    return applicationsToReturn;
+  }
 
   @RequestMapping(value = "/activity/{activityName}/simple", method = RequestMethod.GET)
   @ResponseBody
@@ -70,10 +81,10 @@ public class GrafanaController {
     Collection<Activity> activitiesToReturn = new ArrayList<Activity>();
     for (Application application : applicationDirector.getApplications()) {
       if (application.getTeam().equals(teamName)) {
-        if (application.getApplication().equals(applicationId)) {
+        if (application.getName().equals(applicationId)) {
           for (Activity activity : application.getActivities()) {
             if (activity.getName().equals(activityName)) {
-              logger.debug("Found activity: " + activity.getName() + " in application: " + application.getApplication());
+              logger.debug("Found activity: " + activity.getName() + " in application: " + application.getName());
               activitiesToReturn.add(activity);
             }
           }

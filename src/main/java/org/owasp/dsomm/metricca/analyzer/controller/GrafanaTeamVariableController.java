@@ -41,7 +41,7 @@ public class GrafanaTeamVariableController {
     Collection<String> applicationsToReturn = new ArrayList<String>();
     for (Application application : applicationDirector.getApplications()) {
       if (application.getTeam().equals(teamName)) {
-        applicationsToReturn.add(application.getApplication());
+        applicationsToReturn.add(application.getName());
       }
     }
     return applicationsToReturn;

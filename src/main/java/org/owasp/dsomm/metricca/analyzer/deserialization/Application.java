@@ -15,7 +15,7 @@ public class Application {
   private static final Logger logger = LoggerFactory.getLogger(Application.class);
   private final List<org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity> activities;
   private String team;
-  private String application;
+  private String name;
   private String desiredLevel;
 
   public Application(JsonNode applicationYamlReader, List<SkeletonActivity> skeletonActivities, String kind) throws SkeletonNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -45,12 +45,12 @@ public class Application {
     this.team = team;
   }
 
-  public String getApplication() {
-    return application;
+  public String getName() {
+    return name;
   }
 
-  public void setApplication(String application) {
-    this.application = application;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getDesiredLevel() {

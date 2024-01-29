@@ -32,7 +32,7 @@ public class GrafanaApplicationController {
   public Collection<String> getApplicationIds() throws IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     Set<String> applicationIds = new HashSet<>();
     for (Application application : applicationDirector.getApplications()) {
-      applicationIds.add(application.getApplication());
+      applicationIds.add(application.getName());
     }
     return applicationIds;
   }

@@ -36,7 +36,7 @@
         },
         "datasource": {
           "type": "yesoreyeram-infinity-datasource",
-          "uid": "b16ab68b-982a-48aa-9e85-1784182e6b78"
+          "uid": "${infinityDatasourceId}"
         },
         "definition": "Infinity- (infinity) json",
         "hide": 1,
@@ -54,7 +54,7 @@
             "root_selector": "",
             "source": "url",
             "type": "json",
-            "url": "http://${apiUrl}/teams",
+            "url": "${apiUrl}/teams",
             "url_options": {
               "data": "",
               "method": "GET"
@@ -77,7 +77,7 @@
         },
         "datasource": {
           "type": "yesoreyeram-infinity-datasource",
-          "uid": "b16ab68b-982a-48aa-9e85-1784182e6b78"
+          "uid": "${infinityDatasourceId}"
         },
         "definition": "Infinity- (infinity) json",
         "hide": 0,
@@ -94,7 +94,7 @@
             "root_selector": "",
             "source": "url",
             "type": "json",
-            "url": "http://${apiUrl}/team/${r"${team}"}/applicationIds",
+            "url": "${apiUrl}/team/${r"${team}"}/applicationIds",
             "url_options": {
               "data": "",
               "method": "GET"
@@ -112,13 +112,12 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5y",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "${title}",
-  "uid": "${datasourceUuid}",
   "version": 1,
   "weekStart": ""
 }

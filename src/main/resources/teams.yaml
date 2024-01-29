@@ -1,0 +1,12 @@
+kind: "teams"
+
+teams:
+  - name: two towers
+    applications:
+      - sauron
+  - name: fellowship of the ring
+    applications:
+      - gandalf
+  - name: humans
+    applications:
+      - boromir
