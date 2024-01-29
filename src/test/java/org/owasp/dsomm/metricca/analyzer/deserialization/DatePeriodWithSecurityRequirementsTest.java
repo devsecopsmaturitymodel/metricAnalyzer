@@ -59,7 +59,7 @@ public class DatePeriodWithSecurityRequirementsTest {
   private UrlActivity getSecurityRequirementsActivity() throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     List<Application> actualApplications = applicationDirector.getApplications();
     for (Application application : actualApplications) {
-      if (application.getApplication().equals("sauron")) {
+      if (application.getName().equals("sauron")) {
         return (UrlActivity) application.getActivities().get(0);
       }
     }

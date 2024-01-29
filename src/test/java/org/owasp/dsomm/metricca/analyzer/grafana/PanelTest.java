@@ -18,11 +18,12 @@ public class PanelTest extends ApplicationTest {
   @Test
   public void testPanel() throws Exception {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
+    String dashboardType = "overview";
     boolean found = false;
     String activityName = "Security requirements";
     for (SkeletonActivity skeletonActivity : ApplicationDirector.getSkeletonActivities()) {
       if (skeletonActivity.getActivityNames().contains("Security requirements")) {
-        for (PanelConfiguration panelConfiguration : skeletonActivity.getPanelConfigurations()) {
+        for (PanelConfiguration panelConfiguration : skeletonActivity.getPanelConfigurations(dashboardType)) {
           if (activityName.equals(panelConfiguration.getTitle())) {
             found = true;
             break;
