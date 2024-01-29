@@ -1,3 +1,12 @@
+# [1.12.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.11.1...v1.12.0) (2024-01-29)
+
+
+### Features
+
+* add teams ([0932d2e](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/0932d2e60b4d61436fee11c2f7c08671935f4b1b))
+* add teams ([4ffb89c](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/4ffb89cd0aa3d4909727712c24ae448f00133b92))
+* add teams ([70e9c4d](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/70e9c4d3f46d8bfd6f21ad2e532444ec421a7e0c))
+
 ## [1.11.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.11.0...v1.11.1) (2024-01-26)
 
 
