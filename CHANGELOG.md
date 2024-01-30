@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.12.0...v1.12.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* tests ([1dc98ab](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/1dc98ab8a1a3c548b5ec9a5d5484e7bdfb49e9d4))
+
 # [1.12.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.11.1...v1.12.0) (2024-01-29)
 
 
