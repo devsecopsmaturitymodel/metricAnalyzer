@@ -5,20 +5,20 @@ settings:
   application: "sauron" # e.g. from deployment
   team: "two towers"
 
-# TODO optional fields results in null values in the output is good?
+# Do not modify without testing the code, this file is used in integration tests
 
 activities:
   Source Control Protection:
     components:
       - url: "https://test1.com"
-        date: 2023-05-01
+        date: 2023-01-01
       - date: 2022-10-01
         url: "https://test1.com"
-      - date: 2021-10-01
+      - date: 2000-01-01
         url: "https://test1.com"
       - date: 2023-12-19
         url: "https://test1.com"
-      - date: 2022-11-19
+      - date: 2022-05-01
         url: "https://test2.com"
       - date: 2023-12-19
         url: "https://test2.com"
