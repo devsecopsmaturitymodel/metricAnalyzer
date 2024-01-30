@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @EnableConfigurationProperties
 @SpringBootApplication
-//@ComponentScan(basePackages = {"org.owasp.dsomm.metricca.analyzer"})
+//@ComponentScan(basePackages = {"org.owasp.dsomm.metricCA.analyzer"})
 public class MetricAnalyzerApplication {
   private static final Logger logger = LoggerFactory.getLogger(MetricAnalyzerApplication.class);
 
