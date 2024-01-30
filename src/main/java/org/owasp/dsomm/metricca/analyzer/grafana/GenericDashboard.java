@@ -36,6 +36,9 @@ public abstract class GenericDashboard {
   protected String templateFilePostfix;
   @Value("${metricCA.grafana.infinity.datasource.id}")
   protected String infinityDatasourceId;
+  @Value("${metricCa.grafana.dashboard.prefix:MetricCa-}")
+  protected String metricCaDashboardPrefix;
+
 
   public GenericDashboard() {
   }
@@ -72,7 +75,7 @@ public abstract class GenericDashboard {
   }
 
   public String getTitle() {
-    return StringUtils.capitalize(getDashboardType());
+    return metricCaDashboardPrefix +  StringUtils.capitalize(getDashboardType());
   }
 
   private String replaceLastLetter(String text, String newLetter) {
@@ -111,7 +114,7 @@ public abstract class GenericDashboard {
     Map<String, Object> input = new HashMap<>();
     input.put("title", panelConfiguration.getTitle());
     input.put("description", panelConfiguration.getDescription());
-    input.put("apiUrl", apiBaseUrl + "/" + panelConfiguration.getUrl());
+    input.put("apiUrl", apiBaseUrl + "/" + panelConfiguration.getUrlPath());
     input.put("infinityDatasourceId", infinityDatasourceId);
 
     Template template = getTemplate(panelBaseName + getDashboardType() + "/" + panelConfiguration.getType() + templateFilePostfix);

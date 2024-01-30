@@ -78,7 +78,7 @@ public class GrafanaDashboardCreator {
 
   private Map<String, PanelConfiguration> getMatrixPanel() {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
-    PanelConfiguration panelConfiguration = new PanelConfiguration("Matrix", "heatmap", "https://todo.de", "");
+    PanelConfiguration panelConfiguration = new PanelConfiguration("Matrix", "table-overview", "matrix/overview", "Overview of all applications");
     panelConfigurations.put(panelConfiguration.getTitle(), panelConfiguration);
     return panelConfigurations;
   }

@@ -2,6 +2,7 @@ package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
@@ -20,6 +21,9 @@ public class Team {
   }
 
   public List<String> getApplications() {
+    if(applications == null) {
+      applications = new ArrayList<>();
+    }
     return applications;
   }
 

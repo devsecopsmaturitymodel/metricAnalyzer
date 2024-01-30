@@ -1,10 +1,10 @@
+# Do not modify without testing the code, this file is used in integration tests
+
 apiVersion: v1
 kind: application
 settings:
   desired level: Level 1 # one team can have multiple applications in different levels
   application: "nix-app" # e.g. from deployment
   team: "nix-team"
-
-# TODO optional fields results in null values in the output is good?
 
 activities:

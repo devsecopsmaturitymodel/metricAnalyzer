@@ -10,3 +10,5 @@ teams:
   - name: humans
     applications:
       - boromir
+  - name: nix-team
+    applications:

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: application
 settings:
-  desired level: Level 1 # one team can have multiple applications in different levels
+  desired level: Level 2 # one team can have multiple applications in different levels
   application: "gandalf" # e.g. from deployment
   team: "fellowship of the ring"
 

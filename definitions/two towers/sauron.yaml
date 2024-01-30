@@ -1,11 +1,11 @@
+# Do not modify without testing the code, this file is used in integration tests
+
 apiVersion: v1
 kind: application
 settings:
   desired level: Level 1 # one team can have multiple applications in different levels
   application: "sauron" # e.g. from deployment
   team: "two towers"
-
-# Do not modify without testing the code, this file is used in integration tests
 
 activities:
   Source Control Protection:

@@ -20,8 +20,7 @@
   "graphTooltip": 0,
   "links": [],
   "liveNow": false,
-  "panels": [ ${panelsAsString}
-  ],
+  "panels": [ ${panelsAsString} ],
   "refresh": "",
   "schemaVersion": 38,
   "tags": [],
