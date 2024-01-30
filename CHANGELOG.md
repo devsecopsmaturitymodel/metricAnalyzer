@@ -1,3 +1,15 @@
+# [1.13.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.12.1...v1.13.0) (2024-01-30)
+
+
+### Bug Fixes
+
+* remove ID from template to create new dashboard based on name ([9b97fd2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/9b97fd261ec4196a8238267254f325c5d90de0c8))
+
+
+### Features
+
+* Add matrix view ([62293ec](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/62293ec47c306759646da59f3bc82bbb9552e938))
+
 ## [1.12.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.12.0...v1.12.1) (2024-01-30)
 
 
