@@ -9,9 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
-import org.owasp.dsomm.metricca.analyzer.grafana.OverviewDashboard;
-import org.owasp.dsomm.metricca.analyzer.grafana.PanelConfiguration;
-import org.owasp.dsomm.metricca.analyzer.grafana.PanelFactory;
+import org.owasp.dsomm.metricca.analyzer.grafana.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -33,8 +31,12 @@ public class GrafanaDashboardExportControllerTest {
   @Mock
   PanelFactory panelFactory;
   @Mock
+  private TeamDashboard teamDashboard;
+  @Mock
   @Autowired
   private ApplicationDirector applicationDirector;
+  @Mock
+  private GrafanaDashboardCreator grafanaDashboardCreator;
   @Mock
   private SkeletonActivity skeletonActivity;
   @InjectMocks
@@ -59,4 +61,31 @@ public class GrafanaDashboardExportControllerTest {
       assertThat(grafanaDashboardExportController.getOverviewDashboard()).isNull();
     }
   }
+
+  @Test
+  public void shouldGetTeamDashboard(){
+    try (MockedStatic<ApplicationDirector> mockedFactory = Mockito.mockStatic(ApplicationDirector.class);
+         MockedStatic<PanelFactory> panelFactory = Mockito.mockStatic(PanelFactory.class)) {
+      mockedFactory.when(ApplicationDirector::getSkeletonActivities).thenReturn(List.of(skeletonActivity));
+      when(skeletonActivity.getPanelConfigurations()).thenReturn(List.of(panelConfiguration));
+      Map<String, PanelConfiguration> map = new HashMap<>();
+      map.put(MAP_KEY, panelConfiguration);
+      mockedFactory.when(() -> PanelFactory.getPanelsForLevels(panelConfiguration, skeletonActivity)).thenReturn(map);
+      when(panelConfiguration.getTitle()).thenReturn(TITLE);
+
+      assertThat(grafanaDashboardExportController.getTeamDashboard()).isNull();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Test
+  public void shouldPushOverviewDashboard() throws Exception {
+      when(panelConfiguration.getTitle()).thenReturn(TITLE);
+      when(overviewDashboard.getDashboard(List.of(panelConfiguration))).thenReturn("dashboard");
+      when(grafanaDashboardCreator.pushDashboard()).thenReturn(Boolean.TRUE);
+
+      assertThat(grafanaDashboardExportController.pushOverviewDashboard()).isNotEmpty();
+  }
+
 }
