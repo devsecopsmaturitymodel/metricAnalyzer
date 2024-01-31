@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: team
+# Do not modify without testing the code, this file is used in integration tests
+
+settings:
+  team: "nix-team"
+
+activities:

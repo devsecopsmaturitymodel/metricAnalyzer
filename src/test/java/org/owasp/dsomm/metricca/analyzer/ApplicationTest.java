@@ -21,14 +21,15 @@ public class ApplicationTest {
     constructor.setAccessible(true);
     applicationDirector = constructor.newInstance();
     YamlScanner yamlScanner = new YamlScanner();
-    setPrivateField(yamlScanner, "yamlApplicationFolderPath", "definitions");
-    setPrivateField(yamlScanner, "yamlSkeletonFilePath", "src/main/resources/skeleton.yaml");
+    setPrivateFieldInTest(yamlScanner, "yamlApplicationFolderPath", "definitions");
+    setPrivateFieldInTest(yamlScanner, "yamlSkeletonFilePath", "src/main/resources/skeleton.yaml");
+    setPrivateFieldInTest(yamlScanner, "yamlTeamsFilePath", "src/main/resources/teams.yaml");
     yamlScanner.getApplicationYamls();
-    setPrivateField(this.applicationDirector, "yamlScanner", yamlScanner);
-    applicationDirector.getApplications();
+    setPrivateFieldInTest(this.applicationDirector, "yamlScanner", yamlScanner);
+    applicationDirector.initiateApplicationsViaCron();
   }
 
-  private void setPrivateField(Object targetObject, String fieldName, Object valueToSet) {
+  private void setPrivateFieldInTest(Object targetObject, String fieldName, Object valueToSet) {
     try {
       Field field = targetObject.getClass().getDeclaredField(fieldName);
       field.setAccessible(true);

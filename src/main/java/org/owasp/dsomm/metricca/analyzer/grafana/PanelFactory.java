@@ -15,16 +15,33 @@ public class PanelFactory {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<>();
     switch (panelConfiguration.getType()) {
       case "timeseries-flatdate":
-        for (Threshold threshold : activity.getThresholds()) {
-          PanelConfiguration newPanelConfiguration = new PanelConfiguration(
-              panelConfiguration.getTitle() + " " + threshold.getLevel(),
+        if (panelConfiguration.getDashboardType() == "team") {
+          PanelConfiguration teamNewPanelConfiguration = new PanelConfiguration(
+              getTitle(panelConfiguration, null),
               panelConfiguration.getType(),
-              "activity/" + SkeletonActivity.urlEncode(panelConfiguration.getTitle()) + "/level/" + SkeletonActivity.urlEncode(threshold.getLevel()) + "/flatdate",
-              threshold.getDescription());
-          panelConfigurations.put(newPanelConfiguration.getTitle(), newPanelConfiguration);
+              getURLTimeSeries(panelConfiguration, null),
+              "All levels for this application");
+          panelConfigurations.put(teamNewPanelConfiguration.getTitle(), teamNewPanelConfiguration);
+        } else if (panelConfiguration.getDashboardType() == "overview") {
+          for (Threshold threshold : activity.getThresholds()) {
+            PanelConfiguration newPanelConfiguration = new PanelConfiguration(
+                panelConfiguration.getTitle() + " " + threshold.getLevel(),
+                panelConfiguration.getType(),
+                getURLTimeSeries(panelConfiguration, threshold),
+                threshold.getDescription());
+            panelConfigurations.put(newPanelConfiguration.getTitle(), newPanelConfiguration);
+          }
         }
         break;
       case "count":
+//        if(panelConfiguration.getDashboardType() == "team") {
+//          PanelConfiguration teamNewPanelConfiguration = new PanelConfiguration(
+//              getTitle(panelConfiguration, null),
+//              panelConfiguration.getType(),
+//              getURLCount( panelConfiguration, null),
+//              "All levels for this application");
+//          panelConfigurations.put(teamNewPanelConfiguration.getTitle(), teamNewPanelConfiguration);
+//        } else if(panelConfiguration.getDashboardType() == "overview") {
         for (Threshold threshold : activity.getThresholds()) {
           PanelConfiguration newPanelConfiguration = new PanelConfiguration(
               panelConfiguration.getTitle() + " " + threshold.getLevel(),
@@ -33,11 +50,58 @@ public class PanelFactory {
               threshold.getDescription());
           panelConfigurations.put(newPanelConfiguration.getTitle(), newPanelConfiguration);
         }
+//        }
+
         break;
       default:
         panelConfigurations.put(panelConfiguration.getTitle(), panelConfiguration);
     }
 
     return panelConfigurations;
+  }
+
+  private static String getURLCount(PanelConfiguration panelConfiguration, Threshold threshold) {
+    String url = "";
+    switch (panelConfiguration.getDashboardType()) {
+      case "team":
+        url = "activity/" + SkeletonActivity.urlEncode(panelConfiguration.getTitle()) + "/level/" + SkeletonActivity.urlEncode(threshold.getLevel()) + "/count";
+        break;
+      case "overview":
+        url = "activity/" + SkeletonActivity.urlEncode(panelConfiguration.getTitle()) + "/level/" + SkeletonActivity.urlEncode(threshold.getLevel()) + "/flatdate";
+        break;
+      default:
+        logger.error("Could not find panel type for " + panelConfiguration.getDashboardType());
+    }
+    return url;
+  }
+
+  private static String getURLTimeSeries(PanelConfiguration panelConfiguration, Threshold threshold) {
+    String url = "";
+    switch (panelConfiguration.getDashboardType()) {
+      case "team":
+        url = "team/${team}/application/${application}/activity/" + panelConfiguration.getTitleUrlEncoded() + "/entries";
+        break;
+      case "overview":
+        url = "activity/" + SkeletonActivity.urlEncode(panelConfiguration.getTitle()) + "/level/" + SkeletonActivity.urlEncode(threshold.getLevel()) + "/flatdate";
+        break;
+      default:
+        logger.error("Could not find panel type for " + panelConfiguration.getDashboardType());
+    }
+    return url;
+  }
+
+  private static String getTitle(PanelConfiguration panelConfiguration, Threshold threshold) {
+    String title = "";
+    switch (panelConfiguration.getDashboardType()) {
+      case "team":
+        title = panelConfiguration.getTitle();
+        break;
+      case "overview":
+        title = panelConfiguration.getTitle() + " " + threshold.getLevel();
+        break;
+      default:
+        logger.error("Could not find panel type for " + panelConfiguration.getDashboardType());
+    }
+    return title;
   }
 }

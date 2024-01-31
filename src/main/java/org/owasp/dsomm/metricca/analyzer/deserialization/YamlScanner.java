@@ -1,7 +1,14 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,8 +36,15 @@ public class YamlScanner {
   private String yamlGitTargetPath;
   @Value("${metricCA.skeleton.path}")
   private String yamlSkeletonFilePath;
+  @Value("${metricCA.teams.path}")
+  private String yamlTeamsFilePath;
+
   @Value("${metricCA.application.path}")
   private String yamlApplicationFolderPath;
+  @Value("${metricCA.git.usernameOrToken}")
+  private String gitUsernameOrToken;
+  @Value("${metricCA.git.password}")
+  private String gitPassword;
 
   private static void deleteDirectoryRecursively(File dir) {
     File[] allContents = dir.listFiles();
@@ -67,13 +82,24 @@ public class YamlScanner {
       }
     }
     if (yamlGitTargetPathFile.exists()) {
-      logger.info("yamlGitTargetPath STILL exists");
+      logger.warn("yamlGitTargetPath STILL exists");
     }
-    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
-    Git.cloneRepository()
+    CloneCommand repoCloneCommand = Git.cloneRepository()
         .setURI(yamlGitUrl)
         .setDirectory(yamlGitTargetPathFile)
-        .setBranch(yamlGitBranch)
+        .setBranch(yamlGitBranch);
+
+    if (gitUsernameOrToken != null && !gitUsernameOrToken.isEmpty()) {
+      if (gitPassword == null || gitPassword.isEmpty()) {
+        logger.info("Password is empty, assuming a token is used");
+      } else {
+        logger.debug("gitUsernameOrToken is set to " + gitUsernameOrToken);
+      }
+      CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken, gitPassword);
+      repoCloneCommand.setCredentialsProvider(credentialsProvider);
+    }
+    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
+    repoCloneCommand
         .call();
   }
 
@@ -100,6 +126,24 @@ public class YamlScanner {
     if (!skeletonConfig.exists()) throw new FileNotFoundException(getYamlSkeletonFilePath());
 
     return skeletonConfig;
+  }
+
+  public List<Team> getTeamsAndApplicationYaml() throws IOException {
+    ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+    JsonNode teamsNode = objectMapper.readTree(new File(yamlTeamsFilePath));
+    String kind = teamsNode.get("kind").textValue();
+    if (!kind.equals("teams")) {
+      throw new RuntimeException("teams.yaml is not of kind teams (kind: " + kind + ")");
+    }
+    if (!teamsNode.has("teams")) {
+      throw new RuntimeException("teams.yaml is missing the teams node");
+    }
+    String teamsString = objectMapper.writeValueAsString(teamsNode.get("teams"));
+    ObjectMapper mapper = new ObjectMapper();
+    logger.info("teamsNode.get(\"teams\") " + teamsString);
+    List<Team> teams = objectMapper.readValue(teamsString, new TypeReference<List<Team>>() {
+    });
+    return teams;
   }
 
   private boolean isGitEnabled() {

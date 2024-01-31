@@ -28,5 +28,4 @@ public class FlattenDate {
   public void setDate(Date date) {
     this.date = date;
   }
-
 }

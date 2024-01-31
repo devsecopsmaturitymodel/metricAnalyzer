@@ -30,7 +30,7 @@ public class ActivityFactory {
 
   private static Activity deserialize(String activityName, JsonNode activityData, Class<? extends Activity> clazz) throws JsonProcessingException, InstantiationException, IllegalAccessException {
     if (activityData == null) {
-      logger.info("activityData for activityName " + activityName + " is null which means that the activity is defined as skeleton and not defined in the yaml file of the team/application. Creating a default empty activity class ." + clazz.getSimpleName());
+      logger.debug("activityData for activityName " + activityName + " is null which means that the activity is defined as skeleton and not defined in the yaml file of the team/application. Creating a default empty activity class ." + clazz.getSimpleName());
       return clazz.newInstance();
     }
     ObjectMapper activityObjectMapper = new ObjectMapper();

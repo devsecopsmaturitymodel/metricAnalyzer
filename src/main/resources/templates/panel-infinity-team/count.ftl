@@ -1,39 +1,5 @@
 {
-  "type": "stat",
-  "title": "Panel Title",
-  "gridPos": {
-    "x": 0,
-    "y": 0,
-    "w": 12,
-    "h": 8
-  },
-  "datasource": {
-    "uid": "${infinityDatasourceId}",
-    "type": "yesoreyeram-infinity-datasource"
-  },
-  "id": 2,
-  "targets": [
-    {
-      "datasource": {
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "${infinityDatasourceId}"
-      },
-      "refId": "A",
-      "type": "json",
-      "source": "inline",
-      "format": "table",
-      "url": "https://github.com/grafana/grafana-infinity-datasource/blob/main/testdata/users.json",
-      "url_options": {
-        "method": "GET",
-        "data": ""
-      },
-      "root_selector": "",
-      "columns": [],
-      "filters": [],
-      "global_query_id": "",
-      "data": "{\n \"fellowship of the ring\": 0,\n \"sauron\": 10\n}"
-    }
-  ],
+  "datasource": {},
   "fieldConfig": {
     "defaults": {
       "mappings": [],
@@ -45,8 +11,8 @@
             "value": null
           },
           {
-            "value": 1,
-            "color": "green"
+            "color": "green",
+            "value": 1
           }
         ]
       },
@@ -57,8 +23,13 @@
     },
     "overrides": []
   },
-  "transformations": [],
-  "pluginVersion": "10.2.2",
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  },
+  "id": 2,
   "options": {
     "reduceOptions": {
       "values": true,
@@ -73,5 +44,33 @@
     "colorMode": "value",
     "graphMode": "area",
     "justifyMode": "auto"
-  }
+  },
+  "pluginVersion": "10.2.2",
+  "targets": [
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${infinityDatasourceId}"
+      },
+      "columns": [],
+      "data": "",
+      "filters": [],
+      "format": "table",
+      "global_query_id": "",
+      "parser": "backend",
+      "refId": "A",
+      "root_selector": "",
+      "source": "url",
+      "type": "json",
+      "url": "${apiUrl}",
+      "url_options": {
+        "data": "",
+        "method": "GET"
+      }
+    }
+  ],
+  "title": "${title}",
+  "transformations": [],
+  "type": "stat",
+  "description": "${description}"
 }

@@ -80,6 +80,7 @@ public class ApplicationDirector {
   private List<Application> getDeserializedApplications(List<SkeletonActivity> skeletonActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, GitAPIException {
     List<Application> applications = new ArrayList<>();
     YamlApplicationNodes yamlApplicationNodes = new YamlApplicationNodes();
+    HashMap<String, List<Activity>> teamActivities = new HashMap<>();
     for (File yamlApplicationFilePath : yamlScanner.getApplicationYamls()) {
       logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());
       ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
@@ -99,8 +100,49 @@ public class ApplicationDirector {
         }
         applications.add(application);
       }
+      for (Application teamApplication : teamApplications) {
+        if (teamActivities.containsKey(teamName)) {
+          teamActivities.get(teamName).addAll(teamApplication.getActivities());
+          continue;
+        }
+        if (teamActivities.containsKey(teamName)) {
+          teamActivities.get(teamName).addAll(teamApplication.getActivities());
+        } else {
+          teamActivities.put(teamName, teamApplication.getActivities());
+        }
+      }
     }
+    setApplicationFromTeamsYaml(teamActivities);
+
     return applications;
+  }
+
+  private void setApplicationFromTeamsYaml(HashMap<String, List<Activity>> teamActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    List<Team> teams = yamlScanner.getTeamsAndApplicationYaml();
+    for (Team team : teams) {
+      logger.debug("team: " + team.getName());
+      String settings = "activities:" + System.lineSeparator() + "settings:" + System.lineSeparator() + "  team: " + team.getName();
+      JsonNode settingsTeamNode = new ObjectMapper(new YAMLFactory()).readTree(settings);
+      Application applicationTeam = createApplication(settingsTeamNode, skeletonActivities, "team");
+      for (String applicationName : team.getApplications()) {
+        if (isApplicationInList(applications, applicationName)) {
+          continue;
+        }
+        String settingsActivity = settings + System.lineSeparator() + "  application: " + applicationName;
+        JsonNode settingsActivityNode = new ObjectMapper(new YAMLFactory()).readTree(settingsActivity);
+        Application application = createApplication(settingsActivityNode, skeletonActivities, "application");
+
+        if (teamActivities.containsKey(team.getName())) {
+          application.getActivities().addAll(teamActivities.get(team.getName()));
+        } else {
+          application.getActivities().addAll(applicationTeam.getActivities());
+        }
+        for(Activity activity : application.getActivities()) {
+          logger.debug("activity: " + activity.getName() + " " + activity.getKind() + " ");
+        }
+        applications.add(application);
+      }
+    }
   }
 
   private boolean isNameInList(List<Activity> activities, String name) {
@@ -118,7 +160,7 @@ public class ApplicationDirector {
     JsonNode settings = jsonNode.get("settings");
     Application newApp = new Application(jsonNode.get("activities"), skeletonActivities, kind);
     if (settings.has("application")) {
-      newApp.setApplication(settings.get("application").asText());
+      newApp.setName(settings.get("application").asText());
     }
     if (settings.has("team")) {
       newApp.setTeam(settings.get("team").asText());
@@ -238,44 +280,15 @@ public class ApplicationDirector {
     for (java.util.Date date : datesFromActivities) {
       FlattenDate flattenDate = new FlattenDate(date);
       for (Application application : getApplications()) {
-        if (applicationName != null && !application.getApplication().equals(applicationName)) {
+        if (applicationName != null && !application.getName().equals(applicationName)) {
           continue;
         }
         if (teamName != null && !application.getTeam().equals(teamName)) {
           continue;
         }
         for (Activity activity : application.getActivities(activityName)) {
-          boolean value = false;
-          org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod dateComponent = null;
-          if (activity.getThresholdDatePeriodMap().get(level) == null) {
-            logger.debug("1activity.getThresholdDatePeriodMap().get(level) == null");
-          } else {
-            if (isDateStartDatePeriod(date, activity, level)) {
-              logger.info("isDateAStartDatePeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
-              value = true;
-            } else if (isDateEndDatePeriod(date, activity, level)) {
-              logger.info("isDateAEndDatePeriod " + activityName + " " + level + " " + date);
-              dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
-              value = !dateComponent.getShowEndDate();
-            } else if (isDateEndDatePeriodEnforced(date, activity, level)) {
-              logger.info("isDateAEndDateEnforcedPeriod " + activityName + " " + level + " " + date + " " + application.getTeam());
-              dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
-              if (dateComponent == null) { //no DatePeriod found, that means it is not implemented (yet)
-                value = false;
-              } else {
-                value = dateComponent.isInPeriod(date);
-              }
-            } else { // it is a DatePeriod from an other activity
-              logger.info("an other activity " + activityName + " " + level + " " + date + " " + application.getTeam());
-              dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
-              if (dateComponent == null) {
-                value = false; //  no DatePeriod found, that means it is not implemented (yet)
-              } else {
-                value = dateComponent.isInPeriod(date);
-              }
-            }
-          }
-          String label = getLabel(application.getTeam(), application.getApplication(), activity);
+          boolean value = isDateActive(activity, date, level, activityName, application.getTeam());
+          String label = getLabel(application.getTeam(), application.getName(), activity, level);
           flattenDate.addDynamicField(label, value);
         }
       }
@@ -284,16 +297,50 @@ public class ApplicationDirector {
     return flattenedActivitiesToReturn;
   }
 
-  private String getLabel(String team, String applicationName, Activity activity) {
+  private boolean isDateActive(Activity activity, Date date, String level, String activityName, String teamName) {
+    boolean value = false;
+    org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod dateComponent = null;
+
+    if (activity.getThresholdDatePeriodMap() == null || activity.getThresholdDatePeriodMap().get(level) == null) {
+      logger.debug("activity.getThresholdDatePeriodMap().get(level) == null");
+    } else {
+      if (isDateStartDatePeriod(date, activity, level)) {
+        logger.info("isDateAStartDatePeriod " + activity.getName() + " " + level + " " + date + " " + teamName);
+        value = true;
+      } else if (isDateEndDatePeriod(date, activity, level)) {
+        logger.info("isDateAEndDatePeriod " + activity.getName() + " " + level + " " + date);
+        dateComponent = activity.getThresholdDatePeriodMap().get(level).getDatePeriodEndForDate(date);
+        value = !dateComponent.getShowEndDate();
+      } else if (isDateEndDatePeriodEnforced(date, activity, level)) {
+        logger.info("isDateAEndDateEnforcedPeriod " + activity.getName() + " " + level + " " + date + " " + teamName);
+        dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
+        if (dateComponent == null) { //no DatePeriod found, that means it is not implemented (yet)
+          value = false;
+        } else {
+          value = dateComponent.isInPeriod(date);
+        }
+      } else { // it is a DatePeriod from an other activity
+        logger.debug("an other activity " + activity.getName() + " " + level + " " + date + " " + teamName);
+        dateComponent = activity.getThresholdDatePeriodMap().get(level).getClosestBeforeDatePeriodComponent(date);
+        if (dateComponent == null) {
+          value = false; //  no DatePeriod found, that means it is not implemented (yet)
+        } else {
+          value = dateComponent.isInPeriod(date);
+        }
+      }
+    }
+    return value;
+  }
+
+  private String getLabel(String team, String applicationName, Activity activity, String level) {
     switch (activity.getKind()) {
       case "team":
-        return team;
+        return team + " " + level;
       case "application":
-        return team + " - " + applicationName;
+        return team + " - " + applicationName + " " + level;
       default:
         return "";
     }
-
   }
 
   private boolean isDateStartDatePeriod(java.util.Date date, Activity activity, String level) {
@@ -315,11 +362,84 @@ public class ApplicationDirector {
     return getActivitiesPerTeamFlat(null, activityName);
   }
 
-  public LinkedHashMap<String, Collection<FlattenDate>> getActivitiesPerTeamAndApplicationFlatAsLevelMap(String applicationName, String teamName, String activityName) throws Exception {
-    LinkedHashMap<String, Collection<FlattenDate>> flattenedActivitiesToReturn = new LinkedHashMap<String, Collection<FlattenDate>>();
+  public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlatAsLevelMap(String applicationName, String teamName, String activityName) throws Exception {
+    Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
+
     for (String level : getLevelsForActivity(activityName)) {
-      flattenedActivitiesToReturn.put(level, getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName, level));
+      Collection<FlattenDate> flattenedActivities = getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName, level);
+      flattenedActivitiesToReturn = mergeFlattenDates(flattenedActivitiesToReturn, flattenedActivities, getActivity(activityName, teamName), level, teamName, applicationName);
     }
+
     return flattenedActivitiesToReturn;
   }
+
+  private Collection<FlattenDate> mergeFlattenDates(Collection<FlattenDate> flattenDates, Collection<FlattenDate> flattenDatesNew, Activity activity, String level, String teamName, String applicationName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    List<FlattenDate> mergedFlattenDates = new ArrayList<>();
+
+    for (FlattenDate flattenDateNew : flattenDatesNew) {
+      FlattenDate flattenDateFoundInList = null;
+      for (FlattenDate flattenDate : flattenDates) {
+        if (flattenDate.getDate().equals(flattenDateNew.getDate())) {
+          flattenDateFoundInList = flattenDate;
+          break;
+        }
+      }
+      if (flattenDateFoundInList == null) {
+        logger.info("flattenDateFoundInList == null" + flattenDateNew.getDate());
+        boolean isDateActiveForLevel = isDateActive(activity, flattenDateNew.getDate(), level, activity.getName(), teamName);
+        flattenDateNew.addDynamicField(getLabel(teamName, applicationName, activity, level), isDateActiveForLevel);
+        for (String otherLevel : getLevelsForActivity(activity.getName())) {
+          if (!otherLevel.equals(level)) {
+            String label = getLabel(teamName, applicationName, activity, otherLevel);
+            if (flattenDateNew.getEntries() != null && flattenDateNew.getEntries().containsKey(label)) {
+              logger.info("flattenDateNew.getDynamicFields().containsKey(label) " + label);
+              continue;
+            }
+            boolean isDateActiveForOtherLevel = isDateActive(activity, flattenDateNew.getDate(), otherLevel, activity.getName(), teamName);
+            flattenDateNew.addDynamicField(label, isDateActiveForOtherLevel);
+          }
+        }
+      } else {
+        logger.info("flattenDateFoundInList != null" + flattenDateFoundInList.getDate());
+        flattenDateFoundInList.getEntries().forEach((key, value) -> {
+          flattenDateNew.addDynamicField(key, value);
+        });
+      }
+
+      mergedFlattenDates.add(flattenDateNew);
+    }
+    return mergedFlattenDates;
+  }
+
+  private Activity getActivity(String activityName, String teamName) throws Exception {
+    for (Application application : getApplications()) {
+      if (application.getTeam().equals(teamName)) {
+        for (Activity activity : application.getActivities(activityName)) {
+          if (activity.getName().equals(activityName)) {
+            return activity;
+          }
+        }
+      }
+    }
+    throw new Exception("Activity not found");
+  }
+
+  private boolean isApplicationInList(List<Application> applications, String name) {
+    boolean isInList = false;
+    for (Application application : applications) {
+      if (application.getName().equals(name)) {
+        isInList = true;
+        break;
+      }
+    }
+    return isInList;
+  }
+
+//  public LinkedHashMap<String, Collection<FlattenDate>> getActivitiesPerTeamAndApplicationFlatAsLevelMap(String applicationName, String teamName, String activityName) throws Exception {
+//    LinkedHashMap<String, Collection<FlattenDate>> flattenedActivitiesToReturn = new LinkedHashMap<String, Collection<FlattenDate>>();
+//    for (String level : getLevelsForActivity(activityName)) {
+//      flattenedActivitiesToReturn.put(level, getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName, level));
+//    }
+//    return flattenedActivitiesToReturn;
+//  }
 }

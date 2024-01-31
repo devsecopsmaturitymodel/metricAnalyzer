@@ -1,3 +1,45 @@
+# [1.13.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.12.1...v1.13.0) (2024-01-30)
+
+
+### Bug Fixes
+
+* remove ID from template to create new dashboard based on name ([9b97fd2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/9b97fd261ec4196a8238267254f325c5d90de0c8))
+
+
+### Features
+
+* Add matrix view ([62293ec](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/62293ec47c306759646da59f3bc82bbb9552e938))
+
+## [1.12.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.12.0...v1.12.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* tests ([1dc98ab](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/1dc98ab8a1a3c548b5ec9a5d5484e7bdfb49e9d4))
+
+# [1.12.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.11.1...v1.12.0) (2024-01-29)
+
+
+### Features
+
+* add teams ([0932d2e](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/0932d2e60b4d61436fee11c2f7c08671935f4b1b))
+* add teams ([4ffb89c](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/4ffb89cd0aa3d4909727712c24ae448f00133b92))
+* add teams ([70e9c4d](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/70e9c4d3f46d8bfd6f21ad2e532444ec421a7e0c))
+
+## [1.11.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.11.0...v1.11.1) (2024-01-26)
+
+
+### Bug Fixes
+
+* Git clone with cred. provider only if cred. are provided ([c65e5b4](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/c65e5b48bbd5b353e4a0ed3e726eedeb9fd5516e))
+
+# [1.11.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.4...v1.11.0) (2024-01-25)
+
+
+### Features
+
+* add jgit credentials provider ([dfc9f9e](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/dfc9f9e8dc84974ba7aff2cf268a9517b6fea82b))
+
 ## [1.10.4](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.10.3...v1.10.4) (2024-01-22)
 
 
