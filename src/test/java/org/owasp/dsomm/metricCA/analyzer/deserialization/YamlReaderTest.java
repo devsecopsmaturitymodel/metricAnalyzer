@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.owasp.dsomm.metricca.analyzer.deserialization.YamlReader;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
@@ -49,4 +48,5 @@ public class YamlReaderTest {
             .extracting(IllegalStateException.class::cast)
             .returns(ERROR_MESSAGE, Throwable::getMessage);
   }
+
 }

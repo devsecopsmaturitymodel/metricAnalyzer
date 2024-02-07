@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,13 +26,11 @@ public class GrafanaTeamDashboardControllerTest {
   @Mock
   private ApplicationDirector applicationDirector;
   @Mock
-  private Application application;
-  @Mock
   private FlattenDate flattenDate;
   @Mock
   private LinkedHashMap<String, Collection<FlattenDate>> linkedHashMap;
   @InjectMocks
-  GrafanaTeamDashboardController grafanaTeamDashboardController;
+  private GrafanaTeamDashboardController grafanaTeamDashboardController;
 
   @Test
   public void shouldGetActivitiesPerTeamFlatSimple() throws Exception {
@@ -41,15 +40,19 @@ public class GrafanaTeamDashboardControllerTest {
     assertThat(grafanaTeamDashboardController.getActivitiesPerTeamFlatSimple(TEAM_NAME, APPLICATION, ACTIVITY_NAME))
             .isNotNull()
             .hasSize(1);
+
+    verify(applicationDirector).getActivitiesPerTeamAndApplicationFlat(APPLICATION, TEAM_NAME, ACTIVITY_NAME);
   }
 
   @Test
   public void shouldGetActivitiesPerTeamFlatAsMap() throws Exception {
     when(applicationDirector.getActivitiesPerTeamAndApplicationFlatAsLevelMap(APPLICATION, TEAM_NAME, ACTIVITY_NAME))
-            .thenReturn(linkedHashMap);
+            .thenReturn(List.of(flattenDate));
 
     assertThat(grafanaTeamDashboardController.getActivitiesPerTeamFlatAsMap(TEAM_NAME, APPLICATION, ACTIVITY_NAME))
             .isNotNull()
-            .hasSize(0);
+            .hasSize(1);
+
+    verify(applicationDirector).getActivitiesPerTeamAndApplicationFlatAsLevelMap(APPLICATION, TEAM_NAME, ACTIVITY_NAME);
   }
 }

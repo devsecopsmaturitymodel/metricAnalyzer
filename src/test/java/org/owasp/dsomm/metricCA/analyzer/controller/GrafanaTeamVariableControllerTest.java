@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +25,7 @@ public class GrafanaTeamVariableControllerTest {
   @Mock
   private Application application;
   @InjectMocks
-  GrafanaTeamVariableController grafanaTeamVariableController;
+  private GrafanaTeamVariableController grafanaTeamVariableController;
 
   @Test
   public void shouldGetTeams() throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
@@ -33,6 +34,8 @@ public class GrafanaTeamVariableControllerTest {
     assertThat(grafanaTeamVariableController.getTeams())
             .isNotNull()
             .hasSize(1);
+
+    verify(applicationDirector).getApplications();
   }
 
   @Test
@@ -43,5 +46,8 @@ public class GrafanaTeamVariableControllerTest {
     assertThat(grafanaTeamVariableController.getTeamApplicationIds(TEAM_NAME))
             .isNotNull()
             .hasSize(1);
+
+    verify(applicationDirector).getApplications();
   }
+
 }

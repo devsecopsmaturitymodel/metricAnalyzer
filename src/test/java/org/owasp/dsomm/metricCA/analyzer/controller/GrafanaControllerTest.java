@@ -45,6 +45,8 @@ public class GrafanaControllerTest {
     assertThat(grafanaController.getActivities())
             .isNotEmpty()
             .hasSize(1);
+
+    verify(applicationDirector).getApplications();
   }
 
   @Test
@@ -91,7 +93,7 @@ public class GrafanaControllerTest {
   public void shouldGetTeamActivity() throws Exception {
     when(applicationDirector.getApplications()).thenReturn(List.of(application));
     when(application.getTeam()).thenReturn(TEAM_NAME);
-    when(application.getApplication()).thenReturn(APPLICATION_ID);
+    when(application.getName()).thenReturn(APPLICATION_ID);
     when(application.getActivities()).thenReturn(List.of(activity));
     when(activity.getName()).thenReturn(ACTIVITY_NAME);
 
@@ -103,6 +105,20 @@ public class GrafanaControllerTest {
     verify(application).getActivities();
     verify(applicationDirector).getApplications();
 
+  }
+
+  @Test
+  public void shouldGetTeamApplicationNames() throws Exception {
+    when(applicationDirector.getApplications()).thenReturn(List.of(application));
+    when(application.getTeam()).thenReturn(TEAM_NAME);
+    when(application.getName()).thenReturn(APPLICATION_ID);
+
+    assertThat(grafanaController.getTeamApplicationNames(TEAM_NAME))
+            .isNotNull()
+            .asList()
+            .hasSize(1);
+
+    verify(applicationDirector).getApplications();
   }
 
 }

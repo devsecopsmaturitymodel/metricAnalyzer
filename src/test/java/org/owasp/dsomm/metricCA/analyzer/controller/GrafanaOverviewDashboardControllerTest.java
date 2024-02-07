@@ -19,10 +19,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class GrafanaOverviewDashboardControllerTest {
+
   private static final String ACTIVITY_NAME = "abc activity";
   private static final String LEVEL = "abc level";
   private static final String TEAM_NAME = "abc level";
@@ -45,7 +47,7 @@ public class GrafanaOverviewDashboardControllerTest {
   @Mock
   private Application application;
   @InjectMocks
-  GrafanaOverviewDashboardController grafanaOverviewDashboardController;
+  private GrafanaOverviewDashboardController grafanaOverviewDashboardController;
 
   @Test
   public void shouldGetActivitiesSimpleNoDate() throws Exception {
@@ -56,6 +58,8 @@ public class GrafanaOverviewDashboardControllerTest {
     assertThat(grafanaOverviewDashboardController.getActivitiesSimpleNoDate(ACTIVITY_NAME))
             .isNotEmpty()
             .hasSize(1);
+
+    verify(applicationDirector).getApplications();
   }
 
   @Test
@@ -71,6 +75,8 @@ public class GrafanaOverviewDashboardControllerTest {
     assertThat(grafanaOverviewDashboardController.getActivitiesWithCount(ACTIVITY_NAME, LEVEL))
             .isNotEmpty()
             .hasSize(1);
+
+    verify(applicationDirector).getApplications();
   }
 
   @Test
@@ -81,6 +87,8 @@ public class GrafanaOverviewDashboardControllerTest {
     assertThat(grafanaOverviewDashboardController.getActivitiesFlat(ACTIVITY_NAME, LEVEL))
             .isNotNull()
             .hasSize(1);
+
+    verify(applicationDirector).getActivitiesPerTeamAndApplicationFlat(null, null, ACTIVITY_NAME, LEVEL);
   }
 
   @Test
@@ -92,6 +100,8 @@ public class GrafanaOverviewDashboardControllerTest {
 
     assertThatThrownBy(() -> grafanaOverviewDashboardController.getActivitiesHoursAndPeople(ACTIVITY_NAME, LEVEL)).returns(ERROR_MESSAGE, Throwable::getMessage);
 
+    verify(applicationDirector).getStartDateFromActivitiesAsMap(ACTIVITY_NAME);
+    verify(applicationDirector).getApplications();
   }
 
   @Test
@@ -107,5 +117,9 @@ public class GrafanaOverviewDashboardControllerTest {
 
     assertThat(grafanaOverviewDashboardController.getActivitiesHoursAndPeople(ACTIVITY_NAME, LEVEL))
             .isNull();
+
+    verify(applicationDirector).getStartDateFromActivitiesAsMap(ACTIVITY_NAME);
+    verify(applicationDirector).getApplications();
   }
+
 }
