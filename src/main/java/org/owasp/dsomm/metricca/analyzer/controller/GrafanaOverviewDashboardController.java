@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class GrafanaOverviewDashboardController {
@@ -69,8 +66,8 @@ public class GrafanaOverviewDashboardController {
    */
   @RequestMapping(value = "/activity/{activityName}/level/{level}/hoursAndPeople", method = RequestMethod.GET)
   @ResponseBody
-  public List<DatePeriodHoursAndPeople> getActivitiesHoursAndPeople(@PathVariable String activityName, @PathVariable String level) throws Exception {
-    List<Date> allActivityDates = applicationDirector.getStartDateFromActivitiesAsMap(activityName);
+  public Map<String, List<DatePeriodHoursAndPeople>> getActivitiesHoursAndPeople(@PathVariable String activityName, @PathVariable String level) throws Exception {
+    Map<String, List<DatePeriodHoursAndPeople>> allActivityDates = new HashMap<>();
     for (Application application : applicationDirector.getApplications()) {
       for (Activity activity : application.getActivities(activityName)) {
         logger.info("activity: " + activity.getName());
@@ -84,9 +81,9 @@ public class GrafanaOverviewDashboardController {
           flattenDate.addDynamicField(application.getTeam(), datePeriodHoursAndPeople.getHours());
         }
 
-        ((SecurityTrainingActivity) activity).getLearningTimePerDate();
+        allActivityDates.put(application.getTeam(), ((SecurityTrainingActivity) activity).getLearningTimePerDate());
       }
     }
-    return null;
+    return allActivityDates;
   }
 }

@@ -22,9 +22,6 @@ import java.util.*;
 public class GrafanaMatrixDashboardController {
   private static final Logger logger = LoggerFactory.getLogger(GrafanaMatrixDashboardController.class);
 
-  @Autowired
-  private GrafanaDashboardCreator grafanaDashboardCreator;
-
   @Autowired ApplicationDirector applicationDirector;
 
   @RequestMapping(value = "/matrix/overview", method = RequestMethod.GET)

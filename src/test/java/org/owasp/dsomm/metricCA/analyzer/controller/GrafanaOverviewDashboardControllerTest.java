@@ -28,8 +28,6 @@ public class GrafanaOverviewDashboardControllerTest {
   private static final String ACTIVITY_NAME = "abc activity";
   private static final String LEVEL = "abc level";
   private static final String TEAM_NAME = "abc level";
-  private static final String ERROR_MESSAGE = "SecurityTrainingActivity not implemented yet";
-
   @Mock
   private ApplicationDirector applicationDirector;
   @Mock
@@ -92,21 +90,7 @@ public class GrafanaOverviewDashboardControllerTest {
   }
 
   @Test
-  public void shouldThrowsExceptionOnGetActivitiesHoursAndPeople() throws Exception {
-    when(applicationDirector.getStartDateFromActivitiesAsMap(ACTIVITY_NAME)).thenReturn(List.of(date));
-    when(applicationDirector.getApplications()).thenReturn(List.of(application));
-    when(application.getActivities(ACTIVITY_NAME)).thenReturn(List.of(activity));
-    when(activity.getName()).thenReturn(ACTIVITY_NAME);
-
-    assertThatThrownBy(() -> grafanaOverviewDashboardController.getActivitiesHoursAndPeople(ACTIVITY_NAME, LEVEL)).returns(ERROR_MESSAGE, Throwable::getMessage);
-
-    verify(applicationDirector).getStartDateFromActivitiesAsMap(ACTIVITY_NAME);
-    verify(applicationDirector).getApplications();
-  }
-
-  @Test
   public void shouldGetActivitiesHoursAndPeople() throws Exception {
-    when(applicationDirector.getStartDateFromActivitiesAsMap(ACTIVITY_NAME)).thenReturn(List.of(date));
     when(applicationDirector.getApplications()).thenReturn(List.of(application));
     when(application.getActivities(ACTIVITY_NAME)).thenReturn(List.of(securityTrainingActivity));
     when(application.getTeam()).thenReturn(TEAM_NAME);
@@ -115,11 +99,9 @@ public class GrafanaOverviewDashboardControllerTest {
     when(datePeriodHoursAndPeople.getDate()).thenReturn(date);
     when(datePeriodHoursAndPeople.getHours()).thenReturn(1);
 
-    assertThat(grafanaOverviewDashboardController.getActivitiesHoursAndPeople(ACTIVITY_NAME, LEVEL))
-            .isNull();
+    assertThat(grafanaOverviewDashboardController
+        .getActivitiesHoursAndPeople(ACTIVITY_NAME, LEVEL)).containsKey(TEAM_NAME);
 
-    verify(applicationDirector).getStartDateFromActivitiesAsMap(ACTIVITY_NAME);
     verify(applicationDirector).getApplications();
   }
-
 }

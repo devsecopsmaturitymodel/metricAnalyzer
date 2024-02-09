@@ -63,22 +63,5 @@ public class GrafanaDashboardExportController {
   @ResponseBody
   public String getTeamDashboard() throws Exception {
     return grafanaDashboardCreator.getDashboards().get("team");
-
-//    String dashboardType = "team";
-//    Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
-//    for (SkeletonActivity skeletonActivity : ApplicationDirector.getSkeletonActivities()) {
-//      for (PanelConfiguration panelConfiguration : skeletonActivity.getPanelConfigurations(dashboardType)) {
-//        Map<String, PanelConfiguration> fetchedPanelConfigurations = PanelFactory.getPanelsForLevels(panelConfiguration, skeletonActivity);
-//        for (PanelConfiguration fetchedPanelConfiguration : fetchedPanelConfigurations.values()) {
-//          if (!panelConfigurations.containsKey(fetchedPanelConfiguration.getTitle())) {
-//            panelConfigurations.put(fetchedPanelConfiguration.getTitle(), fetchedPanelConfiguration);
-//          }
-//        }
-//      }
-//    }
-//    for (PanelConfiguration panelConfiguration : panelConfigurations.values()) {
-//      logger.info("panelConfiguration: " + panelConfiguration.getTitle());
-//    }
-//    return teamDashboard.getDashboard(panelConfigurations.values());
   }
 }
