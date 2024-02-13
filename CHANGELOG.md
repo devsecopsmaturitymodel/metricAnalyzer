@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.15.0...v1.16.0) (2024-02-13)
+
+
+### Features
+
+* Add implementation levels; ([abf13cc](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/abf13ccfd8a18fa431657759adf53f5fe8f8188e))
+
 # [1.14.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.13.0...v1.14.0) (2024-02-09)
 
 
