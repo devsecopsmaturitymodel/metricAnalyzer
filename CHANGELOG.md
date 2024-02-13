@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.13.0...v1.14.0) (2024-02-09)
+
+
+### Features
+
+* Add Security Training Activity ([48e2eaa](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/48e2eaa33c43e1197b98d4cbb166be94b25f5d06))
+
 # [1.13.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.12.1...v1.13.0) (2024-01-30)
 
 
