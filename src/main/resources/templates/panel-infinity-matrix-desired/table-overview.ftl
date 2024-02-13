@@ -4,8 +4,8 @@
   "gridPos": {
     "x": 0,
     "y": 0,
-    "w": 12,
-    "h": 8
+    "w": 24,
+    "h": 24
   },
   "datasource": {
     "uid": "${infinityDatasourceId}",
@@ -88,7 +88,7 @@
       "options": {
         "excludeByName": {},
         "indexByName": {
-          "team": 0,
+          "Application": 0,
           "Advanced app. metrics": 1,
           "Alerting": 2,
           "Centralized system logging": 3,

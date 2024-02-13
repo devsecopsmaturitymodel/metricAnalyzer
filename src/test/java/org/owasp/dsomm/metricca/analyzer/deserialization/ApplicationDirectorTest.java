@@ -42,4 +42,21 @@ public class ApplicationDirectorTest extends ApplicationTest {
     }
     assertTrue(foundSecurityRequirements);
   }
+  @Test
+  public void testTeamActivitySecurityRequirementsExistsFromTeamsYaml() throws Exception {
+    List<Application> actualApplications = applicationDirector.getApplications();
+    boolean foundSecurityRequirements = false;
+    for (Application application : actualApplications) {
+      if(!application.getTeam().equals("nix-team")) {
+        continue;
+      }
+      for (Activity activity : application.getActivities()) {
+        if (activity.getName().equals("Security requirements")) {
+          foundSecurityRequirements = true;
+          break;
+        }
+      }
+    }
+    assertTrue(foundSecurityRequirements);
+  }
 }

@@ -18,7 +18,7 @@ public class SecurityTrainingActivity extends Activity {
   private static final Logger logger = LoggerFactory.getLogger(Activity.class);
 
   @JsonProperty("components")
-  protected List<DatePeriodHoursAndPeople> learningTimePerDate;
+  protected List<DatePeriodHoursAndPeople> learningTimePerDate = new ArrayList<DatePeriodHoursAndPeople>();
 
   @Override
   public List<Date> getDateComponents() {
@@ -70,10 +70,10 @@ public class SecurityTrainingActivity extends Activity {
     return isImplementedMap;
   }
 
-  @Override
-  public HashMap<String, ThresholdDatePeriodManager> getThresholdDatePeriodMap() {
-    return null;
-  }
+//  @Override
+//  public HashMap<String, ThresholdDatePeriodManager> getThresholdDatePeriodMap() {
+//    return null;
+//  }
 
   public List<DatePeriodHoursAndPeople> getLearningTimePerDate() {
     return learningTimePerDate;

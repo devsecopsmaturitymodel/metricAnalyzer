@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GrafanaMatrixDashboardControllerTest {
+public class GrafanaMatrixImplementedDashboardControllerTest {
 
   private static final String TEAM = "team";
   private static final String DESIRE_LEVEL = "level";
@@ -43,7 +43,7 @@ public class GrafanaMatrixDashboardControllerTest {
     map.put(MAP_KEY, Boolean.TRUE);
     when(activity.isActivityImplemented()).thenReturn(map);
 
-    assertThat(grafanaMatrixDashboardController.getOverviewDashboard()).isNotNull();
+    assertThat(grafanaMatrixDashboardController.getOverviewDashboardDesiredLevel()).isNotNull();
 
     verify(applicationDirector).getApplications();
   }
@@ -57,7 +57,7 @@ public class GrafanaMatrixDashboardControllerTest {
     map.put(MAP_KEY, Boolean.TRUE);
     when(activity.isActivityImplemented()).thenReturn(map);
 
-    assertThat(grafanaMatrixDashboardController.getOverviewDashboard()).isNotNull();
+    assertThat(grafanaMatrixDashboardController.getOverviewDashboardDesiredLevel()).isNotNull();
 
     verify(applicationDirector).getApplications();
   }

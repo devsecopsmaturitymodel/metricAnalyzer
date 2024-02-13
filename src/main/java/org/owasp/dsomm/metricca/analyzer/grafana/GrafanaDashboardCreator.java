@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,10 @@ public class GrafanaDashboardCreator {
   private TeamDashboard teamDashboard;
 
   @Autowired
-  private MatrixDashboard matrixDashboard;
+  private MatrixImplementedDashboard matrixImplementedDashboard;
+
+  @Autowired
+  private MatrixDesiredDashboard matrixDesiredLevelDashboard;
 
   @Value("${metricCA.grafana.baseurl:http://localhost:3000}")
   private String grafanaBaseUrl;
@@ -37,12 +39,16 @@ public class GrafanaDashboardCreator {
   @Value("${metricCA.grafana.timeoutInSeconds:10}")
   private Integer grafanaApiTimeoutInSeconds;
 
+  @Value("${metricCa.levels}")
+  private String[] levels;
+
 
   public HashMap<String, String> getDashboards() throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, TemplateException {
     HashMap<String, String> dashboards = new HashMap<String, String>();
     dashboards.put("overview", overviewDashboard.getDashboard(getPanelConfigurations("overview").values()));
     dashboards.put("team", teamDashboard.getDashboard(getPanelConfigurations("team").values()));
-    dashboards.put("matrix", matrixDashboard.getDashboard(getMatrixPanel().values()));
+    dashboards.put("matrix-desired-level", matrixDesiredLevelDashboard.getDashboard(getMatrixPanel().values()));
+    dashboards.put("matrix-implemented-level", matrixImplementedDashboard.getDashboard(getImplementedMatrixPanel().values()));
     return dashboards;
   }
 
@@ -78,8 +84,16 @@ public class GrafanaDashboardCreator {
 
   private Map<String, PanelConfiguration> getMatrixPanel() {
     Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
-    PanelConfiguration panelConfiguration = new PanelConfiguration("Matrix", "table-overview", "matrix/overview", "Overview of all applications");
+    PanelConfiguration panelConfiguration = new PanelConfiguration("Matrix for Desired Level", "table-overview", "matrix/overview/desiredLevel", "Overview of all applications");
     panelConfigurations.put(panelConfiguration.getTitle(), panelConfiguration);
+    return panelConfigurations;
+  }
+  private Map<String, PanelConfiguration> getImplementedMatrixPanel() {
+    Map<String, PanelConfiguration> panelConfigurations = new HashMap<String, PanelConfiguration>();
+    for(String level : levels) {
+      PanelConfiguration panelConfiguration = new PanelConfiguration("Matrix for Implemented Activities " + level, "table-overview", "matrix/overview/level/" + level, "Overview of all applications for " + level);
+      panelConfigurations.put(panelConfiguration.getTitle(), panelConfiguration);
+    }
     return panelConfigurations;
   }
 }
