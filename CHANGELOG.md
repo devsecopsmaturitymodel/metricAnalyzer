@@ -1,3 +1,10 @@
+## [1.17.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.17.1...v1.17.2) (2024-02-20)
+
+
+### Bug Fixes
+
+* Add XDG_CONFIG_HOME env for Kubernetes env ([9bbc330](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/9bbc33067defe07028e989e7407b7737ab310674))
+
 # [1.17.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.16.2...v1.17.0) (2024-02-20)
 
 
