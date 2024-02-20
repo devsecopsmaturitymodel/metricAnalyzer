@@ -53,7 +53,7 @@ jobs:
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           tag="${{ steps.get-version.outputs.version }}"
           if [ "${branch}" == "main" ]; then
-            tag="${$tag},latest"
+            tag="${tag},latest"
           fi
           echo "tag: ${tag}, ${branch}"
           ./mvnw compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Djib.from.image=eclipse-temurin:17-jre -Djib.container.environment=XDG_CONFIG_HOME=/tmp -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${tag}
