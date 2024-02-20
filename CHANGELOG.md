@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.16.0...v1.16.1) (2024-02-20)
+
+
+### Bug Fixes
+
+* pull instead of delte and clone ([c6a2b17](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/c6a2b17bdf779c2cf9294b9cbe40218b7a2b5822))
+
 # [1.16.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.15.0...v1.16.0) (2024-02-13)
 
 
