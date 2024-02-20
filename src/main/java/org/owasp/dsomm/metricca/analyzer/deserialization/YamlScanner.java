@@ -56,13 +56,13 @@ public class YamlScanner {
     dir.delete();
   }
 
-  public void initiate() throws GitAPIException {
+  public void initiate() throws GitAPIException, IOException {
     if (isGit()) {
       gitClone(false);
     }
   }
 
-  public void initiateEnforced() throws GitAPIException {
+  public void initiateEnforced() throws GitAPIException, IOException {
     if (!isGitEnabled()) {
       return;
     }
@@ -70,20 +70,14 @@ public class YamlScanner {
   }
 
 
-  private void gitClone(boolean enforceGitCloneIfTargetFolderExists) throws GitAPIException {
+  private void gitClone(boolean enforceGitCloneIfTargetFolderExists) throws GitAPIException, IOException {
     File yamlGitTargetPathFile = new File(yamlGitTargetPath);
     if (yamlGitTargetPathFile.exists()) {
-      if (enforceGitCloneIfTargetFolderExists) {
-        logger.info("yamlGitTargetPath exists, deleting it: " + yamlGitTargetPath + " enforceGitCloneIfTargetFolderExists:" + enforceGitCloneIfTargetFolderExists);
-        deleteDirectoryRecursively(yamlGitTargetPathFile);
-      } else {
-        logger.info("yamlGitTargetPath exists, skipping cloning " + yamlGitTargetPath);
-        return;
-      }
+      Git.open(new File(yamlGitTargetPath)).pull();
+      logger.info("Pulled " + yamlGitUrl + " to " + yamlGitTargetPath);
+      return;
     }
-    if (yamlGitTargetPathFile.exists()) {
-      logger.warn("yamlGitTargetPath STILL exists");
-    }
+
     CloneCommand repoCloneCommand = Git.cloneRepository()
         .setURI(yamlGitUrl)
         .setDirectory(yamlGitTargetPathFile)
