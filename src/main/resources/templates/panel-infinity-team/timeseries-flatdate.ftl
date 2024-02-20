@@ -8,7 +8,7 @@
     "h": 8
   },
   "datasource": {
-    "uid": "bf5f79be-56ae-4a3e-869e-fa01fa2b3161",
+    "uid": "${infinityDatasourceId}",
     "type": "yesoreyeram-infinity-datasource"
   },
   "id": 2,
