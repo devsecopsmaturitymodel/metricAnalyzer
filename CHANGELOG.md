@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.16.1...v1.16.2) (2024-02-20)
+
+
+### Bug Fixes
+
+* infinityDatasourceId in teams ([0002d1a](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/0002d1afd62952a42a915c53f75441a914374af1))
+
 ## [1.16.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.16.0...v1.16.1) (2024-02-20)
 
 
