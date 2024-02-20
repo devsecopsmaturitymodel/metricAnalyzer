@@ -31,6 +31,12 @@ public class GrafanaTeamDashboardController {
   public Collection<FlattenDate> getActivitiesPerTeamFlatAsMap(@PathVariable String teamName, @PathVariable String application, @PathVariable String activityName) throws Exception {
     return applicationDirector.getActivitiesPerTeamAndApplicationFlatAsLevelMap(application, teamName, activityName);
   }
+  @RequestMapping(value = "/team/{teamName}/application/{application}/entriesWithTeam", method = RequestMethod.GET)
+  @ResponseBody
+  public Collection<FlattenDate> getActivitiesWithTeamFlatAsMap(@PathVariable String teamName, @PathVariable String application) throws Exception {
+    return applicationDirector.getActivitiesWithTeamAndApplicationFlatAsLevelMap(application, teamName);
+  }
+
 }
 
 //http://192.168.178.27:8080/team/${team}/application/${application}/activity/Conduction%20of%20simple%20threat%20modeling%20on%20technical%20level/simple

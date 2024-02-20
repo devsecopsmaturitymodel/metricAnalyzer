@@ -29,6 +29,7 @@ metricCA.api.baseurl=http://todo
 metricCA.grafana.baseurl=http://todo
 metricCA.grafana.apiKey=TODO
 metricCA.grafana.template.path=/app/resources/templates/
+metricCa.levels=Level 1, Level 2, Level 3
 ```
 ```bash
 docker compose up

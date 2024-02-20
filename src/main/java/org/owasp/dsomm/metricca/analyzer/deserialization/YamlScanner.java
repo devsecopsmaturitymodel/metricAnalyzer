@@ -46,31 +46,13 @@ public class YamlScanner {
   @Value("${metricCA.git.password}")
   private String gitPassword;
 
-  private static void deleteDirectoryRecursively(File dir) {
-    File[] allContents = dir.listFiles();
-    if (allContents != null) {
-      for (File file : allContents) {
-        deleteDirectoryRecursively(file);
-      }
-    }
-    dir.delete();
-  }
-
   public void initiate() throws GitAPIException, IOException {
     if (isGit()) {
-      gitClone(false);
+      gitCloneOrUpdate();
     }
   }
 
-  public void initiateEnforced() throws GitAPIException, IOException {
-    if (!isGitEnabled()) {
-      return;
-    }
-    gitClone(true);
-  }
-
-
-  private void gitClone(boolean enforceGitCloneIfTargetFolderExists) throws GitAPIException, IOException {
+  private void gitCloneOrUpdate() throws GitAPIException, IOException {
     File yamlGitTargetPathFile = new File(yamlGitTargetPath);
     if (yamlGitTargetPathFile.exists()) {
       Git.open(new File(yamlGitTargetPath)).pull();

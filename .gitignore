@@ -1,3 +1,4 @@
 target
 .idea
 grafana
+/src/main/resources/application-git.properties

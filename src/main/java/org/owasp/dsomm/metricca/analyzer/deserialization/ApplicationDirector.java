@@ -9,6 +9,7 @@ import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
+import org.owasp.dsomm.metricca.analyzer.exception.ApplicationNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.ComponentNotFoundException;
 import org.owasp.dsomm.metricca.analyzer.exception.SkeletonNotFoundException;
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class ApplicationDirector {
   @Scheduled(fixedRate = 10000)
   public void initiateApplicationsViaCron() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     logger.debug("initiateApplicationsViaCron");
-    yamlScanner.initiateEnforced();
+    yamlScanner.initiate();
     initiateApplications();
   }
 
@@ -279,22 +280,27 @@ public class ApplicationDirector {
     logger.info("datesFromActivities: " + datesFromActivities);
     for (java.util.Date date : datesFromActivities) {
       FlattenDate flattenDate = new FlattenDate(date);
-      for (Application application : getApplications()) {
-        if (applicationName != null && !application.getName().equals(applicationName)) {
-          continue;
-        }
-        if (teamName != null && !application.getTeam().equals(teamName)) {
-          continue;
-        }
-        for (Activity activity : application.getActivities(activityName)) {
-          boolean value = isDateActive(activity, date, level, activityName, application.getTeam());
-          String label = getLabel(application.getTeam(), application.getName(), activity, level);
-          flattenDate.addDynamicField(label, value);
-        }
+      Application application = getApplicationForTeamAndApplication(applicationName, teamName);
+      for (Activity activity : application.getActivities(activityName)) {
+        boolean value = isDateActive(activity, date, level, activityName, application.getTeam());
+        String label = getLabel(application.getTeam(), application.getName(), activity, level);
+        flattenDate.addDynamicField(label, value);
       }
       flattenedActivitiesToReturn.add(flattenDate);
     }
     return flattenedActivitiesToReturn;
+  }
+  private Application getApplicationForTeamAndApplication(String applicationName, String teamName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    for (Application application : getApplications()) {
+      if (applicationName != null && !application.getName().equals(applicationName)) {
+        continue;
+      }
+      if (teamName != null && !application.getTeam().equals(teamName)) {
+        continue;
+      }
+      return application;
+    }
+    throw new ApplicationNotFoundException(applicationName, teamName);
   }
 
   private boolean isDateActive(Activity activity, Date date, String level, String activityName, String teamName) {
@@ -370,6 +376,20 @@ public class ApplicationDirector {
       flattenedActivitiesToReturn = mergeFlattenDates(flattenedActivitiesToReturn, flattenedActivities, getActivity(activityName, teamName), level, teamName, applicationName);
     }
 
+    return flattenedActivitiesToReturn;
+  }
+  public Collection<FlattenDate> getActivitiesWithTeamAndApplicationFlatAsLevelMap(String applicationName, String teamName) throws Exception {
+    Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
+
+    // in the future, here might be a loop over dates
+    Application application = getApplicationForTeamAndApplication(applicationName, teamName);
+    FlattenDate flattenDate = new FlattenDate(new Date());
+    for(Activity activity : application.getActivities()) {
+      flattenDate.addDynamicField(activity.getName(), activity.isActivityImplemented().get(application.getDesiredLevel()));
+      flattenDate.addDynamicField("team", teamName);
+      flattenDate.addDynamicField("date", new Date());
+    }
+    flattenedActivitiesToReturn.add(flattenDate);
     return flattenedActivitiesToReturn;
   }
 
