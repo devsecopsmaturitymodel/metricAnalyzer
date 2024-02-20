@@ -21,7 +21,7 @@ jobs:
         id: get-version
         run: |
           branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-          if [ "branch" == "main" ]; then
+          if [ "${branch}" == "main" ]; then
             echo "::set-output name=version::$(grep -oP '\[\d+\.\d+\.\d+\]' CHANGELOG.md | tr -d '[]')"
           else
             echo "::set-output name=version::${branch}"
