@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.16.2...v1.17.0) (2024-02-20)
+
+
+### Features
+
+* Add team overview ([b117bf6](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/b117bf69e14ddc1509a87747f8bf0def678cd201))
+
 ## [1.16.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.16.1...v1.16.2) (2024-02-20)
 
 
