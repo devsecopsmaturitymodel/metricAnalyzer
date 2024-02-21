@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.dsomm.metricca.analyzer.deserialization.YamlApplicationNodes;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;

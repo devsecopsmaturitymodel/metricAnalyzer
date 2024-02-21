@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.dsomm.metricca.analyzer.deserialization.ActivityDirector;
 import org.owasp.dsomm.metricca.analyzer.deserialization.skeleton.SkeletonActivity;
 
 import java.util.ArrayList;
