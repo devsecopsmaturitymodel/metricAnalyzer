@@ -3,9 +3,7 @@ package org.owasp.dsomm.metricca.analyzer.deserialization;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.owasp.dsomm.metricca.analyzer.ApplicationTest;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.UrlActivity;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.threshold.DatePeriod;
@@ -13,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

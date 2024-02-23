@@ -2,13 +2,10 @@ package org.owasp.dsomm.metricca.analyzer.deserialization;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.owasp.dsomm.metricca.analyzer.ApplicationTest;
 import org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

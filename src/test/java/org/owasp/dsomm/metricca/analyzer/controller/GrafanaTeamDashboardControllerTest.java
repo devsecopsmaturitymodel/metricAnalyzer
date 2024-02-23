@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.dsomm.metricca.analyzer.controller.GrafanaTeamDashboardController;
 import org.owasp.dsomm.metricca.analyzer.controller.dto.FlattenDate;
 import org.owasp.dsomm.metricca.analyzer.deserialization.Application;
 import org.owasp.dsomm.metricca.analyzer.deserialization.ApplicationDirector;
@@ -54,5 +55,17 @@ public class GrafanaTeamDashboardControllerTest {
             .hasSize(1);
 
     verify(applicationDirector).getActivitiesPerTeamAndApplicationFlatAsLevelMap(APPLICATION, TEAM_NAME, ACTIVITY_NAME);
+  }
+
+  @Test
+  public void shouldGetActivitiesWithTeamFlatAsMap() throws Exception {
+    when(applicationDirector.getActivitiesWithTeamAndApplicationFlatAsLevelMap(APPLICATION, TEAM_NAME))
+            .thenReturn(List.of(flattenDate));
+
+    assertThat(grafanaTeamDashboardController.getActivitiesWithTeamFlatAsMap(TEAM_NAME, APPLICATION))
+            .isNotNull()
+            .hasSize(1);
+
+    verify(applicationDirector).getActivitiesWithTeamAndApplicationFlatAsLevelMap(APPLICATION, TEAM_NAME);
   }
 }

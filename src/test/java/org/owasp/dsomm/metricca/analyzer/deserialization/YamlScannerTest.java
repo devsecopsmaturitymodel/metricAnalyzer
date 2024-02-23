@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.dsomm.metricca.analyzer.deserialization.YamlScanner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.nio.file.Path;
