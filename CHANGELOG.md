@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.17.3...v1.18.0) (2024-03-14)
+
+
+### Features
+
+* Add scheduled for dashboards ([f296969](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/f296969f4b0c3dff07463797c633b075368da39b))
+
 ## [1.17.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.17.1...v1.17.2) (2024-02-20)
 
 
