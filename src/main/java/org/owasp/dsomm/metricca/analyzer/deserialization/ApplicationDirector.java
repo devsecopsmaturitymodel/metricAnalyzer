@@ -46,7 +46,7 @@ public class ApplicationDirector {
     return skeletonActivities;
   }
 
-  @Scheduled(fixedRate = 10000)
+  @Scheduled(fixedDelayString = "${metricCA.git.pull.milliseconds}")
   public void initiateApplicationsViaCron() throws SkeletonNotFoundException, ComponentNotFoundException, IOException, GitAPIException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     logger.debug("initiateApplicationsViaCron");
     yamlScanner.initiate();

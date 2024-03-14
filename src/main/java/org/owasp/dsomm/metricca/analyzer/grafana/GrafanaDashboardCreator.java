@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class GrafanaDashboardCreator {
     return dashboards;
   }
 
+  @Scheduled(cron = "${metricCA.grafana.dashboard.push.cron}")
   public boolean pushDashboards() throws Exception {
     boolean status = true;
     for (Map.Entry<String, String> dashboard : getDashboards().entrySet()) {
