@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.18.0...v1.18.1) (2024-03-18)
+
+
+### Bug Fixes
+
+* scheduled/cron syntax ([ac10801](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/ac1080179ae4f927db665e3432d982ff7ad6c11b))
+
 # [1.18.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.17.3...v1.18.0) (2024-03-14)
 
 
