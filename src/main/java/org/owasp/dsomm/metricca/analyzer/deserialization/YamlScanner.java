@@ -73,6 +73,8 @@ public class YamlScanner {
       }
       CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken, gitPassword);
       repoCloneCommand.setCredentialsProvider(credentialsProvider);
+    } else {
+      logger.debug("gitUsernameOrToken is is not set");
     }
     logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
     repoCloneCommand
