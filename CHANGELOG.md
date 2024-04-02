@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.18.1...v1.18.2) (2024-04-02)
+
+
+### Bug Fixes
+
+* move comment to extra line ([2633e0f](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/2633e0fa586c9fed057d6f5a832c6d3040aa854e))
+
 ## [1.18.1](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.18.0...v1.18.1) (2024-03-18)
 
 
