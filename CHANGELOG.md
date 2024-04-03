@@ -1,3 +1,10 @@
+## [1.20.5](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.20.4...v1.20.5) (2024-04-03)
+
+
+### Bug Fixes
+
+* resources path ([4a23657](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/4a236574fd2eb0cce313e576ed808d8e69fea7da))
+
 ## [1.20.3](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.20.2...v1.20.3) (2024-04-03)
 
 
