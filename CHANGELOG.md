@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.18.3...v1.19.0) (2024-04-03)
+
+
+### Features
+
+* Update application-debugging.properties ([312b4d4](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/312b4d4ee66461256dbb2b3ce568ee9c0689effe))
+
 ## [1.18.3](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.18.2...v1.18.3) (2024-04-03)
 
 
