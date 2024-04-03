@@ -32,7 +32,7 @@ jobs:
           echo "Semantic Release Version: ${{ steps.get-version.outputs.version }}"
 
       - name: setup qemu for multi-arch build
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: amd64,arm64
       - name: setup buildx
