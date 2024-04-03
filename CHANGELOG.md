@@ -1,3 +1,10 @@
+## [1.20.3](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.20.2...v1.20.3) (2024-04-03)
+
+
+### Bug Fixes
+
+* logging level ([618713b](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/618713b37b106108247eeada700315de12cb9e3e))
+
 ## [1.20.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.20.1...v1.20.2) (2024-04-03)
 
 
