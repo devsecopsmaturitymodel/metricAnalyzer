@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.19.0...v1.20.0) (2024-04-03)
+
+
+### Features
+
+* put root logging to INFO ([fca3024](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/fca3024eb6cae038240acf6ca58002018642f8c2))
+
 # [1.19.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.18.3...v1.19.0) (2024-04-03)
 
 
