@@ -61,22 +61,22 @@ public class YamlScanner {
     }
 
     CloneCommand repoCloneCommand = Git.cloneRepository()
-        .setURI(yamlGitUrl)
+        .setURI(yamlGitUrl.trim())
         .setDirectory(yamlGitTargetPathFile)
-        .setBranch(yamlGitBranch);
+        .setBranch(yamlGitBranch.trim());
 
     if (gitUsernameOrToken != null && !gitUsernameOrToken.isEmpty()) {
       if (gitPassword == null || gitPassword.isEmpty()) {
         logger.info("Password is empty, assuming a token is used");
       } else {
-        logger.debug("gitUsernameOrToken is set to " + gitUsernameOrToken);
+        logger.debug("gitUsernameOrToken is set to " + gitUsernameOrToken.trim());
       }
-      CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken, gitPassword);
+      CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(gitUsernameOrToken.trim(), gitPassword.trim());
       repoCloneCommand.setCredentialsProvider(credentialsProvider);
     } else {
       logger.debug("gitUsernameOrToken is not set");
     }
-    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath + " with branch " + yamlGitBranch);
+    logger.info("Cloning " + yamlGitUrl.trim() + " into " + yamlGitTargetPath + " with branch " + yamlGitBranch.trim());
     repoCloneCommand
         .call();
   }
