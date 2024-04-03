@@ -76,7 +76,7 @@ public class YamlScanner {
     } else {
       logger.debug("gitUsernameOrToken is not set");
     }
-    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath);
+    logger.info("Cloning " + yamlGitUrl + " into " + yamlGitTargetPath + " with branch " + yamlGitBranch);
     repoCloneCommand
         .call();
   }
