@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.20.7...v1.21.0) (2024-04-04)
+
+
+### Features
+
+* add teams.yaml to git path for prod ([6a7fce3](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/6a7fce34dbb60d78d236643663ea2fdefb5fc115))
+
 ## [1.20.5](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.20.4...v1.20.5) (2024-04-03)
 
 
