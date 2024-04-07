@@ -1,15 +1,15 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization.activity.component;
 
 public class DatePeriodHoursAndPeople extends Date {
-  private Integer hours = Integer.MIN_VALUE;
+  private Double hours = Double.MIN_VALUE;
 
   private Integer people = Integer.MIN_VALUE;
 
-  public Integer getHours() {
+  public Double getHours() {
     return hours;
   }
 
-  public void setHours(Integer hours) {
+  public void setHours(Double hours) {
     this.hours = hours;
   }
 
@@ -21,7 +21,7 @@ public class DatePeriodHoursAndPeople extends Date {
     this.people = people;
   }
 
-  public Integer getHoursAndPeople() {
+  public Double getHoursAndPeople() {
     if (people != null && hours != null) {
       return people * hours;
     } else {

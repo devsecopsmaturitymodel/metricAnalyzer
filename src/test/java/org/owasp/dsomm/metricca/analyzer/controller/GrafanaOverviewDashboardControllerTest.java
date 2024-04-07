@@ -98,7 +98,7 @@ public class GrafanaOverviewDashboardControllerTest {
     when(securityTrainingActivity.getName()).thenReturn(ACTIVITY_NAME);
     when(securityTrainingActivity.getLearningTimePerDate()).thenReturn(List.of(datePeriodHoursAndPeople));
     when(datePeriodHoursAndPeople.getDate()).thenReturn(date);
-    when(datePeriodHoursAndPeople.getHours()).thenReturn(1);
+    when(datePeriodHoursAndPeople.getHours()).thenReturn(1.0);
 
     assertThat(grafanaOverviewDashboardController
         .getActivitiesHoursAndPeople(ACTIVITY_NAME, LEVEL)).containsKey(TEAM_NAME);
