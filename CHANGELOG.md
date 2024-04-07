@@ -1,3 +1,10 @@
+## [1.21.2](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.1...v1.21.2) (2024-04-07)
+
+
+### Bug Fixes
+
+* use double instead of integer for hours ([14efcb8](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/14efcb8a1a9df64227792477ef9f25be3b483253))
+
 # [1.21.0](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.20.7...v1.21.0) (2024-04-04)
 
 
