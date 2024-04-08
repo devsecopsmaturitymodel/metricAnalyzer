@@ -58,7 +58,7 @@ public class GrafanaOverviewDashboardController {
   @RequestMapping(value = "/activity/{activityName}/level/{level}/flatdate", method = RequestMethod.GET)
   @ResponseBody
   public Collection<FlattenDate> getActivitiesFlat(@PathVariable String activityName, @PathVariable String level) throws Exception {
-    return applicationDirector.getActivitiesPerTeamAndApplicationFlat(null, null, activityName, level);
+    return applicationDirector.getActivitiesFlat(activityName, level);
   }
 
   /**

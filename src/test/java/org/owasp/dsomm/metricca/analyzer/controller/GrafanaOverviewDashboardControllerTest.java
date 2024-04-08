@@ -80,14 +80,13 @@ public class GrafanaOverviewDashboardControllerTest {
 
   @Test
   public void shouldGetActivitiesFlat() throws Exception {
-    when(applicationDirector.getActivitiesPerTeamAndApplicationFlat(null, null, ACTIVITY_NAME, LEVEL))
-            .thenReturn(List.of(flattenDates));
-
+    when(applicationDirector.getActivitiesFlat(ACTIVITY_NAME, LEVEL))
+        .thenReturn(List.of(flattenDates));
     assertThat(grafanaOverviewDashboardController.getActivitiesFlat(ACTIVITY_NAME, LEVEL))
-            .isNotNull()
-            .hasSize(1);
+        .isNotNull()
+        .hasSize(1);
 
-    verify(applicationDirector).getActivitiesPerTeamAndApplicationFlat(null, null, ACTIVITY_NAME, LEVEL);
+    verify(applicationDirector).getActivitiesFlat(ACTIVITY_NAME, LEVEL);
   }
 
   @Test

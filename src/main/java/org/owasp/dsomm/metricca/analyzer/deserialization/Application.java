@@ -60,4 +60,8 @@ public class Application {
   public void setDesiredLevel(String desiredLevel) {
     this.desiredLevel = desiredLevel;
   }
+
+  public void addActivities(List<Activity> activities) {
+    this.activities.addAll(activities);
+  }
 }

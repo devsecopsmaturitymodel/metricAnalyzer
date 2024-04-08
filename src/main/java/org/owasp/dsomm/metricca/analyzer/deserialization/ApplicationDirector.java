@@ -99,7 +99,13 @@ public class ApplicationDirector {
         for (Application teamApplication : teamApplications) {
           application.getActivities().addAll(teamApplication.getActivities());
         }
-        applications.add(application);
+        if (isApplicationInList(applications, application.getName())) {
+          logger.debug("Merging " + application.getName() + " for team " + application.getTeam());
+          getApplicationInList(applications, application.getName()).addActivities(application.getActivities());
+        } else {
+          applications.add(application);
+        }
+
       }
       for (Application teamApplication : teamApplications) {
         if (teamActivities.containsKey(teamName)) {
@@ -267,12 +273,11 @@ public class ApplicationDirector {
     return getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName, null);
   }
 
-  public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String applicationName, String teamName, String activityName, String level) throws Exception {
+  public Collection<FlattenDate> getActivitiesFlat(String activityName, String level) throws Exception {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
     List<java.util.Date> datesFromActivities;
     if (level == null) {
       datesFromActivities = getStartAndEndDateFromActivities(activityName);
-      logger.debug("datesFromActivities: " + datesFromActivities);
     } else {
       datesFromActivities = getStartAndEndDateFromActivities(activityName, level);
     }
@@ -280,17 +285,44 @@ public class ApplicationDirector {
     logger.info("datesFromActivities: " + datesFromActivities);
     for (java.util.Date date : datesFromActivities) {
       FlattenDate flattenDate = new FlattenDate(date);
-      Application application = getApplicationForTeamAndApplication(applicationName, teamName);
-      for (Activity activity : application.getActivities(activityName)) {
-        boolean value = isDateActive(activity, date, level, activityName, application.getTeam());
-        String label = getLabel(application.getTeam(), application.getName(), activity, level);
-        flattenDate.addDynamicField(label, value);
+      for (Application application : applications) {
+        for (Activity activity : application.getActivities(activityName)) {
+          boolean value = isDateActive(activity, date, level, activityName, application.getTeam());
+          String label = getLabel(application.getTeam(), application.getName(), activity, level);
+          flattenDate.addDynamicField(label, value);
+        }
+        flattenedActivitiesToReturn.add(flattenDate);
       }
-      flattenedActivitiesToReturn.add(flattenDate);
     }
     return flattenedActivitiesToReturn;
   }
-  private Application getApplicationForTeamAndApplication(String applicationName, String teamName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+  public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String applicationName, String teamName, String activityName, String level) throws Exception {
+    Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
+    List<java.util.Date> datesFromActivities;
+    if (level == null) {
+      datesFromActivities = getStartAndEndDateFromActivities(activityName);
+    } else {
+      datesFromActivities = getStartAndEndDateFromActivities(activityName, level);
+    }
+
+    logger.info("datesFromActivities: " + datesFromActivities);
+    for (java.util.Date date : datesFromActivities) {
+      FlattenDate flattenDate = new FlattenDate(date);
+      List<Application> applications = getApplicationsForTeamAndApplication(applicationName, teamName);
+      for (Application application : applications) {
+        for (Activity activity : application.getActivities(activityName)) {
+          boolean value = isDateActive(activity, date, level, activityName, application.getTeam());
+          String label = getLabel(application.getTeam(), application.getName(), activity, level);
+          flattenDate.addDynamicField(label, value);
+        }
+        flattenedActivitiesToReturn.add(flattenDate);
+      }
+    }
+    return flattenedActivitiesToReturn;
+  }
+  private List<Application> getApplicationsForTeamAndApplication(String applicationName, String teamName) throws GitAPIException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    List<Application> applications = new ArrayList<>();
     for (Application application : getApplications()) {
       if (applicationName != null && !application.getName().equals(applicationName)) {
         continue;
@@ -298,9 +330,12 @@ public class ApplicationDirector {
       if (teamName != null && !application.getTeam().equals(teamName)) {
         continue;
       }
-      return application;
+      applications.add(application);
     }
-    throw new ApplicationNotFoundException(applicationName, teamName);
+    if (applications.size() == 0) {
+      throw new ApplicationNotFoundException(applicationName, teamName);
+    }
+    return applications;
   }
 
   private boolean isDateActive(Activity activity, Date date, String level, String activityName, String teamName) {
@@ -382,14 +417,16 @@ public class ApplicationDirector {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
 
     // in the future, here might be a loop over dates
-    Application application = getApplicationForTeamAndApplication(applicationName, teamName);
+    List<Application> applications = getApplicationsForTeamAndApplication(applicationName, teamName);
     FlattenDate flattenDate = new FlattenDate(new Date());
-    for(Activity activity : application.getActivities()) {
-      flattenDate.addDynamicField(activity.getName(), activity.isActivityImplemented().get(application.getDesiredLevel()));
-      flattenDate.addDynamicField("team", teamName);
-      flattenDate.addDynamicField("date", new Date());
+    for (Application application : applications) {
+      for (Activity activity : application.getActivities()) {
+        flattenDate.addDynamicField(activity.getName(), activity.isActivityImplemented().get(application.getDesiredLevel()));
+        flattenDate.addDynamicField("team", teamName);
+        flattenDate.addDynamicField("date", new Date());
+      }
+      flattenedActivitiesToReturn.add(flattenDate);
     }
-    flattenedActivitiesToReturn.add(flattenDate);
     return flattenedActivitiesToReturn;
   }
 
@@ -442,6 +479,16 @@ public class ApplicationDirector {
       }
     }
     throw new Exception("Activity not found");
+  }
+
+  private Application getApplicationInList(List<Application> applications, String name) {
+    boolean isInList = false;
+    for (Application application : applications) {
+      if (application.getName().equals(name)) {
+        return application;
+      }
+    }
+    return null;
   }
 
   private boolean isApplicationInList(List<Application> applications, String name) {
