@@ -16,7 +16,6 @@ public class ActivityDirector {
 
   private final List<Activity> activities;
 
-
   public ActivityDirector(JsonNode activityObjects, List<SkeletonActivity> skeletonActivities, String kind) throws JsonProcessingException, InstantiationException, IllegalAccessException, ClassNotFoundException {
     List<Activity> activities = new ArrayList<>();
     for (SkeletonActivity skeletonActivity : skeletonActivities) {
@@ -25,6 +24,7 @@ public class ActivityDirector {
         continue;
       }
       for (String activityName : skeletonActivity.getActivityNames()) {
+        logger.debug("Skeleton Activity kind: " + skeletonActivity.getKind() + " " + skeletonActivity.getClassName() + " for " + activityName);
         Class<? extends org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity> clazz = (Class<? extends org.owasp.dsomm.metricca.analyzer.deserialization.activity.Activity>) Class.forName("org.owasp.dsomm.metricca.analyzer.deserialization.activity." + skeletonActivity.getClassName());
         JsonNode activityData = activityObjects.get(activityName);
         SkeletonActivity newSkeletonActivity = copyObject(skeletonActivity);

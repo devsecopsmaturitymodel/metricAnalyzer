@@ -75,9 +75,9 @@ Assuming you are using infinity plugin:
 
 # Development
 ## Deserialization process (see `ApplicationDirector`)
-1. Deserialize the YAML in `resources/skeleton.yaml` in the method  to Java object skeletons (`getDeserializedApplications()` creates `sekelton/SeketlonActivity`)
+1. Deserialize the YAML in `resources/skeleton.yaml` in the method to Java object skeletons (`getDeserializedApplications()` creates `sekelton/SeketlonActivity`)
     1. Using the models in `deserialization/skeleton/Period` to represent the activity details (e.g. `Thresholds` -> `DatePeriod`)
-2. Called via `getDeserializedApplications(skeletonActivities)`, the `ActivityDirector` creates the activities from the skeletons and the activity YAML files from git (or for development local file system `/definitions`)
+2. Called via `getDeserializedApplications(skeletonActivities)`, the `ActivityDirector` creates the activities from the skeletons and the activity YAML files from git (or for development local file system `/activities`)
     1. The `ActivityFactory` is called by the `ActivityDirector` to create the activities
     2. The `ActivityFactory` deserializes the YAML files to Java objects
     3. `ActivityFactory` uses the `ActivityBuilder` to transport the data from the skeleton to the activity

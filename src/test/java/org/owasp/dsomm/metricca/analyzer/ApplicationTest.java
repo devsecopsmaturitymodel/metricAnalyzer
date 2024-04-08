@@ -21,7 +21,7 @@ public class ApplicationTest {
     constructor.setAccessible(true);
     applicationDirector = constructor.newInstance();
     YamlScanner yamlScanner = new YamlScanner();
-    setPrivateFieldInTest(yamlScanner, "yamlApplicationFolderPath", "definitions");
+    setPrivateFieldInTest(yamlScanner, "yamlApplicationFolderPath", "activities");
     setPrivateFieldInTest(yamlScanner, "yamlSkeletonFilePath", "src/main/resources/skeleton.yaml");
     setPrivateFieldInTest(yamlScanner, "yamlTeamsFilePath", "src/main/resources/teams.yaml");
     yamlScanner.getApplicationYamls();
