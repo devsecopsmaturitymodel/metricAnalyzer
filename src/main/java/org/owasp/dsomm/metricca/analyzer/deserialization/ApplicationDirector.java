@@ -272,6 +272,7 @@ public class ApplicationDirector {
   public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String applicationName, String teamName, String activityName) throws Exception {
     return getActivitiesPerTeamAndApplicationFlat(applicationName, teamName, activityName, null);
   }
+
   public Collection<FlattenDate> getActivitiesFlat(String activityName, String level) throws Exception {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
     List<java.util.Date> datesFromActivities;
@@ -295,6 +296,7 @@ public class ApplicationDirector {
     }
     return flattenedActivitiesToReturn;
   }
+
   public Collection<FlattenDate> getActivitiesPerTeamAndApplicationFlat(String applicationName, String teamName, String activityName, String level) throws Exception {
     Collection<FlattenDate> flattenedActivitiesToReturn = new ArrayList<FlattenDate>();
     List<java.util.Date> datesFromActivities;
@@ -330,8 +332,9 @@ public class ApplicationDirector {
       }
       applications.add(application);
     }
-    if(applications.size() == 0)
+    if (applications.size() == 0) {
       throw new ApplicationNotFoundException(applicationName, teamName);
+    }
     return applications;
   }
 
@@ -416,7 +419,7 @@ public class ApplicationDirector {
     // in the future, here might be a loop over dates
     List<Application> applications = getApplicationsForTeamAndApplication(applicationName, teamName);
     FlattenDate flattenDate = new FlattenDate(new Date());
-    for(Application application : applications) {
+    for (Application application : applications) {
       for (Activity activity : application.getActivities()) {
         flattenDate.addDynamicField(activity.getName(), activity.isActivityImplemented().get(application.getDesiredLevel()));
         flattenDate.addDynamicField("team", teamName);
@@ -477,6 +480,7 @@ public class ApplicationDirector {
     }
     throw new Exception("Activity not found");
   }
+
   private Application getApplicationInList(List<Application> applications, String name) {
     boolean isInList = false;
     for (Application application : applications) {
@@ -486,6 +490,7 @@ public class ApplicationDirector {
     }
     return null;
   }
+
   private boolean isApplicationInList(List<Application> applications, String name) {
     boolean isInList = false;
     for (Application application : applications) {
