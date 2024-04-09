@@ -61,7 +61,7 @@ public abstract class Activity {
       Boolean isImplemented = true;
       for (Target target : threshold.getTargets()) {
         if (target == null || target.implemented() == null || !target.implemented()) {
-          logger.info("target.implemented() == null" + (target.implemented() == null));
+          logger.debug("target.implemented() == null, result:" + (target.implemented() == null));
           isImplemented = false;
         }
       }
