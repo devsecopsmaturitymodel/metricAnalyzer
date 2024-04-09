@@ -112,7 +112,6 @@ public class ApplicationDirector {
         } else {
           applications.add(application);
         }
-
       }
       for (Application teamApplication : teamApplications) {
         if (teamActivities.containsKey(teamName)) {
