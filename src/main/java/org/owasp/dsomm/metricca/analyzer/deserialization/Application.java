@@ -62,6 +62,13 @@ public class Application {
   }
 
   public void addActivities(List<Activity> activities) {
-    this.activities.addAll(activities);
+    for (Activity givenActivity : activities) {
+      for (Activity existingActivity : getActivities(givenActivity.getName())) {
+        if (existingActivity.getDateComponents().size() == 0 && givenActivity.getDateComponents().size() > 0) {
+          this.activities.remove(existingActivity);
+          this.activities.add(givenActivity);
+        }
+      }
+    }
   }
 }
