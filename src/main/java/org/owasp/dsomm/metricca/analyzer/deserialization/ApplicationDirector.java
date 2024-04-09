@@ -101,7 +101,14 @@ public class ApplicationDirector {
         }
         if (isApplicationInList(applications, application.getName())) {
           logger.debug("Merging " + application.getName() + " for team " + application.getTeam());
-          getApplicationInList(applications, application.getName()).addActivities(application.getActivities());
+          Application applicationInList = getApplicationInList(applications, application.getName());
+          applicationInList.addActivities(application.getActivities());
+          if (applicationInList.getTeam() != null && applicationInList.getTeam().isEmpty()) {
+            applicationInList.setTeam(application.getTeam());
+          }
+          if (applicationInList.getDesiredLevel() != null && applicationInList.getDesiredLevel().isEmpty()) {
+            applicationInList.setDesiredLevel(application.getDesiredLevel());
+          }
         } else {
           applications.add(application);
         }
