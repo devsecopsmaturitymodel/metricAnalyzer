@@ -3,10 +3,17 @@
   "extends": [
     "config:recommended"
   ],
+  "automergeType": "pr",
+  "prCreation": "immediate",
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "groupName": "all dependencies",
+      "groupSlug": "all",
+      "matchPackagePatterns": [
+        "*"
+      ]      
     }
   ]
 }
