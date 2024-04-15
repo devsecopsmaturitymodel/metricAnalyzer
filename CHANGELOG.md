@@ -1,3 +1,10 @@
+## [1.21.4](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.3...v1.21.4) (2024-04-15)
+
+
+### Bug Fixes
+
+* schedule only every 4 hours hour and not minute ([38a64aa](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/38a64aa2ba71558ae977230e20a09c695985d597))
+
 ## [1.21.3](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.2...v1.21.3) (2024-04-08)
 
 
