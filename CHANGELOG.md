@@ -1,3 +1,10 @@
+## [1.21.6](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.5...v1.21.6) (2024-04-15)
+
+
+### Bug Fixes
+
+* dashboard cron again ([ae390bd](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/ae390bd46c8c85988415937e232a059d5c036bfe))
+
 ## [1.21.5](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.4...v1.21.5) (2024-04-15)
 
 
