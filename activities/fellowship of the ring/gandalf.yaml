@@ -5,21 +5,10 @@ settings:
   application: "gandalf" # e.g. from deployment
   team: "fellowship of the ring"
 
-# TODO optional fields results in null values in the output is good?
+includes:
+  - infrastructure/infrastructure.yaml
 
 activities:
-  Source Control Protection:
-    components:
-      - url: "https://test1.com"
-        date: 2023-01-01
-      - date: 2022-05-01
-        url: "https://test1.com"
-      - date: 2021-05-01
-        url: "https://test1.com"
-      - date: 2023-12-19
-        url: "https://test1.com"
-
-
   Conduction of simple threat modeling on technical level:
     components:
       - date: "2008-11-01"
@@ -42,4 +31,6 @@ activities:
         links:
           - title: "testtitle"
             url: "https://test1.com"
-
+  Reduction of the attack surface:
+    components:
+      - date: "2024-01-01"
