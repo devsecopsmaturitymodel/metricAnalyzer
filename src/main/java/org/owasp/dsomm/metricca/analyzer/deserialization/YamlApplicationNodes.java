@@ -18,6 +18,7 @@ public class YamlApplicationNodes {
   public YamlApplicationNodes() {
     this.nodes = new HashMap<String, ArrayList<JsonNode>>();
   }
+
   public YamlApplicationNodes(String yamlBasePath) {
     this.yamlBasePath = yamlBasePath;
     this.nodes = new HashMap<String, ArrayList<JsonNode>>();
@@ -39,6 +40,22 @@ public class YamlApplicationNodes {
     return nodes;
   }
 
+  public ArrayList<JsonNode> getNodes(String team, String kind) throws IOException {
+    ArrayList<JsonNode> applicationNodes = new ArrayList<JsonNode>();
+
+    for (JsonNode node : getNodesForTeam(team)) {
+      if (node.get("kind").asText().equals(kind)) {
+        if (yamlBasePath != null && !yamlBasePath.isEmpty()) {
+          YamlScannerIncludes yamlScannerIncludes = new YamlScannerIncludes(node, yamlBasePath);
+          node = yamlScannerIncludes.getNode();
+        }
+        applicationNodes.add(node);
+      }
+    }
+
+    return applicationNodes;
+  }
+
   public ArrayList<JsonNode> getNodesForTeam(String team) {
     ArrayList<JsonNode> allNodes = new ArrayList<JsonNode>();
 
@@ -50,21 +67,5 @@ public class YamlApplicationNodes {
       }
     }
     return allNodes;
-  }
-
-  public ArrayList<JsonNode> getNodes(String team, String kind) throws IOException {
-    ArrayList<JsonNode> applicationNodes = new ArrayList<JsonNode>();
-
-    for (JsonNode node : getNodesForTeam(team)) {
-      if (node.get("kind").asText().equals(kind)) {
-        if(yamlBasePath != null && !yamlBasePath.isEmpty()) {
-          YamlScannerIncludes yamlScannerIncludes = new YamlScannerIncludes(node, yamlBasePath);
-          node = yamlScannerIncludes.getNode();
-        }
-        applicationNodes.add(node);
-      }
-    }
-
-    return applicationNodes;
   }
 }

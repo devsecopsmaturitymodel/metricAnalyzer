@@ -1,4 +1,5 @@
 package org.owasp.dsomm.metricca.analyzer.deserialization;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,7 @@ public class YamlScannerIncludesTest {
     // Assert
     assertEquals(expected, result);
   }
+
   @Test
   void testIncludesWithActivities() throws Exception {
     // Arrange
