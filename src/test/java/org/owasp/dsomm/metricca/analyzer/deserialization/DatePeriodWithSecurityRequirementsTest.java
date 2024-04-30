@@ -26,8 +26,6 @@ public class DatePeriodWithSecurityRequirementsTest extends ApplicationTest {
     List<Application> actualApplications = applicationDirector.getApplications();
     for (Application application : actualApplications) {
       if (application.getName().equals("sauron")) {
-        Date date = ((UrlActivity) application.getActivities().get(0)).getDateComponents().get(0).getDate();
-        logger.error("date" + date);
         return (UrlActivity) application.getActivities().get(0);
       }
     }

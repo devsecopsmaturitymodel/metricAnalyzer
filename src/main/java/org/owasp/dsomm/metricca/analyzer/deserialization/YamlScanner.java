@@ -144,7 +144,7 @@ public class YamlScanner {
   }
 
   public String getYamlApplicationFolderPath() {
-    logger.info("yamlApplicationFolderPath() " + yamlApplicationFolderPath);
+    logger.debug("yamlApplicationFolderPath() " + yamlApplicationFolderPath);
     if (isGit()) {
       return yamlGitTargetPath + "/" + yamlApplicationFolderPath;
     }

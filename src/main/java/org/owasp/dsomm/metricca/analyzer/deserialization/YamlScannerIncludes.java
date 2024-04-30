@@ -10,9 +10,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class YamlScannerIncludes {
-  private ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-  private String yamlBasePath;
-  private JsonNode applicationJsonNode;
+  private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+  private final String yamlBasePath;
+  private final JsonNode applicationJsonNode;
 
   public YamlScannerIncludes(JsonNode applicationJsonNode, String basePath) {
     this.applicationJsonNode = applicationJsonNode;
@@ -45,9 +45,7 @@ public class YamlScannerIncludes {
   }
 
   private void mergeJsonNodes(JsonNode destinationNode, JsonNode sourceNode) {
-    if (destinationNode instanceof ObjectNode && sourceNode instanceof ObjectNode) {
-      ObjectNode destObjectNode = (ObjectNode) destinationNode;
-      ObjectNode srcObjectNode = (ObjectNode) sourceNode;
+    if (destinationNode instanceof ObjectNode destObjectNode && sourceNode instanceof ObjectNode srcObjectNode) {
 
       // Merge fields from source node to destination node
       srcObjectNode.fieldNames().forEachRemaining(fieldName -> {
