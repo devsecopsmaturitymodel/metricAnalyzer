@@ -54,7 +54,7 @@ public class YamlScannerIncludesTest {
     assertEquals(expected, result);
   }
   @Test
-  void testIncludesWithActvities() throws Exception {
+  void testIncludesWithActivities() throws Exception {
     // Arrange
     String basePath = Paths.get("src", "test", "resources", "include").toString();
     ObjectMapper objectMapper = new ObjectMapper();
