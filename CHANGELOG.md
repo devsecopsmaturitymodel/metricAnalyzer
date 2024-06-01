@@ -1,3 +1,10 @@
+## [1.21.9](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.8...v1.21.9) (2024-06-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.freemarker:freemarker to v2.3.33 ([#68](https://github.com/devsecopsmaturitymodel/metricAnalyzer/issues/68)) ([6c21c7b](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/6c21c7b4c71a2344fdcb32abd14b72ce9bc138a3))
+
 ## [1.21.7](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.6...v1.21.7) (2024-04-19)
 
 
