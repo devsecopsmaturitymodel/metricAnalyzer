@@ -58,7 +58,7 @@ jobs:
           echo "tag: ${tag}, ${branch}"
           ./mvnw compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Djib.from.image=eclipse-temurin:17-jre -Djib.container.environment=XDG_CONFIG_HOME=/tmp -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${tag}
       # Commit all changed files back to the repository
-      - uses: planetscale/ghcommit-action@v0.1.41
+      - uses: planetscale/ghcommit-action@v0.1.42
         with:
           commit_message: "🤖 BOT based relase commit"
           repo: ${{ github.repository }}
