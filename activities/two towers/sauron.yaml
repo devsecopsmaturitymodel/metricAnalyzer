@@ -7,21 +7,32 @@ settings:
   application: "sauron" # e.g. from deployment
   team: "two towers"
 
+includes:
+  - infrastructure/infrastructure.yaml
+
 activities:
   Source Control Protection:
     components:
       - url: "https://test1.com"
         date: 2023-01-01
-      - date: 2022-10-01
-        url: "https://test1.com"
-      - date: 2000-01-01
-        url: "https://test1.com"
-      - date: 2023-12-19
-        url: "https://test1.com"
       - date: 2022-05-01
-        url: "https://test2.com"
+        url: "https://test1.com"
+      - date: 2021-05-01
+        url: "https://test1.com"
       - date: 2023-12-19
-        url: "https://test2.com"
+        url: "https://test1.com"
+
+  Defined build process:
+    components:
+      - url: "https://test1.com"
+        date: 2023-01-01
+      - date: 2022-05-01
+        url: "https://test1.com"
+      - date: 2021-05-01
+        url: "https://test1.com"
+      - date: 2023-12-19
+        url: "https://test1.com"
+
   Conduction of simple threat modeling on technical level:
     components:
       - date: "2009-11-01"
@@ -44,9 +55,6 @@ activities:
         links:
           - title: "testtitle"
             url: "https://test1.com"
-  Reduction of the attack surface:
-    components:
-      - date: "2023-01-01"
 #  sast:
 #    confirmation:
 #      - confirmed by: "Max Mustermann"

@@ -7,7 +7,7 @@ public class ApplicationNotFoundException extends RuntimeException {
     this.teamName = teamName;
   }
 
-  private String teamName;
+  private final String teamName;
   private String applicationName;
 
   public String getApplicationName() {

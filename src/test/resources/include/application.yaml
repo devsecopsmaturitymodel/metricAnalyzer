@@ -1,0 +1,5 @@
+includes:
+  - include1.yaml
+  - include2.yaml
+  - nestedInclude.yaml
+key: value

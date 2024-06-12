@@ -80,7 +80,7 @@ public class ApplicationDirector {
 
   private List<Application> getDeserializedApplications(List<SkeletonActivity> skeletonActivities) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, GitAPIException {
     List<Application> applications = new ArrayList<>();
-    YamlApplicationNodes yamlApplicationNodes = new YamlApplicationNodes();
+    YamlApplicationNodes yamlApplicationNodes = new YamlApplicationNodes(yamlScanner.getYamlApplicationFolderPath());
     HashMap<String, List<Activity>> teamActivities = new HashMap<>();
     for (File yamlApplicationFilePath : yamlScanner.getApplicationYamls()) {
       logger.info("yamlApplicationFilePath: " + yamlApplicationFilePath.getPath());

@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.owasp.dsomm.metricca.analyzer.deserialization.YamlApplicationNodes;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -91,7 +92,7 @@ public class YamlApplicationNodesTest {
   }
 
   @Test
-  void testGetNodesForTeam() throws JsonProcessingException {
+  void testGetNodesForTeam() throws IOException {
     HashMap<String, ArrayList<JsonNode>> nodes = new HashMap<>();
     ArrayList<JsonNode> jsonNodes = new ArrayList<>();
     jsonNodes.add(objectMapper.readTree(jsonNodeString));
