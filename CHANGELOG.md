@@ -1,3 +1,10 @@
+## [1.21.11](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.10...v1.21.11) (2024-06-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springdoc:springdoc-openapi-starter-webmvc-ui to v2.6.0 ([#75](https://github.com/devsecopsmaturitymodel/metricAnalyzer/issues/75)) ([5248d1b](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/5248d1baf24d25972ef493125bd2cc5a89456169))
+
 ## [1.21.10](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.9...v1.21.10) (2024-06-20)
 
 
