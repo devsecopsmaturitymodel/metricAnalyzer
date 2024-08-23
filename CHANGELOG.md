@@ -1,3 +1,10 @@
+## [1.21.13](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.12...v1.21.13) (2024-08-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.boot:spring-boot-starter-parent to v3.3.3 ([#81](https://github.com/devsecopsmaturitymodel/metricAnalyzer/issues/81)) ([9d55bec](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/9d55bec5423378d76e8644afbdd94964cc727593))
+
 ## [1.21.12](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.11...v1.21.12) (2024-07-18)
 
 
