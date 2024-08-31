@@ -1,3 +1,10 @@
+## [1.21.14](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.13...v1.21.14) (2024-08-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.yaml:snakeyaml to v2.3 ([#82](https://github.com/devsecopsmaturitymodel/metricAnalyzer/issues/82)) ([2181a2c](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/2181a2c688603d0fa5e28ae7de8d24cbe75d59f2))
+
 ## [1.21.13](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.12...v1.21.13) (2024-08-23)
 
 
