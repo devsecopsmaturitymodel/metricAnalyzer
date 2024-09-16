@@ -1,3 +1,10 @@
+## [1.21.15](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.14...v1.21.15) (2024-09-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency joda-time:joda-time to v2.13.0 ([#85](https://github.com/devsecopsmaturitymodel/metricAnalyzer/issues/85)) ([02501e7](https://github.com/devsecopsmaturitymodel/metricAnalyzer/commit/02501e7f7fe693f4a148a920ef134b5262fd4d95))
+
 ## [1.21.14](https://github.com/devsecopsmaturitymodel/metricAnalyzer/compare/v1.21.13...v1.21.14) (2024-08-31)
 
 
