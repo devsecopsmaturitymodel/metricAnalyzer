@@ -70,7 +70,7 @@ public class DatePeriodWithSecurityRequirementsTest extends ApplicationTest {
     SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd");
     isoFormat.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
 
-    Date existingDate = isoFormat.parse("2000-01-01");
+    Date existingDate = isoFormat.parse("2023-12-19");
     DatePeriod endDateForExistingDate = activity.getThresholdDatePeriodMap().get("Level 1").getDatePeriodForDate(existingDate);
     assertNotNull(endDateForExistingDate);
     assertTrue(endDateForExistingDate.getShowEndDate());
