@@ -1,0 +1,4 @@
+key: toBeOverriden
+includedKey1: includedValue1
+includes:
+  - nestedInclude2.yaml
