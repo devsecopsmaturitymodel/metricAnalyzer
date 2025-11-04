@@ -58,7 +58,7 @@ jobs:
           echo "tag: ${tag}, ${branch}"
           ./mvnw compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Djib.from.image=eclipse-temurin:17-jre -Djib.container.environment=XDG_CONFIG_HOME=/tmp -Dimage=docker.io/wurstbrot/metric-analyzer -Djib.to.tags=${tag}
       # Commit all changed files back to the repository
-      - uses: planetscale/ghcommit-action@v0.2.9
+      - uses: planetscale/ghcommit-action@v0.2.18
         with:
           commit_message: "🤖 BOT based relase commit"
           repo: ${{ github.repository }}
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check out Git repository"
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - name: "Set Heroku app & branch for ${{ github.ref }}"
         run: |
           echo "HEROKU_BRANCH=main" >> $GITHUB_ENV
